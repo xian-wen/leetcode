@@ -81,14 +81,14 @@ class Solution {
 public:
     int romanToInt(string s) {
         int result = 0;
-        bool used = false;
+        bool used = false; // 判断X、C是否已经被匹配过
         for (int i = 0; i < s.length(); i++) {
             switch (s[i]) {
             case 'I':
                 result += 1;
                 break;
             case 'V':
-                if (s[i - 1] == 'I') {
+                if (s[i - 1] == 'I') { // I不需要判断是否used
                     result += 3;
                     used = true;
                 } else if (s[i - 1] != 'I') {
@@ -97,7 +97,7 @@ public:
                 }
                 break;
             case 'X':
-                if (s[i - 1] == 'I') {
+                if (s[i - 1] == 'I') { // I不需要判断是否used
                     result += 8;
                     used = true;
                 } else if (s[i - 1] != 'I') {
