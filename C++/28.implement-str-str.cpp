@@ -42,6 +42,8 @@
 class Solution {
 public:
     int strStr(string haystack, string needle) {
+        if (needle.empty()) return 0; // 模式串为空
+
         for (int i = 0; i < haystack.length(); i++) {
             int j = 0;
             for (; j < needle.length(); j++) {
@@ -50,9 +52,8 @@ public:
                     break;
                 }
             }
-            
-            // 匹配成功，包含模式串为空的情况
-            if (j == needle.length())
+
+            if (j == needle.length()) // 匹配成功
                 return i;
         }
 
