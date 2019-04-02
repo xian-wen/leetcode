@@ -42,22 +42,22 @@
 class Solution {
 public:
     int strStr(string haystack, string needle) {
-        if (needle.empty()) return 0; // 模式串为空
+        int hLen = haystack.length();
+        int nLen = needle.length();
 
-        for (int i = 0; i < haystack.length(); i++) {
-            int j = 0;
-            for (; j < needle.length(); j++) {
-                // [i + j]即表示每次第i个位置开始逐一比较
-                if (haystack[i + j] != needle[j]) {
+        // 为避免越界，i最大值为hLen和nLen之差
+        for (int i = 0; i <= hLen - nLen; i++) {
+            int j;
+            for (j = 0; j < nLen; j++) {
+                if (haystack[i + j] != needle[j]) { // 不匹配
                     break;
                 }
             }
 
-            if (j == needle.length()) // 匹配成功
-                return i;
+            if (j == nLen) return i; // 匹配，包括needle为空串这种情况
         }
 
-        return -1; // 匹配失败
+        return -1; // 不匹配
     }
 };
 
