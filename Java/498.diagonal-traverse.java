@@ -43,12 +43,12 @@ class Solution {
     public int[] findDiagonalOrder(int[][] matrix) {
         if (matrix.length == 0) return new int[0]; // empty array
 
-        final int M = matrix.length;
-        final int N = matrix[0].length;
+        final int M = matrix.length;  // M rows
+        final int N = matrix[0].length;  // N cols
 
         int[] res = new int[M * N];
         int index = 0;
-        for (int s = 0; s <= M + N - 2; ++s) { // s: diagonal
+        for (int s = 0; s <= M + N - 2; ++s) { // s: the first row and the last col
             for (int x = 0; x <= s; ++x) {
                 // for all i + j = s
                 int i = x;
@@ -61,7 +61,7 @@ class Solution {
                     i = i ^ j;
                 }
 
-                // pass the overflow
+                // overflow
                 if (i >= M || j >= N) continue;
 
                 res[index++] = matrix[i][j];
