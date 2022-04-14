@@ -34,42 +34,20 @@
  * 
  */
 
-/* 
-class Solution {
-    public int[] twoSum(int[] numbers, int target) {
-        int[] res = new int[2];
-
-        for (int i = 0; i < numbers.length; i++) {
-            // j = i + 1, avoid repetition
-            for (int j = i + 1; j < numbers.length; j++) {
-                if (numbers[i] + numbers[j] == target) {
-                    // index from 1, not 0
-                    res[0] = i + 1;
-                    res[1] = j + 1;
-                    break;
-                } else if (numbers[i] + numbers[j] > target)
-                    break;
-            }
-        }
-
-        return res;
-    }
-}
- */
-
 class Solution {
     public int[] twoSum(int[] numbers, int target) {
         int l = 0, r = numbers.length - 1;
 
-        // from both sides to middle
+        // From both sides to middle
         while (numbers[l] + numbers[r] != target) { 
-            if (numbers[l] + numbers[r] > target)
+            if (numbers[l] + numbers[r] > target) {
                 --r;
-            else
+            } else {
                 ++l;
+            }
         }
 
-        return new int[] {l + 1, r + 1}; // index from 1, not 0
+        return new int[] {l + 1, r + 1}; // Index from 1, not 0
     }
 }
 
