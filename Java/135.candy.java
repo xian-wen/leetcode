@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /*
  * @lc app=leetcode id=135 lang=java
  *
@@ -6,11 +8,11 @@
  * https://leetcode.com/problems/candy/description/
  *
  * algorithms
- * Hard (36.93%)
- * Likes:    2705
- * Dislikes: 246
- * Total Accepted:    210.4K
- * Total Submissions: 569.7K
+ * Hard (36.35%)
+ * Likes:    2934
+ * Dislikes: 257
+ * Total Accepted:    219.5K
+ * Total Submissions: 586.8K
  * Testcase Example:  '[1,0,2]'
  *
  * There are n children standing in a line. Each child is assigned a rating
@@ -63,9 +65,7 @@
 class Solution {
     public int candy(int[] ratings) {
         int[] candies = new int[ratings.length];
-        for (int i = 0; i < candies.length; ++i) {
-            candies[i] = 1;
-        }
+        Arrays.fill(candies, 1);
 
         for (int i = 1; i < ratings.length; ++i) {
             if (ratings[i] > ratings[i - 1]) {
@@ -80,8 +80,8 @@ class Solution {
         }
 
         int sum = 0;
-        for (int i = 0; i < candies.length; ++i) {
-            sum += candies[i];
+        for (int candy : candies) {
+            sum += candy;
         }
         return sum;
     }
