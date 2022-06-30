@@ -65,16 +65,17 @@ class Solution {
         // https://stackoverflow.com/questions/15452429/java-arrays-sort-2d-array
         Arrays.sort(intervals, (i1, i2) -> Integer.compare(i1[1], i2[1]));
 
-        int res = 0;
-        int prev = 0;
+        int numRemoved = 0;
+        int prevEnd = intervals[0][1];
         for (int i = 1; i < intervals.length; ++i) {
-            if (intervals[i][0] < intervals[prev][1]) {
-                ++res;
+            int currStart = intervals[i][0];
+            if (currStart < prevEnd) {
+                ++numRemoved;
             } else {
-                prev = i;
+                prevEnd = intervals[i][1];
             }
         }
-        return res;
+        return numRemoved;
     }
 }
 // @lc code=end
