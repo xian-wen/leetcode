@@ -36,14 +36,17 @@
 
 class Solution {
     public int[] twoSum(int[] numbers, int target) {
-        int l = 0, r = numbers.length - 1;
+        int l = 0, r = numbers.length - 1, sum = 0;
 
         // From both sides to middle
-        while (numbers[l] + numbers[r] != target) { 
-            if (numbers[l] + numbers[r] > target) {
+        while (l < r) {
+            sum = numbers[l] + numbers[r];
+            if (sum > target) {
                 --r;
-            } else {
+            } else if (sum < target) {
                 ++l;
+            } else {
+                break;
             }
         }
 
