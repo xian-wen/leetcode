@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -45,31 +44,28 @@ import java.util.List;
 // @lc code=start
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
+        boolean[] visited = new boolean[nums.length];
+        List<Integer> temp = new ArrayList<>();
         List<List<Integer>> permutations = new ArrayList<>();
-        backtrack(nums, 0, permutations);
+        backtrack(nums, visited, temp, permutations);
         return permutations;
     }
 
-    private void backtrack(int[] nums, int level, List<List<Integer>> permutations) {
-        if (level == nums.length - 1) {
-            List<Integer> list = new ArrayList<>();
-            for (int num : nums) {
-                list.add(num);
-            }
-            permutations.add(list);
+    private void backtrack(int[] nums, boolean[] visited, 
+                List<Integer> temp, List<List<Integer>> permutations) {
+        if (temp.size() == nums.length) {
+            permutations.add(new ArrayList<>(temp));
         }
         
-        for (int i = level; i < nums.length; ++i) {
-            swap(nums, i, level);
-            backtrack(nums, level + 1, permutations);
-            swap(nums, i, level);
+        for (int i = 0; i < nums.length; ++i) {
+            if (!visited[i]) {  // bound function
+                visited[i] = true;
+                temp.add(nums[i]);
+                backtrack(nums, visited, temp, permutations);
+                visited[i] = false;
+                temp.remove(temp.size() - 1);
+            }
         }
-    }
-
-    private void swap(int[] nums, int i, int j) {
-        int temp = nums[i];
-        nums[i] = nums[j];
-        nums[j] = temp;
     }
 }
 // @lc code=end
