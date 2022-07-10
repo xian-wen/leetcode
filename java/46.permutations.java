@@ -55,6 +55,7 @@ class Solution {
                 List<Integer> temp, List<List<Integer>> permutations) {
         if (temp.size() == nums.length) {
             permutations.add(new ArrayList<>(temp));
+            return;
         }
         
         for (int i = 0; i < nums.length; ++i) {
