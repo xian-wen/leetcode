@@ -88,13 +88,15 @@ class Solution {
     }
 
     private boolean check(int row, int col) {
-        return !column[col] && !leftDiagonal[row + n - 1 - col] 
+        // For points on the left diagonal, row - col is a negative constant.
+        // For points on the right diagonal, row + col is a constant.
+        return !column[col] && !leftDiagonal[row - col + n - 1] 
             && !rightDiagonal[row + col];
     }
 
     private void set(int row, int col, List<String> temp) {
         column[col] = true;
-        leftDiagonal[row + n - 1 - col] = true;
+        leftDiagonal[row - col + n - 1] = true;
         rightDiagonal[row + col] = true;
         grid[row][col] = 'Q';
         temp.add(new String(grid[row]));
@@ -102,7 +104,7 @@ class Solution {
 
     private void unset(int row, int col, List<String> temp) {
         column[col] = false;
-        leftDiagonal[row + n - 1 - col] = false;
+        leftDiagonal[row - col + n - 1] = false;
         rightDiagonal[row + col] = false;
         grid[row][col] = '.';
         temp.remove(temp.size() - 1);
