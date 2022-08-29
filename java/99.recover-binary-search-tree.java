@@ -66,12 +66,12 @@
  * }
  */
 class Solution {
-    // Must not pass as parameters prev, swap1, and swap2 to preorder!
+    // Must not pass as parameters prev, swap1, and swap2 to inorder!
     // Java is copy-by-value, the 64-bit address is also directly copied!
-    private TreeNode prev = null, swap1 = null, swap2 = null;
+    private TreeNode prev, swap1, swap2;
 
     public void recoverTree(TreeNode root) {
-        preorder(root);
+        inorder(root);
 
         if (swap1 != null && swap2 != null) {
             int temp = swap1.val;
@@ -80,24 +80,22 @@ class Solution {
         }
     }
 
-    private void preorder(TreeNode root) {
+    private void inorder(TreeNode root) {
         if (root == null) {
             return;
         }
 
-        preorder(root.left);
+        inorder(root.left);
 
         if (prev != null && root.val < prev.val) {
             if (swap1 == null) {
                 swap1 = prev;
-                swap2 = root;
-            } else {
-                swap2 = root;
             }
+            swap2 = root;
         }
         prev = root;
 
-        preorder(root.right);
+        inorder(root.right);
     }
 }
 // @lc code=end
