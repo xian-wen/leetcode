@@ -76,61 +76,120 @@ import java.util.Queue;
  */
 
 // @lc code=start
+// DFS
 class Solution {
-    private List<List<Integer>> graph;
-    private int[] indegrees;
-    private int count;
-    private Queue<Integer> topological;
+    private List<Integer>[] graph;
+    private boolean[] visited;
+    private boolean[] onStack;
+    private boolean hasCycle;
+    private Queue<Integer> postorder;
 
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        graph = new ArrayList<>(numCourses);
+        graph = new List[numCourses];
         for (int i = 0; i < numCourses; ++i) {
-            graph.add(new LinkedList<>());
+            graph[i] = new LinkedList<>();
         }
 
-        indegrees = new int[numCourses];
         for (int[] e : prerequisites) {
-            graph.get(e[1]).add(e[0]);
-            ++indegrees[e[0]];
+            graph[e[1]].add(e[0]);
         }
 
-        // Use BFS instead of DFS since there may exist cicles.
-        topological = new LinkedList<>();
-        Queue<Integer> queue = new LinkedList<>();
+        visited = new boolean[numCourses];
+        onStack = new boolean[numCourses];
+        postorder = new LinkedList<>();
         for (int v = 0; v < numCourses; ++v) {
-            if (indegrees[v] == 0) {
-                queue.offer(v);
+            if (!visited[v]) {
+                dfs(v);
             }
         }
-        
-        bfs(queue);
 
         // Cycle detected!
-        if (count != numCourses) {
+        if (hasCycle) {
             return new int[0];
         }
 
-        int[] res = new int[numCourses];
-        for (int i = 0; i < numCourses; ++i) {
-            res[i] = topological.poll();
+        // The topological order is the reverse of post order.
+        int[] topological = new int[numCourses];
+        for (int v = numCourses - 1; v >= 0; --v) {
+            topological[v] = postorder.poll();
         }
-        return res;
+        return topological;
     }
 
-    private void bfs(Queue<Integer> queue) {
-        while (!queue.isEmpty()) {
-            int v = queue.poll();
-            topological.offer(v);
-            ++count;
+    private void dfs(int v) {
+        visited[v] = true;
+        onStack[v] = true;
 
-            for (int w : graph.get(v)) {
-                --indegrees[w];
-                if (indegrees[w] == 0) {
-                    queue.offer(w);
-                }
+        for (int w : graph[v]) {
+            if (!visited[w]) {
+                dfs(w);
+            } else if (onStack[w]) {
+                // Cycle detected!
+                hasCycle = true;
+                return;
             }
         }
+
+        postorder.add(v);
+        onStack[v] = false;
     }
 }
-// @lc code=end
 
+// BFS
+// class Solution {
+//     private List<List<Integer>> graph;
+//     private int[] indegrees;
+//     private int count;
+//     private Queue<Integer> topological;
+
+//     public int[] findOrder(int numCourses, int[][] prerequisites) {
+//         graph = new ArrayList<>(numCourses);
+//         for (int v = 0; v < numCourses; ++v) {
+//             graph.add(new LinkedList<>());
+//         }
+
+//         indegrees = new int[numCourses];
+//         for (int[] e : prerequisites) {
+//             graph.get(e[1]).add(e[0]);
+//             ++indegrees[e[0]];
+//         }
+
+//         // Use BFS instead of DFS since there may exist cicles.
+//         topological = new LinkedList<>();
+//         Queue<Integer> queue = new LinkedList<>();
+//         for (int v = 0; v < numCourses; ++v) {
+//             if (indegrees[v] == 0) {
+//                 queue.offer(v);
+//             }
+//         }
+        
+//         bfs(queue);
+
+//         // Cycle detected!
+//         if (count != numCourses) {
+//             return new int[0];
+//         }
+
+//         int[] res = new int[numCourses];
+//         for (int v = 0; v < numCourses; ++v) {
+//             res[v] = topological.poll();
+//         }
+//         return res;
+//     }
+
+//     private void bfs(Queue<Integer> queue) {
+//         while (!queue.isEmpty()) {
+//             int v = queue.poll();
+//             topological.offer(v);
+//             ++count;
+
+//             for (int w : graph.get(v)) {
+//                 --indegrees[w];
+//                 if (indegrees[w] == 0) {
+//                     queue.offer(w);
+//                 }
+//             }
+//         }
+//     }
+// }
+// @lc code=end
