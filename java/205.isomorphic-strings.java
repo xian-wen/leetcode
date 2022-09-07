@@ -83,6 +83,8 @@ import java.util.Map;
 
 // Solution 2:
 class Solution {
+    private static final int R = 128;
+
     public boolean isIsomorphic(String s, String t) {
         if (s == null || t == null) {
             return s == t;
@@ -92,8 +94,8 @@ class Solution {
             return false;
         }
 
-        int[] firstIndexS = new int[128];
-        int[] firstIndexT = new int[128];
+        int[] firstIndexS = new int[R];
+        int[] firstIndexT = new int[R];
         for (int i = 0; i < s.length(); ++i) {
             char sc = s.charAt(i);
             char tc = t.charAt(i);
