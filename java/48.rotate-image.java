@@ -51,8 +51,12 @@ class Solution {
     private int[][] matrix;
 
     /**
-     * Rotating the matrix 90 degrees is equivalent to swap fout points:
+     * Solution 1:
+     * Rotating the matrix 90 degrees is equivalent to swap four points:
      * matrix[i][j], matrix[j][N-1-i], matrix[N-1-i][N-1-j], matrix[N-1-j][i].
+     * 
+     * Solution 2:
+     * First transform the matrix, then reverse all its columns.
      */
     public void rotate(int[][] matrix) {
         this.matrix = matrix;
