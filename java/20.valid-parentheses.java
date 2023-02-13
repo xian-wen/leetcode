@@ -1,4 +1,5 @@
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 /*
  * @lc app=leetcode id=20 lang=java
@@ -63,14 +64,26 @@ import java.util.Stack;
  */
 class Solution {
     public boolean isValid(String s) {
-        int length;
+        Deque<Character> stack = new ArrayDeque<>();
+        for (char c : s.toCharArray()) {
+            if (stack.isEmpty()) {
+                stack.push(c);
+                continue;
+            }
+            
+            if (isMatch(stack.peek(), c)) {
+                stack.pop();
+            } else {
+                stack.push(c);
+            }
+        }
+        return stack.isEmpty();
+    }
 
-        do {
-            length = s.length();
-            s = s.replace("{}", "").replace("[]", "").replace("()", "");
-        } while (length != s.length());
-
-        return s.isEmpty();
+    private boolean isMatch(char c1, char c2) {
+        return (c1 == '(' && c2 == ')')
+                || (c1 == '[' && c2 == ']')
+                || (c1 == '{' && c2 == '}');
     }
 }
 
