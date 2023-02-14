@@ -72,6 +72,18 @@ class MinStack {
     private Deque<Integer> stack;
     private int min;
 
+    /**
+     * Solution 1: using stack.
+     * 
+     * Solution 2: add min as a field of Node class.
+     * 
+     *   class Node {
+     *       int val;
+     *       int min;
+     *       Node* next;
+     *   }
+     * 
+     */
     public MinStack() {
         stack = new ArrayDeque<>();
         min = Integer.MAX_VALUE;
