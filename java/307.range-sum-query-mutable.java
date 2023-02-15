@@ -70,7 +70,7 @@ class NumArray {
     private int N;
 
     /**
-     * sum[i] = sum(nums[0..(i-1)])
+     * sum[i] = sumRrange(0, i-1)
      */
     private int[] sum;
 

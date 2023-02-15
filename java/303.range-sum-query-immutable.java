@@ -61,7 +61,7 @@
 // @lc code=start
 class NumArray {
     /**
-     * sum[i] = sum(nums[0..(i-1)])
+     * sum[i] = sumRange(0, i-1)
      */
     private int[] sum;
 
