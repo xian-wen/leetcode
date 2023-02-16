@@ -39,7 +39,7 @@ class Solution {
     private static final int BASE = 7;
     
     // /**
-    //  * Solution 1: java lib.
+    //  * Solution 1: java built-in library.
     //  */
     // public String convertToBase7(int num) {
     //     return Integer.toString(num, BASE);
