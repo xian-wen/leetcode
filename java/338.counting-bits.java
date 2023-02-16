@@ -69,14 +69,13 @@ class Solution {
      * count[i] = # 1s in binary i.
      * 
      * Recursive relation:
-     * count[i] = count[i - 1] if LSB(i) = 1
-     *          = count[i >> 1] if LSB(i) = 0
-     * where LSB = i & 1
+     * count[i] = count[i >> 1] + LSB(i)
+     * where LSB(i) = i & 1
      * count[0] = 0
      * 
      * e.g., 
-     * count[0b1001] = count[0b1000] + 1
-     * count[0b1010] = count[0b101]
+     * count[0b1010] = count[0b101] + 0
+     * count[0b1011] = count[0b101] + 1
      * 
      * Time complexity:
      * O(n)
@@ -85,11 +84,8 @@ class Solution {
         int[] count = new int[n + 1];
         for (int i = 1; i <= n; ++i) {
             int last = i & 1;
-            if (last == 1) {
-                count[i] = count[i - 1] + 1;
-            } else {
-                count[i] = count[i >> 1];
-            }
+            int allButLast = i >> 1;
+            count[i] = count[allButLast] + last;
         }
         return count;
     }
