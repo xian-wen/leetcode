@@ -67,9 +67,9 @@ class Solution {
 
     /**
      * Solution 1: 
-     * Divide and Conquer (with memorization). However, adding memorization, the 
+     * Divide and Conquer (with memoization). However, adding memoization, the 
      * runtime does not improve, maybe the cost of frequent substring operations 
-     * in `computeWithMemorization` offsets the benefit of memorization.
+     * in `computeWithMemoization` offsets the benefit of memoization.
      * 
      * Solution 2: 
      * Dynamic programming.
@@ -89,8 +89,8 @@ class Solution {
         for (int i = begin; i < end; ++i) {
             char c = expression.charAt(i);
             if (c == '+' || c == '-' || c == '*') {
-                // If using memorization, replace `diffWaysToCompute`
-                // with `computeWithMemorization`.
+                // If using memoization, replace `diffWaysToCompute`
+                // with `computeWithMemoization`.
                 List<Integer> left = diffWaysToCompute(begin, i);
                 List<Integer> right = diffWaysToCompute(i + 1, end);
                 for (int l : left) {
@@ -117,7 +117,7 @@ class Solution {
         return res;
     }
 
-    private List<Integer> computeWithMemorization(int begin, int end) {
+    private List<Integer> computeWithMemoization(int begin, int end) {
         String subexpression = expression.substring(begin, end);
         if (cache.containsKey(subexpression)) {
             return cache.get(subexpression);
