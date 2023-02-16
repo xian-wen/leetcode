@@ -59,8 +59,8 @@ class Solution {
      * Count the # 1s in the binary form of x.
      */
     private int countOne(int x) {
-        if (x == 0 || x == 1) {
-            return x;
+        if (x == 0) {
+            return 0;
         }
 
         int last = x & 1;
