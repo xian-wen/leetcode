@@ -1,7 +1,3 @@
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
 /*
  * @lc app=leetcode id=204 lang=java
  *
