@@ -1,5 +1,3 @@
-import java.util.concurrent.ConcurrentHashMap;
-
 /*
  * @lc app=leetcode id=504 lang=java
  *
