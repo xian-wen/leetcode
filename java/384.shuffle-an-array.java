@@ -1,7 +1,3 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
 /*
@@ -87,6 +83,7 @@ class Solution {
     
     public int[] shuffle() {
         for (int i = 0; i < N; ++i) {
+            // i: [0, N), j: [i, N)
             int j = r.nextInt(N - i) + i;
             swap(i, j);
         }
