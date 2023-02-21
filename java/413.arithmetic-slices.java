@@ -1,5 +1,3 @@
-import java.util.stream.Stream;
-
 /*
  * @lc app=leetcode id=413 lang=java
  *
@@ -86,8 +84,8 @@ class Solution {
         }
 
         int count = 0;
-        for (int i = 0; i < N; ++i) {
-            count += arithmetic[i];
+        for (int num : arithmetic) {
+            count += num;
         }
         return count;
     }
