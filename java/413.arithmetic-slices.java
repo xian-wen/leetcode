@@ -56,38 +56,50 @@
 
 // @lc code=start
 class Solution {
+    // /**
+    //  * Subproblem:
+    //  * arithmetic[i] = the number of arithmetic subarrays in nums[0..i] 
+    //  * including nums[i].
+    //  * 
+    //  * Recursive relation:
+    //  * arithmetic[i] = arithmetic[i-1] + 1 if nums[i] - nums[i-1] = nums[i-1] - nums[i-2]
+    //  *               = 0                   otherwise
+    //  * airthmetic[0] = 0
+    //  * airthmetic[1] = 0
+    //  * 
+    //  * Time complexity:
+    //  * O(N)
+    //  */
+    // public int numberOfArithmeticSlices(int[] nums) {
+    //     int N = nums.length;
+    //     int[] arithmetic = new int[N];
+    //     for (int i = 2; i < N; ++i) {
+    //         if (nums[i] - nums[i - 1] == nums[i - 1] - nums[i - 2]) {
+    //             arithmetic[i] = arithmetic[i - 1] + 1;
+    //         }
+    //     }
+
+    //     int count = 0;
+    //     for (int num : arithmetic) {
+    //         count += num;
+    //     }
+    //     return count;
+    // }
+
     /**
-     * Subproblem:
-     * arithmetic[i] = the number of arithmetic subarrays in nums[0..i] 
-     * including nums[i].
-     * 
-     * Recursive relation:
-     * arithmetic[i] = arithmetic[i-1] + 1 if nums[i] - nums[i-1] = nums[i-1] - nums[i-2]
-     *               = 0                   otherwise
-     * airthmetic[0] = 0
-     * airthmetic[1] = 0
-     * 
-     * Time complexity:
-     * O(N)
+     * Space optimization.
      */
     public int numberOfArithmeticSlices(int[] nums) {
-        int N = nums.length;
-        if (N < 3) {
-            return 0;
-        }
-
-        int[] arithmetic = new int[N];
-        for (int i = 2; i < N; ++i) {
+        int arithmetic = 0, prev = 0;
+        for (int i = 2; i < nums.length; ++i) {
             if (nums[i] - nums[i - 1] == nums[i - 1] - nums[i - 2]) {
-                arithmetic[i] = arithmetic[i - 1] + 1;
+                ++prev;
+                arithmetic += prev;
+            } else {
+                prev = 0;
             }
         }
-
-        int count = 0;
-        for (int num : arithmetic) {
-            count += num;
-        }
-        return count;
+        return arithmetic;
     }
 }
 // @lc code=end
