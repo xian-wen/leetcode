@@ -85,7 +85,7 @@ class Solution {
     // private ListNode head;
 
     // /**
-    //  * Solution 1: get length.
+    //  * Solution 1: space optimization.
     //  */
     // public Solution(ListNode head) {
     //     this.head = head;
@@ -112,7 +112,7 @@ class Solution {
     private Random r;
 
     /**
-     * Solution 2: get length.
+     * Solution 2: cache all values using extra space.
      */
     public Solution(ListNode head) {
         N = length(head);
