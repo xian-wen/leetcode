@@ -126,7 +126,7 @@ class Solution {
     /**
      * The length of s is either 1 or 2.
      */
-    public int count12(String s) {
+    private int count12(String s) {
         if (s.charAt(0) == '0') {
             return 0;
         }
