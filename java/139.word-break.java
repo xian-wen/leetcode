@@ -65,6 +65,8 @@ import java.util.List;
 // @lc code=start
 class Solution {
     /**
+     * Similar to Knapsack with repetition.
+     * 
      * Subproblem:
      * segmentable[i] = whether s[0..(i-1)] can be segmented using one or more 
      * dictionary words.
