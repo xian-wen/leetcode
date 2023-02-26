@@ -56,7 +56,7 @@ class Solution {
     //  * partitionable[0] = true
     //  * 
     //  * Time complexity:
-    //  * O(N*half)
+    //  * O(N*half) where N = nums.length, half = sum(nums) / 2
     //  */
     // public boolean canPartition(int[] nums) {
     //     int sum = 0;
@@ -70,12 +70,11 @@ class Solution {
     //     }
 
     //     int half = sum >> 1;
-    //     int N = nums.length;
     //     boolean[] partitionable = new boolean[half + 1];
     //     partitionable[0] = true;
-    //     for (int i = 0; i < N; ++i) {
-    //         for (int j = half; j >= nums[i]; --j) {
-    //             partitionable[j] = partitionable[j] || partitionable[j - nums[i]];
+    //     for (int num : nums) {
+    //         for (int i = half; i >= num; --i) {
+    //             partitionable[i] = partitionable[i] || partitionable[i - num];
     //         }
     //     }
     //     return partitionable[half];
