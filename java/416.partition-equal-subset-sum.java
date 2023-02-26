@@ -52,7 +52,7 @@ class Solution {
     //  * nums[0..(N-1)] with a total sum = i.
     //  * 
     //  * Recursive relation:
-    //  * partitionable[i] = OR(partitionable[i - nums[j]]) where nums[j] <= i
+    //  * partitionable[i] = OR(partitionable[i - nums[j]]) if nums[j] <= i
     //  * partitionable[0] = true
     //  * 
     //  * Time complexity:
