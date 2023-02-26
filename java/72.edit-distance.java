@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 /*
  * @lc app=leetcode id=72 lang=java
  *
