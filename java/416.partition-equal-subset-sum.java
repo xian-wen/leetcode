@@ -96,7 +96,7 @@ class Solution {
     }
 
     /**
-     * Knapsack without repetition (space compression).
+     * Knapsack without repetition (space optimization).
      */
     private int knapsack(int[] values, int[] weights, int B) {
         int[] knapsack = new int[B + 1];

@@ -57,7 +57,7 @@
 // @lc code=start
 class Solution {
     /**
-     * Similar to Knapsack without repetition.
+     * Similar to Knapsack without repetition (space optimization).
      * 
      * Subproblem:
      * size[i][j] = the size of the largest subset of strs such that there are
