@@ -83,7 +83,6 @@ public class Knapsack {
         int[][] knapsack = new int[N + 1][B + 1];
         for (int i = 1; i <= N; ++i) {
             int v = values[i - 1], w = weights[i - 1];
-
             for (int b = 1; b <= B; ++b) {
                 if (w <= b) {
                     knapsack[i][b] = Math.max(knapsack[i - 1][b], 
