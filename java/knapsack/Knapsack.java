@@ -40,7 +40,7 @@ public class Knapsack {
      * 0, 1, ..., (N-1) with a total value <= b.
      * 
      * Recursive relation:
-     * knapsack[b] = max{v[i] + knapsack[b - w[i]]} where w[i] <= b
+     * knapsack[b] = max{v[i] + knapsack[b - w[i]]} if w[i] <= b
      * knapsack[0] = 0
      * 
      * Time complexity:
@@ -104,7 +104,7 @@ public class Knapsack {
      * 0, 1, ..., (N-1) with a total value <= b.
      * 
      * Recursive relation:
-     * knapsack[b] = max{v[i] + knapsack[b - w[i]]} where w[i] <= b
+     * knapsack[b] = max{v[i] + knapsack[b - w[i]]} if w[i] <= b
      * knapsack[0] = 0
      * 
      * Time complexity:
