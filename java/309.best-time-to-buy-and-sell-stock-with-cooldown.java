@@ -58,24 +58,24 @@
 class Solution {
     /**
      * Subproblem:
-     * buy[d] = the maximum profit achievable by buying at day d.
+     * buy[d] = the minimum cost achievable by buying at day d.
      * sell[d] = the maximum profit achievable by selling at day d.
      * 
      * Recursive relation:
-     * buy[d] = max{buy[d-1], sell[d-2] - prices[d]}
-     * sell[d] = max{sell[d-1], buy[d-1] + prices[d]}
+     * buy[d] = min{buy[d-1], prices[d] - sell[d-2]}
+     * sell[d] = max{sell[d-1], prices[d] - buy[d]}
      * 
      * Time complexity:
      * O(N)
      */
     public int maxProfit(int[] prices) {
+        int buy = Integer.MAX_VALUE;
         int preSell = 0, sell = 0;
-        int buy = Integer.MIN_VALUE, preBuy;
         for (int price : prices) {
-            preBuy = buy;
-            buy = Math.max(preBuy, preSell - price);
+            buy = Math.min(buy, price - preSell);
+            // The only difference between this and LeetCode 122.
             preSell = sell;
-            sell = Math.max(preSell, preBuy + price);
+            sell = Math.max(preSell, price - buy);
         }
         return sell;
     }

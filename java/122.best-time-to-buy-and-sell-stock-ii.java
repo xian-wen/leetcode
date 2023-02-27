@@ -68,13 +68,13 @@
 class Solution {
     // /**
     //  * Subproblem:
-    //  * buy[d] = the maximum profit achievable by buying at day d.
+    //  * buy[d] = the minimum cost achievable by buying at day d.
     //  * sell[d] = the maximum profit achievable by selling at day d.
     //  * 
     //  * Recursive relation:
-    //  * buy[d] = max{buy[d-1], sell[d-1] - prices[d]}
-    //  * sell[d] = max{sell[d-1], buy[d-1] + prices[d]}
-    //  * buy[0] = Integer.MIN_VALUE
+    //  * buy[d] = min{buy[d - 1], prices[d] - sell[d-1]}
+    //  * sell[d] = max{sell[d - 1], prices[d] - buy[d]}
+    //  * buy[0] = Integer.MAX_VALUE
     //  * sell[0] = 0
     //  * 
     //  * Time complexity:
@@ -84,10 +84,10 @@ class Solution {
     //     int N = prices.length;
     //     int[] buy = new int[N];
     //     int[] sell = new int[N];
-    //     buy[0] = -prices[0];
+    //     buy[0] = prices[0];
     //     for (int d = 1; d < N; ++d) {
-    //         buy[d] = Math.max(buy[d - 1], sell[d - 1] - prices[d]);
-    //         sell[d] = Math.max(sell[d - 1], buy[d - 1] + prices[d]);
+    //         buy[d] = Math.min(buy[d - 1], prices[d] - sell[d - 1]);
+    //         sell[d] = Math.max(sell[d - 1], prices[d] - buy[d]);
     //     }
     //     return sell[N - 1];
     // }
@@ -96,13 +96,13 @@ class Solution {
     //  * Space optimization.
     //  */
     // public int maxProfit(int[] prices) {
-    //     int sell = 0, preSell;
-    //     int buy = Integer.MIN_VALUE, preBuy;
+    //     int buy = Integer.MAX_VALUE;
+    //     int sell = 0;
     //     for (int price : prices) {
-    //         preBuy = buy;
-    //         preSell = sell;
-    //         buy = Math.max(preBuy, preSell - price);
-    //         sell = Math.max(preSell, preBuy + price);
+    //         // Minimum cost.
+    //         buy = Math.min(buy, price - sell);
+    //         // Maximum profit
+    //         sell = Math.max(sell, price - buy);
     //     }
     //     return sell;
     // }
