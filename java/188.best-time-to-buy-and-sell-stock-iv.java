@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /*
  * @lc app=leetcode id=188 lang=java
  *
@@ -56,22 +58,19 @@
 // @lc code=start
 class Solution {
     public int maxProfit(int k, int[] prices) {
-        // profit[t][0]: the minimum cost using <= t transactions.
-        // profit[t][1]: the maximum profit using <= t transactions.
-        int[][] profit = new int[k + 1][2];
-        for (int t = 0; t <= k; ++t) {
-            profit[t][0] = Integer.MAX_VALUE;
-        }
-
+        // buy[t]: the minimum cost achievable using <= t transactions.
+        // sell[t]: the maximum profit achievable using <= t transactions.
+        int[] buy = new int[k + 1], sell = new int[k + 1];
+        Arrays.fill(buy, Integer.MAX_VALUE);
         for (int price : prices) {
             for (int t = 1; t <= k; ++t) {
                 // Minimum cost = current price - previous profit.
-                profit[t][0] = Math.min(profit[t][0], price - profit[t - 1][1]);
+                buy[t] = Math.min(buy[t], price - sell[t - 1]);
                 // Maximum profit = current price - minimum cost.
-                profit[t][1] = Math.max(profit[t][1], price - profit[t][0]);
+                sell[t] = Math.max(sell[t], price - buy[t]);
             }
         }
-        return profit[k][1];
+        return sell[k];
     }
 }
 // @lc code=end
