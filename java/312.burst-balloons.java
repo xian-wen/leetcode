@@ -105,7 +105,9 @@ class Solution {
      * balloons[(i+1)..(j+1)].
      * 
      * Recursive relation:
-     * coins[i][j] = max{balloons[i] * balloons[k] * balloons[j] + coins[i][k] + coins[k][j]} where i < k < j
+     * coins[i][j] = max{balloons[i] * balloons[k] * balloons[j] 
+     *             + coins[i][k] + coins[k][j]} 
+     * where i < k < j and k is the last balloon to be burst
      * coins[i][i+1] = 0
      * 
      * Time complexity:
