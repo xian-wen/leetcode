@@ -56,8 +56,8 @@ class Solution {
     //  * min[i] = the smallest product in nums[0..(i-1)] including nums[i-1].
     //  * 
     //  * Recursive relation:
-    //  * max[i] = max{nums[i-1], nums[i-1] * max[i-1]} if nums[i] > 0
-    //  *        = max{nums[i-1], nums[i-1] * min[i-1]} if nums[i] < 0
+    //  * max[i] = max{nums[i-1], nums[i-1] * max[i-1]} if nums[i-1] > 0
+    //  *        = max{nums[i-1], nums[i-1] * min[i-1]} if nums[i-1] < 0
     //  * min[i] = min{nums[i-1], nums[i-1] * min[i-1]} if nums[i-1] > 0
     //  *        = min{nums[i-1], nums[i-1] * max[i-1]} if nums[i-1] < 0
     //  * max[0] = 1
