@@ -47,38 +47,40 @@
  */
 
 // @lc code=start
-// Solution 1:
-// class Solution {
-//     public int countSubstrings(String s) {
-//         if (s == null || s.isEmpty()) {
-//             return 0;
-//         }
-
-//         StringBuilder sb = new StringBuilder(s);
-//         int count = 0;
-//         for (int i = 0; i < s.length(); ++i) {
-//             for (int j = i + 1; j <= s.length(); ++j) {
-//                 String sub = sb.substring(i, j);
-//                 count += isPalindrome(sub) ? 1 : 0;
-//             }
-//         }
-//         return count;
-//     }
-
-//     private boolean isPalindrome(String s) {
-//         StringBuilder sb = new StringBuilder(s);
-//         String reversed = sb.reverse().toString();
-//         return s.equals(reversed);
-//     }
-// }
-
-// Solution 2:
 class Solution {
+    // /**
+    //  * Solution 1: Brute Force
+    //  */
+    // public int countSubstrings(String s) {
+    //     if (s == null || s.isEmpty()) {
+    //         return 0;
+    //     }
+
+    //     StringBuilder sb = new StringBuilder(s);
+    //     int count = 0;
+    //     for (int i = 0; i < s.length(); ++i) {
+    //         for (int j = i + 1; j <= s.length(); ++j) {
+    //             String sub = sb.substring(i, j);
+    //             count += isPalindrome(sub) ? 1 : 0;
+    //         }
+    //     }
+    //     return count;
+    // }
+
+    // private boolean isPalindrome(String s) {
+    //     StringBuilder sb = new StringBuilder(s);
+    //     String reversed = sb.reverse().toString();
+    //     return s.equals(reversed);
+    // }
+
+    /**
+     * Solution 2: Extend Palindrome
+     */
     public int countSubstrings(String s) {
         if (s == null || s.isEmpty()) {
             return 0;
         }
-
+    
         char[] charArr = s.toCharArray();
         int count = 0;
         for (int i = 0; i < charArr.length; ++i) {
@@ -88,7 +90,7 @@ class Solution {
         }
         return count;
     }
-
+    
     private int countPalindromes(char[] arr, int l, int r) {
         int count = 0;
         // Note: if checking equality in the while loop,
