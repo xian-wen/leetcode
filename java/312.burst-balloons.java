@@ -53,69 +53,14 @@
 
 // @lc code=start
 class Solution {
-    private int[] balloons;
-    private int[][] memo;
-
-    /**
-     * Solution 1: Divide and Conquer + Memoization
-     */
-    public int maxCoins(int[] nums) {
-        balloons = new int[nums.length + 2];
-        int n = 0;
-        balloons[n++] = 1;
-        for (int num : nums) {
-            if (num > 0) {
-                balloons[n++] = num;
-            }
-        }
-        balloons[n++] = 1;
-
-        memo = new int[n][n];
-        return burstBalloons(0, n - 1);
-    }
-
-    private int burstBalloons(int left, int right) {
-        if (left + 1 == right) {
-            return 0;
-        }
-
-        if (memo[left][right] > 0) {
-            return memo[left][right];
-        }
-
-        int maxCoins = 0;
-        for (int k = left + 1; k < right; ++k) {
-            int leftCoins = burstBalloons(left, k);
-            int rightCoins = burstBalloons(k, right);
-            // i: the last balloon to be burst.
-            int coins = balloons[left] * balloons[k] * balloons[right];
-            maxCoins = Math.max(maxCoins, leftCoins + rightCoins + coins);
-        }
-
-        memo[left][right] = maxCoins;
-        return maxCoins;
-    }
+    // private int[] balloons;
+    // private int[][] memo;
 
     // /**
-    //  * Solution 2: Dynamic programming
-    //  * 
-    //  * Similar to Chain Matrix Multiply.
-    //  * 
-    //  * Subproblem:
-    //  * coins[i][j] = the maximum number of coins achievable by bursting 
-    //  * balloons[(i+1)..(j+1)].
-    //  * 
-    //  * Recursive relation:
-    //  * coins[i][j] = max{balloons[i] * balloons[k] * balloons[j] 
-    //  *             + coins[i][k] + coins[k][j]} 
-    //  * where i < k < j and k is the last balloon to be burst
-    //  * coins[i][i+1] = 0
-    //  * 
-    //  * Time complexity:
-    //  * O(N^3)
+    //  * Solution 1: Divide and Conquer + Memoization
     //  */
     // public int maxCoins(int[] nums) {
-    //     int[] balloons = new int[nums.length + 2];
+    //     balloons = new int[nums.length + 2];
     //     int n = 0;
     //     balloons[n++] = 1;
     //     for (int num : nums) {
@@ -125,22 +70,77 @@ class Solution {
     //     }
     //     balloons[n++] = 1;
 
-    //     int[][] coins = new int[n][n];
-    //     // s: the size of the window.
-    //     for (int s = 2; s < n; ++s) {
-    //         for (int i = 0; i < n - s; ++i) {
-    //             int j = i + s;
-    //             coins[i][j] = 0;
-    //             for (int k = i + 1; k < j; ++k) {
-    //                 // k: the last balloon to be burst.
-    //                 int curCoins = balloons[i] * balloons[k] * balloons[j]; 
-    //                 coins[i][j] = Math.max(coins[i][j], 
-    //                         coins[i][k] + coins[k][j] + curCoins);
-    //             }
-    //         }
-    //     }
-    //     return coins[0][n - 1];
+    //     memo = new int[n][n];
+    //     return burstBalloons(0, n - 1);
     // }
+
+    // private int burstBalloons(int left, int right) {
+    //     if (left + 1 == right) {
+    //         return 0;
+    //     }
+
+    //     if (memo[left][right] > 0) {
+    //         return memo[left][right];
+    //     }
+
+    //     int maxCoins = 0;
+    //     for (int k = left + 1; k < right; ++k) {
+    //         int leftCoins = burstBalloons(left, k);
+    //         int rightCoins = burstBalloons(k, right);
+    //         // k: the last balloon to be burst.
+    //         int coins = balloons[left] * balloons[k] * balloons[right];
+    //         maxCoins = Math.max(maxCoins, leftCoins + rightCoins + coins);
+    //     }
+
+    //     memo[left][right] = maxCoins;
+    //     return maxCoins;
+    // }
+
+    /**
+     * Solution 2: Dynamic programming
+     * 
+     * Similar to Chain Matrix Multiply.
+     * 
+     * Subproblem:
+     * coins[i][j] = the maximum number of coins achievable by bursting 
+     * balloons[(i+1)..(j+1)].
+     * 
+     * Recursive relation:
+     * coins[i][j] = max{balloons[i] * balloons[k] * balloons[j] 
+     *             + coins[i][k] + coins[k][j]} 
+     * where i < k < j and k is the last balloon to be burst
+     * coins[i][i+1] = 0
+     * 
+     * Time complexity:
+     * O(N^3)
+     */
+    public int maxCoins(int[] nums) {
+        int[] balloons = new int[nums.length + 2];
+        int n = 0;
+        balloons[n++] = 1;
+        for (int num : nums) {
+            if (num > 0) {
+                balloons[n++] = num;
+            }
+        }
+        balloons[n++] = 1;
+
+        int[][] coins = new int[n][n];
+        // s: the size of the window.
+        for (int s = 2; s < n; ++s) {
+            for (int i = 0; i < n - s; ++i) {
+                int j = i + s;
+                coins[i][j] = 0;
+                for (int k = i + 1; k < j; ++k) {
+                    // k: the last balloon to be burst.
+                    int curCoins = balloons[i] * balloons[k] * balloons[j]; 
+                    coins[i][j] = Math.max(coins[i][j], 
+                            coins[i][k] + coins[k][j] + curCoins);
+                }
+            }
+        }
+        return coins[0][n - 1];
+    }
 }
 // @lc code=end
 
