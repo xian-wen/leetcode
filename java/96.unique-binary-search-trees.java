@@ -52,7 +52,6 @@ class Solution {
      *        = bst[0] * bst[i-1] + bst[1] * bst[i-2] + ... + bst[i-1] * bst[0] 
      *        = sum(bst[j-1] * bst[i-j]) where 1 <= j <= i
      * bst[0] = 1  // empty tree
-     * bst[1] = 1  // only root
      * 
      * Time complexity:
      * O(n^2)
@@ -60,8 +59,7 @@ class Solution {
     public int numTrees(int n) {
         int[] bst = new int[n + 1];
         bst[0] = 1;
-        bst[1] = 1;
-        for (int i = 2; i <= n; ++i) {
+        for (int i = 1; i <= n; ++i) {
             for (int j = 1; j <= i; ++j) {
                 bst[i] += bst[j - 1] * bst[i - j];
             }
