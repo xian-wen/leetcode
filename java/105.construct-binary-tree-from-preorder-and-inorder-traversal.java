@@ -67,39 +67,29 @@ import java.util.Map;
  * }
  */
 class Solution {
+    private int[] preorder;
+    private Map<Integer, Integer> inMap;
+    
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        if (preorder == null || preorder.length == 0) {
-            return new TreeNode();
-        }
-
-        if (preorder.length == 1) {
-            return new TreeNode(preorder[0], null, null);
-        }
-
-        Map<Integer, Integer> inMap = new HashMap<>();
+        this.preorder = preorder;
+        inMap = new HashMap<>();
         for (int i = 0; i < inorder.length; ++i) {
             inMap.put(inorder[i], i);
         }
-
-        return buildTree(preorder, inMap, 0, preorder.length - 1, 
-                   0, inorder.length - 1);
+        return buildTree(0, preorder.length - 1, 0, inorder.length - 1);
     }
 
-    private TreeNode buildTree(int[] preorder, Map<Integer, Integer> inMap, 
-            int loPre, int hiPre, int loIn, int hiIn) {
-        if (loPre > hiPre) {
+    private TreeNode buildTree(int leftPre, int rightPre, int leftIn, int rightIn) {
+        if (leftPre > rightPre || leftIn > rightIn) {
             return null;
         }
 
-        int rootVal = preorder[loPre];
-        int rootIndexOfIn = inMap.get(rootVal);
-        int leftLen = rootIndexOfIn - loIn;
-        TreeNode node = new TreeNode(preorder[loPre]);
-        node.left = buildTree(preorder, inMap, loPre + 1, loPre + leftLen, 
-                              loIn, rootIndexOfIn - 1);
-        node.right = buildTree(preorder, inMap, loPre + leftLen + 1, hiPre, 
-                               rootIndexOfIn + 1, hiIn);
-        return node;
+        int rootVal = preorder[leftPre];
+        int rootIn = inMap.get(rootVal);
+        int leftSize = rootIn - leftIn;
+        TreeNode left = buildTree(leftPre + 1, leftPre + leftSize, leftIn, rootIn - 1);
+        TreeNode right = buildTree(leftPre + leftSize + 1, rightPre, rootIn + 1, rightIn);
+        return new TreeNode(rootVal, left, right);
     }
 }
 // @lc code=end
