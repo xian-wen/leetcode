@@ -71,6 +71,9 @@
 class Solution {
     private int maxSum;
 
+    /**
+     * Similar to LeetCode 543.
+     */
     public int maxPathSum(TreeNode root) {
         maxSum = Integer.MIN_VALUE;
         maxPathSumHalf(root);
