@@ -83,6 +83,7 @@ class Solution {
             List<Integer> list = new ArrayList<>();
             for (int i = 0; i < size; ++i) {
                 TreeNode node = queue.poll();
+                list.add(node.val);
                 if (node.left != null) {
                     queue.offer(node.left);
                 }
@@ -90,8 +91,6 @@ class Solution {
                 if (node.right != null) {
                     queue.offer(node.right);
                 }
-
-                list.add(node.val);
             }
 
             res.add(list);
