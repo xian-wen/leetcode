@@ -51,7 +51,7 @@ class Solution {
     //  * partitionable[i] = whether array can be partitioned using a subset of
     //  * nums[0..(N-1)] with a total sum = i.
     //  * 
-    //  * Recursive relation:
+    //  * Recurrence relation:
     //  * partitionable[i] = OR(partitionable[i - nums[j]]) if nums[j] <= i
     //  * partitionable[0] = true
     //  * 

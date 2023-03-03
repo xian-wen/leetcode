@@ -59,7 +59,7 @@ class Solution {
     //  * Subproblem:
     //  * count[i] = the minimum number of operations to get 'A' exactly i times.
     //  * 
-    //  * Recursive relation:
+    //  * Recurrence relation:
     //  * count[i] = count[j] + count[i/j]} if i%j = 0 and j*j <= i
     //  * count[0] = 0
     //  * count[1] = 0

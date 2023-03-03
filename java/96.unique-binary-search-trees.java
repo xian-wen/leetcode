@@ -47,7 +47,7 @@ class Solution {
      * bst[i] = the number of structurally unique BST's having exactly i nodes 
      * of unique value from 1 to i.
      * 
-     * Recursive relation:
+     * Recurrence relation:
      * bst[i] = sum(bst[tree[1..(j-1)]] * bst[tree[(j+1)..i]]) where j is the root
      *        = bst[0] * bst[i-1] + bst[1] * bst[i-2] + ... + bst[i-1] * bst[0] 
      *        = sum(bst[j-1] * bst[i-j]) where 1 <= j <= i

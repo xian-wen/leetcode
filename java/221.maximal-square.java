@@ -58,7 +58,7 @@ class Solution {
      * len[i][j] = the side length of the largest square filled with only 1's 
      * and including matrix[i-1][j-1] as the bottom right corner.
      * 
-     * Recursive relation:
+     * Recurrence relation:
      * len[i][j] = 1 + min{len[i-1][j], len[i][j-1], len[i-1][j-1]} if matrix[i-1][j-1] == '1'
      *           = 0                                                otherwise
      * len[i][0] = 0

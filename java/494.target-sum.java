@@ -82,7 +82,7 @@ class Solution {
             return 0;
         }
 
-        target = (target + sum) / 2;
+        target = (target + sum) >> 1;
         return target < 0 ? 0 : subsetSum(nums, target);
     }
 
@@ -93,7 +93,7 @@ class Solution {
      * count[t] = the number of different subsets of nums[0..(n-1)] with a total
      * sum = t.
      * 
-     * Recursive relation:
+     * Recurrence relation:
      * count[t] = sum(count[t - nums[i]]) if nums[i] <= t
      * count[0] = 1  // Empty set.
      * 

@@ -64,7 +64,7 @@ class Solution {
      * Subproblem:
      * count[i] = the fewest number of coins to make up amount i.
      * 
-     * Recursive relation:
+     * Recurrence relation:
      * count[i] = min{1 + count[i - coins[j]]} if coins[j] <= i
      * count[i] = amount + 1 if i > 0
      *          = 0          if i = 0

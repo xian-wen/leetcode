@@ -83,7 +83,7 @@ class Solution {
      * Subproblem:
      * count[i] = the number of ways to decode s[0..(i-1)].
      * 
-     * Recursive relation:
+     * Recurrence relation:
      * count[i] = count1 + count2
      * count1 = count[i-1] if count12(s[i-1]) = 1
      *        = 0          if count12(s[i-1]) = 0

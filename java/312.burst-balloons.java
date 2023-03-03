@@ -105,7 +105,7 @@ class Solution {
      * coins[i][j] = the maximum number of coins achievable by bursting 
      * balloons[(i+1)..(j+1)].
      * 
-     * Recursive relation:
+     * Recurrence relation:
      * coins[i][j] = max{balloons[i] * balloons[k] * balloons[j] 
      *             + coins[i][k] + coins[k][j]} 
      * where i < k < j and k is the last balloon to be burst

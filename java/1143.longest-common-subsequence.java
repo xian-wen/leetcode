@@ -68,7 +68,7 @@ class Solution {
     //  * Subproblem:
     //  * len[i][j] = the length of the LCS of text1[0..(i-1)] and text2[0..(j-1)].
     //  * 
-    //  * Recursive relation:
+    //  * Recurrence relation:
     //  * len[i][j] = max{len[i-1][j], len[i][j-1]} if text1[i-1] = text2[j-1]
     //  *           = 1 + len[i-1][j-1]             otherwise
     //  * len[i][0] = 0
@@ -97,10 +97,6 @@ class Solution {
      */
     public int longestCommonSubsequence(String text1, String text2) {
         int M = text1.length(), N = text2.length();
-        if (M < N) {
-            return longestCommonSubsequence(text2, text1);
-        }
-
         int[] len = new int[N + 1];
         for (int i = 1; i <= M; ++i) {
             for (int j = 1, up = 0, upLeft; j <= N; ++j) {

@@ -68,9 +68,8 @@ class Solution {
      * Subproblem:
      * count[i] = # 1s in binary i.
      * 
-     * Recursive relation:
-     * count[i] = count[i >> 1] + LSB(i)
-     * where LSB(i) = i & 1
+     * Recurrence relation:
+     * count[i] = count[i >> 1] + LSB(i) where LSB(i) = i & 1
      * count[0] = 0
      * 
      * e.g., 

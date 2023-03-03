@@ -55,7 +55,7 @@ class Solution {
     //  * max[i] = the largest product in nums[0..(i-1)] including nums[i-1].
     //  * min[i] = the smallest product in nums[0..(i-1)] including nums[i-1].
     //  * 
-    //  * Recursive relation:
+    //  * Recurrence relation:
     //  * max[i] = max{nums[i-1], nums[i-1] * max[i-1]} if nums[i-1] > 0
     //  *        = max{nums[i-1], nums[i-1] * min[i-1]} if nums[i-1] < 0
     //  * min[i] = min{nums[i-1], nums[i-1] * min[i-1]} if nums[i-1] > 0

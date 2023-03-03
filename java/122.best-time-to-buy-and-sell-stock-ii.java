@@ -71,7 +71,7 @@ class Solution {
     //  * buy[d] = the minimum cost achievable by buying at day d.
     //  * sell[d] = the maximum profit achievable by selling at day d.
     //  * 
-    //  * Recursive relation:
+    //  * Recurrence relation:
     //  * buy[d] = min{buy[d - 1], prices[d] - sell[d-1]}
     //  * sell[d] = max{sell[d - 1], prices[d] - buy[d]}
     //  * buy[0] = Integer.MAX_VALUE

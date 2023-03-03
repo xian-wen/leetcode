@@ -62,7 +62,7 @@ class Solution {
     //  * len[i] = the length of the longest valid parentheses substring in 
     //  * s[0..i] including s[i].
     //  * 
-    //  * Recursive relation:
+    //  * Recurrence relation:
     //  * len[i] = 2 + len[i-1] + len[i-len[i-1]-2] if s[i] = ')' && s[i-len[i-1]-1] = '('
     //  *        = 0                                otherwise
     //  * len[0] = 0

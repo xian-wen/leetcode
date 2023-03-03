@@ -53,7 +53,7 @@ class Solution {
     //  * Subproblem:
     //  * sum[i][j] = the sum from grid[0][0] to grid[i][j].
     //  * 
-    //  * Recursive relation:
+    //  * Recurrence relation:
     //  * sum[i][j] = grid[i][j] + min{sum[i-1][j], sum[i][j-1]}
     //  * sum[0][0] = grid[0][0]
     //  * sum[i][0] = grid[i][0] + sum[i-1][0]

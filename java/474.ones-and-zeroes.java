@@ -63,7 +63,7 @@ class Solution {
      * size[i][j] = the size of the largest subset of strs such that there are
      * at most i 0's and j 1's in the subset. 
      * 
-     * Recursive relation:
+     * Recurrence relation:
      * size[i][j] = max{1 + size[i-zeros(strs[k])[j-ones(strs[k])]} if zeros(strs[k]) <= i && ones(strs[k]) <= j
      * size[0][j] = 0
      * size[i][0] = 0

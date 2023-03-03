@@ -60,7 +60,7 @@ class Solution {
     //  * paths[i][j] = the possible unique paths moving from top-left corner to 
     //  * position (i, j).
     //  * 
-    //  * Recursive relation:
+    //  * Recurrence relation:
     //  * paths[i][j] = paths[i-1][j] + paths[i][j-1]
     //  * paths[i][0] = 1
     //  * paths[0][j] = 1

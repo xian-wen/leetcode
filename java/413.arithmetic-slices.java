@@ -61,7 +61,7 @@ class Solution {
     //  * arithmetic[i] = the number of arithmetic subarrays in nums[0..i] 
     //  * including nums[i].
     //  * 
-    //  * Recursive relation:
+    //  * Recurrence relation:
     //  * arithmetic[i] = arithmetic[i-1] + 1 if nums[i] - nums[i-1] = nums[i-1] - nums[i-2]
     //  *               = 0                   otherwise
     //  * airthmetic[0] = 0

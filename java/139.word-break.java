@@ -71,7 +71,7 @@ class Solution {
      * segmentable[i] = whether s[0..(i-1)] can be segmented using one or more 
      * dictionary words.
      * 
-     * Recursive relation:
+     * Recurrence relation:
      * segmentable[i] = OR((s[i-1] ends with wordDict[j]) 
      *                     AND segmentable[i-wordDict[j].length()])
      * segmentable[0] = true

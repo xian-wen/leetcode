@@ -60,7 +60,7 @@ class Solution {
      * amount[i] = The maximum amount of money attainable by robbing the subset
      * of house 1, 2, ..., i.
      * 
-     * Recursive relation:
+     * Recurrence relation:
      * amount[i] = max{amount[i - 1], amount[i - 2] + nums[i - 1]}
      * amount[0] = 0
      * amount[1] = nums[0]

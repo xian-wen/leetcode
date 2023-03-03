@@ -78,7 +78,7 @@ class Solution {
      * Subproblem:
      * match[i][j] = whether s[0..(i-1)] matches p[0..(j-1)].
      * 
-     * Recursive relation:
+     * Recurrence relation:
      * match[i][j] = match[i-1][j-1]                                 if p[j-1] = '.'
      *             = s[i-1] == p[j-1] && match[i-1][j-1]             if p[j-1] = [a-z]
      *             = match[i][j-2]                                   if p[j-1] = '*' && p[j-2] != '.' && s[i-1] != p[j-2]

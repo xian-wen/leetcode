@@ -61,7 +61,7 @@ class Solution {
     //  * Subproblem:
     //  * sum[i] = the largest sum of nums[0..(i-1)] including nums[i-1].
     //  * 
-    //  * Recursive relation:
+    //  * Recurrence relation:
     //  * sum[i] = nums[i-1] + max{0, sum[i-1]}
     //  * sum[0] = 0
     //  * 

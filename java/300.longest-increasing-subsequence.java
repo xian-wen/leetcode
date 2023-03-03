@@ -64,7 +64,7 @@ class Solution {
     //  * Subproblem:
     //  * len[i] = the length of LIS in nums[0..i] including nums[i].
     //  * 
-    //  * Recursive relation:
+    //  * Recurrence relation:
     //  * len[i] = 1 + max{len[j]} where 0 <= j < i and a_j < a_i
     //  * 
     //  * Time complexity:
@@ -92,7 +92,7 @@ class Solution {
     //  * Subproblem:
     //  * tail[i] = the smallest tail of the LIS with len = i + 1.
     //  * 
-    //  * Recursive relation:
+    //  * Recurrence relation:
     //  * tail[i] = tail[j] where 0 <= j <= len and tail[j-1] < tail[j] <= tail[j+1]
     //  * 
     //  * Time complexity:

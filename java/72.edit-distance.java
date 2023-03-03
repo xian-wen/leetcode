@@ -66,7 +66,7 @@ class Solution {
     //  * count[i][j] = the minimum number of operations to convert word1[0..(i-1)]
     //  * to word2[0..(j-1)].
     //  * 
-    //  * Recursive relation:
+    //  * Recurrence relation:
     //  * count[i][j] = 1 + min{count[i-1][j], count[i][j-1], count[i-1][j-1]} if word1[i-1] != word2[j-1]
     //  *             = count[i-1][j-1]                                        otherwise
     //  * where count[i-1][j] represents deleting word1[i-1] or adding word2[j-1],

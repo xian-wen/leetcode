@@ -55,7 +55,7 @@ class Solution {
     //  * Subproblem:
     //  * ways[i] = the distinct ways to climb to the top using i steps.
     //  * 
-    //  * Recursive relation:
+    //  * Recurrence relation:
     //  * ways[i] = ways[i - 1] + ways[i - 2]
     //  * ways[0] = 1
     //  * ways[1] = 1

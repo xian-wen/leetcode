@@ -62,7 +62,7 @@ class Solution {
     //  * left[i][j] = the index of the first column (from left) whose height < height[i][j].
     //  * right[i][j] = the index of the first column (from right) whose height < height[i][j].
     //  * 
-    //  * Recursive relation:
+    //  * Recurrence relation:
     //  * height[i][j] = height[i - 1][j] + 1 if matrix[i][j] == '1'
     //  *              = 0
     //  * left[i][j] = left[i][k] where height[i][k] first < height[i][j]

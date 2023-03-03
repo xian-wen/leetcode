@@ -59,7 +59,7 @@ class Solution {
     //  * Subproblem:
     //  * profit[i] = the maximum profit achievable by selling the stock at day i-1.
     //  * 
-    //  * Recursive relation:
+    //  * Recurrence relation:
     //  * profit[i] = max{prices[i-1] - prices[j]} if 0 <= j < i-1 && prices[j] <= prices[i-1]
     //  * profit[0] = 0
     //  * profit[1] = 0

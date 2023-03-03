@@ -54,7 +54,7 @@ class Solution {
      * Subproblem:
      * count[i] = the least number of perfect square numbers that sum to i.
      * 
-     * Recursive relation:
+     * Recurrence relation:
      * count[i] = min{1 + count(i - j*j)} where 1 <= j*j <= i 
      * count[0] = 0
      * 
