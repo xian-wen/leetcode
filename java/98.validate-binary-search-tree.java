@@ -1,8 +1,6 @@
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import javax.swing.tree.TreeNode;
-
 /*
  * @lc app=leetcode id=98 lang=java
  *
