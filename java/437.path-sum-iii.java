@@ -66,28 +66,67 @@ import java.util.Map;
  * }
  */
 class Solution {
-    public int pathSum(TreeNode root, int targetSum) {
-        if (root == null) {
-            return 0;
-        }
+    // private int count = 0;
 
-        int pathIncludeRoot = pathSumIncludeRoot(root, targetSum);
-        int leftPathExcludeRoot = pathSum(root.left, targetSum);
-        int rightPathExcludeRoot = pathSum(root.right, targetSum);
-        return pathIncludeRoot + leftPathExcludeRoot + rightPathExcludeRoot;
+    // /**
+    //  * Solution 1: Recursion
+    //  */
+    // public int pathSum(TreeNode root, int targetSum) {
+    //     if (root == null) {
+    //         return 0;
+    //     }
+
+    //     pathSumHelper(root, targetSum);
+    //     pathSum(root.left, targetSum);
+    //     pathSum(root.right, targetSum);
+    //     return count;
+    // }
+
+    // private void pathSumHelper(TreeNode root, long targetSum) {
+    //     if (root == null) {
+    //         return;
+    //     }
+
+    //     if (root.val == targetSum) {
+    //         ++count;
+    //     }
+        
+    //     pathSumHelper(root.left, targetSum - root.val);
+    //     pathSumHelper(root.right, targetSum - root.val);
+    // }
+
+    /**
+     * Map: prefix sum -> frequency
+     * prefix sum: path from root to node
+     * path from node 1 to node 2: prefix sum 2 - prefix sum 1
+     */
+    private Map<Long, Integer> map;
+    private int count = 0;
+
+    /**
+     * Similar to two sum using HashMap to speed up.
+     * 
+     * Solution 2: Recursion + HashMap
+     */
+    public int pathSum(TreeNode root, int targetSum) {
+        map = new HashMap<>();
+        map.put(0L, 1);
+        pathSumHelper(root, targetSum, 0);
+        return count;
     }
 
-    // Path including root must be continuous.
-    private int pathSumIncludeRoot(TreeNode root, long targetSum) {
+    private void pathSumHelper(TreeNode root, int targetSum, long currentSum) {
         if (root == null) {
-            return 0;
+            return;
         }
 
-        // Once not equal, invalid.
-        int count = root.val == targetSum ? 1 : 0;
-        count += pathSumIncludeRoot(root.left, targetSum - root.val);
-        count += pathSumIncludeRoot(root.right, targetSum - root.val);
-        return count;
+        currentSum += root.val;
+        count += map.getOrDefault(currentSum - targetSum, 0);
+
+        map.put(currentSum, map.getOrDefault(currentSum, 0) + 1);
+        pathSumHelper(root.left, targetSum, currentSum);
+        pathSumHelper(root.right, targetSum, currentSum);
+        map.put(currentSum, map.get(currentSum) - 1);
     }
 }
 // @lc code=end
