@@ -54,92 +54,120 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
-// Iterative:
-// class Solution {
-//     public boolean isPalindrome(ListNode head) {
-//         if (head == null || head.next == null) {
-//             return true;
-//         }
-
-//         // Find middle.
-//         ListNode slow = head, fast = head;
-//         while (fast != null && fast.next != null) {
-//             slow = slow.next;
-//             fast = fast.next.next;
-//         }
-
-//         // Reverse the right part.
-//         ListNode reversedRight = null, next = null;
-//         while (slow != null) {
-//             next = slow.next;
-//             slow.next = reversedRight;
-//             reversedRight = slow;
-//             slow = next;
-//         }
-
-//         // Check palindrome, i.e. check in the length of the right part
-//         // whether the left part is equal to the reversed right part.
-//         while (reversedRight != null) {
-//             if (head.val != reversedRight.val) {
-//                 return false;
-//             }
-
-//             head = head.next;
-//             reversedRight = reversedRight.next;
-//         }
-//         return true;
-//     }
-// }
-
-// Recursive:
 class Solution {
+    // /**
+    //  * Solution 1: StringBuilder
+    //  */
+    // public boolean isPalindrome(ListNode head) {
+    //     if (head == null || head.next == null) {
+    //         return true;
+    //     }
+
+    //     StringBuilder sb = new StringBuilder();
+    //     while (head != null) {
+    //         sb.append(head.val);
+    //         head = head.next;
+    //     }
+    //     return isPalindrome(sb.toString());
+    // }
+
+    // private boolean isPalindrome(String s) {
+    //     int i = 0, j = s.length() - 1;
+    //     while (i < j) {
+    //         if (s.charAt(i) != s.charAt(j)) {
+    //             return false;
+    //         }
+    //         ++i;
+    //         --j;
+    //     }
+    //     return true;
+    // }
+
+    // /**
+    //  * Solution 2: Iteration
+    //  */
+    // public boolean isPalindrome(ListNode head) {
+    //     if (head == null || head.next == null) {
+    //         return true;
+    //     }
+
+    //     // Find middle.
+    //     ListNode slow = head, fast = head;
+    //     while (fast != null && fast.next != null) {
+    //         slow = slow.next;
+    //         fast = fast.next.next;
+    //     }
+
+    //     // Reverse the right part.
+    //     ListNode reversedRight = null, next = null;
+    //     while (slow != null) {
+    //         next = slow.next;
+    //         slow.next = reversedRight;
+    //         reversedRight = slow;
+    //         slow = next;
+    //     }
+
+    //     // Check palindrome, i.e. check in the length of the right part
+    //     // whether the left part is equal to the reversed right part.
+    //     while (reversedRight != null) {
+    //         if (head.val != reversedRight.val) {
+    //             return false;
+    //         }
+
+    //         head = head.next;
+    //         reversedRight = reversedRight.next;
+    //     }
+    //     return true;
+    // }
+
+    /**
+     * Solution 3: Recursion
+     */
     public boolean isPalindrome(ListNode head) {
         if (head == null || head.next == null) {
             return true;
         }
-
+    
         ListNode middle = findMiddle(head, head);
         middle = reverse(middle);
         return isPalindrome(head, middle);
     }
-
+    
     private void print(ListNode head) {
         if (head == null) {
             return;            
         }
-
+    
         System.out.print(head.val + " ");
         print(head.next);
     }
-
+    
     private ListNode findMiddle(ListNode slow, ListNode fast) {
         if (fast == null || fast.next == null) {
             return slow;
         }
-        
         return findMiddle(slow.next, fast.next.next);
     }
-
+    
     private ListNode reverse(ListNode head) {
         if (head == null || head.next == null) {
             return head;
         }
-
+    
         ListNode reversed = reverse(head.next);
         head.next.next = head;
         head.next = null;
         return reversed;
     }
-
+    
     private boolean isPalindrome(ListNode head1, ListNode head2) {
         if (head1 == null || head2 == null) {
             return true;
         }
-
+    
         if (head1.val != head2.val) {
             return false;
         }
-
         return isPalindrome(head1.next, head2.next);
     }
 }
