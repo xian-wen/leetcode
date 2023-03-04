@@ -72,77 +72,82 @@ import java.util.Map;
 
 // @lc code=start
 class LRUCache {
-    private Map<Integer, DLNode> cache;
-    private DLNode head;
-    private int count;
+    private Map<Integer, DLLNode> map;
+    private DLLNode head;
     private int capacity;
 
-    private class DLNode {
-        int key, value;
-        DLNode prev, next;
+    private class DLLNode {
+        private int key, value;
+        private DLLNode prev, next;
+
+        public DLLNode() {
+        }
+
+        public DLLNode(int key, int value) {
+            this.key = key;
+            this.value = value;
+        }
     }
 
-    private void addFirst(DLNode node) {
-        node.prev = head;
+    private void addFirst(DLLNode node) {
         node.next = head.next;
+        node.prev = head;
         head.next.prev = node;
         head.next = node;
-        ++count;
     }
 
-    private void remove(DLNode node) {
-        DLNode prev = node.prev;
-        DLNode next = node.next;
+    private void remove(DLLNode node) {
+        DLLNode prev = node.prev;
+        DLLNode next = node.next;
         prev.next = next;
         next.prev = prev;
-        --count;
     }
 
-    private DLNode removeLast() {
-        DLNode last = head.prev;
+    private DLLNode removeLast() {
+        DLLNode last = head.prev;
         remove(last);
         return last;
     }
 
+    private void moveFirst(DLLNode node) {
+        remove(node);
+        addFirst(node);
+    }
+
     public LRUCache(int capacity) {
-        head = new DLNode();
+        this.capacity = capacity;
+        map = new HashMap<>();
+        head = new DLLNode();
         head.next = head;
         head.prev = head;
-
-        cache = new HashMap<>();
-        this.capacity = capacity;
     }
     
     public int get(int key) {
-        if (!cache.containsKey(key)) {
+        if (!map.containsKey(key)) {
             return -1;
         }
 
-        DLNode node = cache.get(key);
-        remove(node);
-        addFirst(node);
+        DLLNode node = map.get(key);
+        moveFirst(node);
         return node.value;
     }
     
     public void put(int key, int value) {
-        if (cache.containsKey(key)) {
-            DLNode node = cache.get(key);
+        if (map.containsKey(key)) {
+            DLLNode node = map.get(key);
             node.value = value;
-            remove(node);
-            addFirst(node);
+            moveFirst(node);
             return;
         }
 
-        if (count == capacity) {
-            DLNode last = removeLast();
-            cache.remove(last.key);
+        if (map.size() == capacity) {
+            DLLNode last = removeLast();
+            map.remove(last.key);
         }
 
-        DLNode node = new DLNode();
-        node.key = key;
-        node.value = value;
-        cache.put(key, node);
+        DLLNode node = new DLLNode(key, value);
         addFirst(node);
+        map.put(key, node);
     }
 }
 
