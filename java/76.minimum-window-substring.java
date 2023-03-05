@@ -1,6 +1,3 @@
-import java.util.HashMap;
-import java.util.Map;
-
 /*
  * @lc app=leetcode id=76 lang=java
  *
@@ -69,58 +66,63 @@ import java.util.Map;
 // @lc code=start
 class Solution {
     public String minWindow(String s, String t) {
-        if (s == null || t == null || s.isEmpty() || t.isEmpty()) {
+        int sLen = s.length(), tLen = t.length();
+        if (sLen < tLen) {
             return "";
         }
 
-        // Count the frequency of each character in t.
-        Map<Character, Integer> tCount = new HashMap<>();
-        for (int i = 0; i < t.length(); ++i) {
-            char c = t.charAt(i);
-            tCount.put(c, tCount.getOrDefault(c, 0) + 1);
+        int[] map = new int[128];
+        // All other chars by default are 0 need.
+        for (int i = 0; i < tLen; ++i) {
+            ++map[t.charAt(i)];
         }
-        
-        // Number of unique characters.
-        int have = 0, need = tCount.size();
-        Map<Character, Integer> sCount = new HashMap<>();
-        int minL = 0, minR = 0, minLen = Integer.MAX_VALUE;
-        for (int l = 0, r = 0; r < s.length(); ++r) {
-            char rChar = s.charAt(r);
-            if (tCount.containsKey(rChar)) {
-                sCount.put(rChar, sCount.getOrDefault(rChar, 0) + 1);
 
-                // Only increase have if the frequency is the same.
-                if (sCount.get(rChar).intValue() == tCount.get(rChar).intValue()) {
-                    ++have;
-                }
-
-                // If sCount have all of items in tCount, shrink the window.
-                while (l <= r && have == need) {
-                    char lChar = s.charAt(l);
-                    
-                    // Record current minimum window.
-                    int size = r - l + 1;
-                    if (size < minLen) {
-                        minLen = size;
-                        minL = l;
-                        minR = r;
-                    }
-
-                    if (sCount.containsKey(lChar)) {
-                        sCount.put(lChar, sCount.get(lChar) - 1);
-
-                        // Only decrease have if the frequency in sCount is less than tCount. 
-                        if (sCount.get(lChar).intValue() < tCount.get(lChar).intValue()) {
-                            --have;
-                        }
-                    }
-
-                    ++l;
-                }
+        // # chars we need.
+        int count = tLen;
+        // Update to get a valid window.
+        int right = 0;
+        // Update to shrink a window.
+        int left = 0;
+        // Start index of the min window.
+        int start = -1;
+        // The length of the min window, at most sLen.
+        int minLen = sLen + 1;
+        while (right < sLen) {
+            // If right is what we need.
+            if (map[s.charAt(right)] > 0) {
+                // After include right, we will need one less share of right.
+                --count;
             }
-        }
 
-        return minLen == Integer.MAX_VALUE ? "" : s.substring(minL, minR + 1);
+            // Decrease what we need, causing # chars not in t < 0, 
+            // # chars in t >= 0.
+            --map[s.charAt(right)];
+
+            // Once a valid window is found, try to shrink it.
+            // Valid window: we have found all chars exist in t and have nothing 
+            // needed, i.e., count = 0, # chars in map will be <= 0.
+            while (count == 0) {
+                int len = right - left + 1;
+                if (len < minLen) {
+                    minLen = len;
+                    start = left;
+                }
+
+                // If left is what we need (what we do not need will be < 0).
+                if (map[s.charAt(left)] == 0) {
+                    // After shrink, we will need one more share of left.
+                    ++count;
+                }
+
+                // Increase what we need.
+                ++map[s.charAt(left)];
+
+                ++left;
+            }
+
+            ++right;
+        }
+        return start == -1 ? "" : s.substring(start, start + minLen);  
     }
 }
 // @lc code=end
