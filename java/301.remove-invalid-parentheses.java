@@ -61,14 +61,13 @@ import java.util.Set;
 class Solution {
     public List<String> removeInvalidParentheses(String s) {
         // Set to remove duplicates.
-        Set<String> set = new HashSet<>();
+        List<String> res = new ArrayList<>();
         char[] par = new char[] {'(', ')'};
-        remove(s, par, 0, 0, set);
-        return new ArrayList<>(set);
+        remove(s, par, 0, 0, res);
+        return new ArrayList<>(res);
     }
 
-    private void remove(String s, char[] par, int left, int right, 
-                        Set<String> res) {
+    private void remove(String s, char[] par, int left, int right, List<String> res) {
         // If # par[1] > # par[0], then count < 0, need to remove.
         int count = 0;
         while (right < s.length()) {
@@ -91,6 +90,13 @@ class Solution {
             // them corresponding to a valid result.
             while (left <= right) {
                 if (s.charAt(left) == par[1]) {
+                    // For cases like "())()", only remove the invalid itself,
+                    // i.e., the second ')', to remove duplicates of "()()".
+                    if (left > 0 && s.charAt(left - 1) == par[1]) {
+                        ++left;
+                        continue;
+                    }
+
                     String removed = s.substring(0, left) + s.substring(left + 1);
                     // This will remove all invalid parentheses in `removed` and 
                     // store all the valid result in `res`.
