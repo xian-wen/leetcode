@@ -85,7 +85,7 @@ class Solution {
     //             repeat += String.valueOf(c);
     //         } else if (c == '[') {
     //             stack.push(repeat);
-    //             stack.push(s.substring(i, i + 1));
+    //             stack.push(String.valueOf(c));
     //             repeat = "";
     //         } else if (c == ']') {
     //             while (!"[".equals(stack.peek())) {
@@ -100,7 +100,7 @@ class Solution {
     //             cur = "";
     //             repeat = "";
     //         } else {  // [a-z]
-    //             cur += s.substring(i, i + 1);
+    //             cur += String.valueOf(c);
     //         }
     //     }
 
