@@ -44,17 +44,16 @@ import java.util.List;
 // @lc code=start
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
         boolean[] visited = new boolean[nums.length];
-        List<Integer> temp = new ArrayList<>();
-        List<List<Integer>> permutations = new ArrayList<>();
-        backtrack(nums, visited, temp, permutations);
-        return permutations;
+        backtrack(nums, visited, new ArrayList<>(), res);
+        return res;
     }
 
-    private void backtrack(int[] nums, boolean[] visited, 
-                List<Integer> temp, List<List<Integer>> permutations) {
+    private void backtrack(int[] nums, boolean[] visited, List<Integer> temp, 
+                           List<List<Integer>> res) {
         if (temp.size() == nums.length) {
-            permutations.add(new ArrayList<>(temp));
+            res.add(new ArrayList<>(temp));
             return;
         }
         
@@ -62,7 +61,7 @@ class Solution {
             if (!visited[i]) {  // bound function
                 visited[i] = true;
                 temp.add(nums[i]);
-                backtrack(nums, visited, temp, permutations);
+                backtrack(nums, visited, temp, res);
                 visited[i] = false;
                 temp.remove(temp.size() - 1);
             }
