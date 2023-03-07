@@ -1,7 +1,5 @@
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /*
  * @lc app=leetcode id=301 lang=java
@@ -67,7 +65,8 @@ class Solution {
         return new ArrayList<>(res);
     }
 
-    private void remove(String s, char[] par, int left, int right, List<String> res) {
+    private void remove(String s, char[] par, int left, int right, 
+                        List<String> res) {
         // If # par[1] > # par[0], then count < 0, need to remove.
         int count = 0;
         while (right < s.length()) {
@@ -89,20 +88,18 @@ class Solution {
             // There might be multiple different left could be removed, each of
             // them corresponding to a valid result.
             while (left <= right) {
-                if (s.charAt(left) == par[1]) {
-                    // For cases like "())()", only remove the invalid itself,
-                    // i.e., the second ')', to remove duplicates of "()()".
-                    if (left > 0 && s.charAt(left - 1) == par[1]) {
-                        ++left;
-                        continue;
-                    }
-
-                    String removed = s.substring(0, left) + s.substring(left + 1);
-                    // This will remove all invalid parentheses in `removed` and 
-                    // store all the valid result in `res`.
-                    remove(removed, par, left, right, res);
+                // For cases like "())()", only remove the invalid itself,
+                // i.e., the second ')', to avoid duplicates of "()()".
+                if (s.charAt(left) != par[1] 
+                        || left > 0 && s.charAt(left - 1) == par[1]) {
+                    ++left;
+                    continue;
                 }
 
+                String removed = s.substring(0, left) + s.substring(left + 1);
+                // This will remove all invalid parentheses in `removed` and 
+                // store all the valid results in `res`.
+                remove(removed, par, left, right, res);
                 ++left;
             }
 
