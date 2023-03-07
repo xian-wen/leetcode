@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -43,6 +44,88 @@ import java.util.List;
 
 // @lc code=start
 class Solution {
+    // /**
+    //  * Solution 1: Iteration
+    //  */
+    // public List<List<Integer>> permute(int[] nums) {
+    //     List<List<Integer>> res = new ArrayList<>();
+    //     res.add(new ArrayList<>());
+    //     for (int i = 0; i < nums.length; ++i) {
+    //         // To avoid ConcurrentModificationException.
+    //         List<List<Integer>> temp = new ArrayList<>();
+    //         for (List<Integer> perm : res) {
+    //             for (int j = 0; j <= perm.size(); ++j) {
+    //                 List<Integer> list = new ArrayList<>(perm);
+    //                 list.add(j, nums[i]);
+    //                 temp.add(list);
+    //             }
+    //         }
+
+    //         res = temp;
+    //     }
+    //     return res;
+    // }
+
+    // /**
+    //  * Solution 2: Recursion
+    //  */
+    // public List<List<Integer>> permute(int[] nums) {
+    //     List<List<Integer>> res = new ArrayList<>();
+    //     if (nums.length == 1) {
+    //         List<Integer> list = new ArrayList<>();
+    //         list.add(nums[0]);
+    //         res.add(list);
+    //         return res;
+    //     }
+
+    //     int[] next = Arrays.copyOfRange(nums, 1, nums.length);
+    //     List<List<Integer>> nextPermute = permute(next);
+    //     for (List<Integer> perm : nextPermute) {
+    //         for (int i = 0; i <= perm.size(); ++i) {
+    //             List<Integer> list = new ArrayList<>(perm);
+    //             list.add(i, nums[0]);
+    //             res.add(list);
+    //         }
+    //     }
+    //     return res;
+    // }
+
+    // /**
+    //  * Solution 3: Backtracking + swap
+    //  */
+    // public List<List<Integer>> permute(int[] nums) {
+    //     List<List<Integer>> res = new ArrayList<>();
+    //     backtrack(nums, 0, res);
+    //     return res;
+    // }
+
+    // private void backtrack(int[] nums, int index, List<List<Integer>> res) {
+    //     if (index == nums.length) {
+    //         List<Integer> list = new ArrayList<>();
+    //         for (int num : nums) {
+    //             list.add(num);
+    //         }
+
+    //         res.add(list);
+    //         return;
+    //     }
+        
+    //     for (int i = index; i < nums.length; ++i) {
+    //         swap(nums, index, i);
+    //         backtrack(nums, index + 1, res);
+    //         swap(nums, index, i);
+    //     }
+    // }
+
+    // private void swap(int[] nums, int i, int j) {
+    //     int temp = nums[i];
+    //     nums[i] = nums[j];
+    //     nums[j] = temp;
+    // }
+
+    /**
+     * Solution 4: Backtracking + visited
+     */
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
         boolean[] visited = new boolean[nums.length];
@@ -58,13 +141,15 @@ class Solution {
         }
         
         for (int i = 0; i < nums.length; ++i) {
-            if (!visited[i]) {  // bound function
-                visited[i] = true;
-                temp.add(nums[i]);
-                backtrack(nums, visited, temp, res);
-                visited[i] = false;
-                temp.remove(temp.size() - 1);
+            if (visited[i]) {  // Bounding function.
+                continue;
             }
+
+            visited[i] = true;
+            temp.add(nums[i]);
+            backtrack(nums, visited, temp, res);
+            visited[i] = false;
+            temp.remove(temp.size() - 1);
         }
     }
 }
