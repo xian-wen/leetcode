@@ -114,12 +114,14 @@ public class Knapsack {
                                                    int B) {
         int N = values.length;
         int[] knapsack = new int[B + 1];
-        for (int i = 0; i < N; ++i) {
-            int v = values[i], w = weights[i];
-            // Iterate from left to right since we need to get values from items
-            // in the current row.
-            for (int b = w; b <= B; ++b) {
-                knapsack[b] = Math.max(knapsack[b], v + knapsack[b - w]);
+        // Iterate from left to right since we need to get values from items
+        // in the current row.
+        for (int b = 1; b <= B; ++b) {
+            for (int i = 0; i < N; ++i) {
+                int v = values[i], w = weights[i];
+                if (w <= b) {
+                    knapsack[b] = Math.max(knapsack[b], v + knapsack[b - w]);
+                }
             }
         }
 
