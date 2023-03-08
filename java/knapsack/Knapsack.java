@@ -133,14 +133,14 @@ public class Knapsack {
         int[] values = new int[] {12, 10, 8, 5};
         int[] weights = new int[] {15, 12, 10, 5};
         int B = 22;
-        Knapsack knapsack = new Knapsack();
+        Knapsack k = new Knapsack();
         System.out.println("KnapsackNoRepetition: " 
-                + knapsack.knapsackNoRepetition(values, weights, B));
+                + k.knapsackNoRepetition(values, weights, B));
         System.out.println("knapsackNoRepetitionSpaceOptimization: " 
-                + knapsack.knapsackNoRepetitionSpaceOptimization(values, weights, B));
+                + k.knapsackNoRepetitionSpaceOptimization(values, weights, B));
         System.out.println("KnapsackRepetition: " 
-                + knapsack.knapsackRepetition(values, weights, B));
+                + k.knapsackRepetition(values, weights, B));
         System.out.println("knapsackRepetitionSpaceOptimization: " 
-                + knapsack.knapsackRepetitionSpaceOptimization(values, weights, B));
+                + k.knapsackRepetitionSpaceOptimization(values, weights, B));
     }
 }
