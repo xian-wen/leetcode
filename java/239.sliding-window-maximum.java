@@ -60,58 +60,90 @@ import java.util.Deque;
 
 // @lc code=start
 class Solution {
+    // /**
+    //  * MonotonicQueue stores numbers in descending order, i.e., the leftmost is
+    //  * always the maximum.
+    //  */
+    // private class MonotonicQueue {
+    //     private int[] nums;
+    //     private Deque<Integer> queue;
+
+    //     public MonotonicQueue(int[] nums) {
+    //         this.nums = nums;
+    //         queue = new ArrayDeque<>();
+    //     }
+
+    //     public void offer(int index) {
+    //         while (!queue.isEmpty() && nums[queue.peekLast()] < nums[index]) {
+    //             queue.pollLast();
+    //         }
+
+    //         queue.offerLast(index);
+    //     }
+
+    //     public void poll(int index) {
+    //         if (queue.peekFirst() == index) {
+    //             queue.pollFirst();
+    //         }
+    //     }
+
+    //     public int peek() {
+    //         return queue.peekFirst();
+    //     }
+
+    //     @Override
+    //     public String toString() {
+    //         return queue.toString();
+    //     }
+    // }
+    
+    // /**
+    //  * Solution 1: Monotonic Queue
+    //  */
+    // public int[] maxSlidingWindow(int[] nums, int k) {
+    //     int N = nums.length;
+    //     int[] res = new int[N - k + 1];
+    //     MonotonicQueue win = new MonotonicQueue(nums);
+    //     for (int i = 0; i < N; ++i) {
+    //         // Add current into sliding window.
+    //         win.offer(i);
+    //         // A valid sliding window needs to be constructed first.
+    //         if (i < k - 1) {
+    //             continue;
+    //         }
+
+    //         // Store the max, the left in the current window, into res.
+    //         res[i - k + 1] = nums[win.peek()];
+    //         // Remove the left from the current window.
+    //         win.poll(i - k + 1);
+    //     }
+    //     return res;
+    // }
+
     /**
-     * MonotonicQueue stores numbers in descending order, i.e., the leftmost is
-     * always the maximum.
+     * Solution 2: Dynamic Programming
      */
-    private class MonotonicQueue {
-        private Deque<Integer> dq;
-
-        public MonotonicQueue() {
-            dq = new ArrayDeque<>();
-        }
-
-        public void offer(int x) {
-            while (!dq.isEmpty() && dq.peekLast() < x) {
-                dq.pollLast();
-            }
-
-            dq.offerLast(x);
-        }
-
-        public void poll(int x) {
-            if (dq.peekFirst() == x) {
-                dq.pollFirst();
-            }
-        }
-
-        public int peek() {
-            return dq.peekFirst();
-        }
-
-        @Override
-        public String toString() {
-            return dq.toString();
-        }
-    }
-
     public int[] maxSlidingWindow(int[] nums, int k) {
         int N = nums.length;
-        int[] res = new int[N - k + 1];
-        MonotonicQueue win = new MonotonicQueue();
-        for (int i = 0; i < N; ++i) {
-            // Add current into sliding window.
-            win.offer(nums[i]);
-            
-            // A valid sliding window needs to be constructed first. 
-            if (i < k - 1) {
-                continue;
+        int[] left = new int[N], right = new int[N];
+        for (int start = 0; start < N; start += k) {
+            int end = Math.min(start + k - 1, N - 1);
+            // Left -> right.
+            left[start] = nums[start];
+            for (int i = start + 1; i <= end; ++i) {
+                left[i] = Math.max(left[i - 1], nums[i]);
             }
             
-            // Store the max, the left in the current window, into res.
-            res[i - k + 1] = win.peek();
-            // Remove the left in the current window.
-            win.poll(nums[i - k + 1]);
+            // Right -> left.
+            right[end] = nums[end];
+            for (int i = end - 1; i >= start; --i) {
+                right[i] = Math.max(right[i + 1], nums[i]);
+            }
+        }
+        
+        int[] res = new int[N - k + 1];
+        for (int i = 0, j = i + k - 1; j < N; ++i, ++j) {
+            res[i] = Math.max(right[i], left[j]);
         }
         return res;
     }
