@@ -68,41 +68,33 @@ import java.util.Map;
 // @lc code=start
 class Solution {
     public boolean exist(char[][] board, String word) {
-        M = board.length;
-        N = board[0].length;
-
-        Map<Character, Integer> boardMap = new HashMap<>();
+        int rows = board.length, cols = board[0].length;
+        int[] boardMap = new int[128];
         for (char[] row : board) {
-            for (char col : row) {
-                boardMap.put(col, boardMap.getOrDefault(col, 0) + 1);
+            for (char c : row) {
+                ++boardMap[c];
             }
         }
 
-        Map<Character, Integer> wordMap = new HashMap<>();
-        for (int i = 0; i < word.length(); ++i) {
-            char c = word.charAt(i);
-            wordMap.put(c, wordMap.getOrDefault(c, 0) + 1);
-        }
-
-        // The number of a specific character in word is more 
-        // than that in board, return false. 
-        for (char c : wordMap.keySet()) {
-            if (!boardMap.containsKey(c) || boardMap.get(c) < wordMap.get(c)) {
+        int[] wordMap = new int[128];
+        char[] wordArr = word.toCharArray();
+        for (char c : wordArr) {
+            ++wordMap[c];
+            if (wordMap[c] > boardMap[c]) {
                 return false;
             }
         }
-
-        // Making less valid options in the root of the recursion tree.
-        char first = word.charAt(0);
-        char last = word.charAt(word.length() - 1);
-        if (boardMap.get(first) > boardMap.get(last)) {
-            StringBuilder sb = new StringBuilder(word);
-            word = sb.reverse().toString();
+        
+        // Make the less frequent found first.
+        char first = word.charAt(0), last = word.charAt(word.length() - 1);
+        if (boardMap[first] > boardMap[last]) {
+            word = new StringBuilder(word).reverse().toString();
         }
 
-        for (int r = 0; r < M; ++r) {
-            for (int c = 0; c < N; ++c) {
-                if (backtrack(board, r, c, word, 0)) {
+        boolean[][] visited = new boolean[rows][cols];
+        for (int row = 0; row < rows; ++row) {
+            for (int col = 0; col < cols; ++col) {
+                if (backtrack(board, visited, row, col, word, 0)) {
                     return true;
                 }
             }
@@ -110,43 +102,31 @@ class Solution {
         return false;
     }
 
-    private boolean backtrack(char[][] board, int row, int col, 
-            String word, int index) {
-        if (board[row][col] != word.charAt(index)) {
-            return false;
-        }
-
-        if (index == word.length() - 1) {
+    private boolean backtrack(char[][] board, boolean[][] visited, int row, 
+                              int col, String word, int index) {
+        if (index == word.length()) {
             return true;
         }
 
-        board[row][col] = '#';
-        for (int d = 0; d < DIRECTION.length; ++d) {
-            int r = row + DIRECTION[d][0];
-            int c = col + DIRECTION[d][1];
-            if (validate(r, c)) {
-                if (backtrack(board, r, c, word, index + 1)) {
-                    return true;
-                }
-            }
+        if (!isValid(board, row, col) || visited[row][col] 
+                || board[row][col] != word.charAt(index)) {
+            return false;
         }
 
-        board[row][col] = word.charAt(index);
-        return false;
+        visited[row][col] = true;
+        boolean res = false;
+        res = res || backtrack(board, visited, row + 1, col, word, index + 1);
+        res = res || backtrack(board, visited, row - 1, col, word, index + 1);
+        res = res || backtrack(board, visited, row, col + 1, word, index + 1);
+        res = res || backtrack(board, visited, row, col - 1, word, index + 1);
+        visited[row][col] = false;
+        return res;
     }
 
-    private boolean validate(int row, int col) {
-        return row >= 0 && row < M && col >= 0 && col < N;
+    private boolean isValid(char[][] board, int row, int col) {
+        int rows = board.length, cols = board[0].length;
+        return row >= 0 && row < rows && col >= 0 && col < cols;
     }
-
-    private static final int[][] DIRECTION = {
-        {-1, 0},  // North
-        {0, 1},   // East
-        {1, 0},   // South
-        {0, -1},  // West
-    };
-    private int M;  // # rows
-    private int N;  // # cols
 }
 // @lc code=end
 
