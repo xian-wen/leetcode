@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -76,21 +77,51 @@ class Solution {
     //     return maxLen;
     // }
 
+    // /**
+    //  * Solution 2: HashSet
+    //  */
+    // public int lengthOfLongestSubstring(String s) {
+    //     int N = s.length(), right = 0, left = 0, maxLen = 0;
+    //     Set<Character> win = new HashSet<>();
+    //     while (left < N) {
+    //         if (!win.contains(s.charAt(left))) {
+    //             win.add(s.charAt(left++));
+    //             maxLen = Math.max(maxLen, win.size());
+    //         } else {
+    //             win.remove(s.charAt(right++));
+    //         }
+    //     }
+    //     return maxLen;
+    // }
+
     /**
-     * Solution 2: HashSet
+     * Solution 3: Sliding Window
      */
     public int lengthOfLongestSubstring(String s) {
-        int N = s.length(), right = 0, left = 0, maxLen = 0;
-        Set<Character> win = new HashSet<>();
-        while (left < N) {
-            if (!win.contains(s.charAt(left))) {
-                win.add(s.charAt(left++));
-                maxLen = Math.max(maxLen, win.size());
-            } else {
-                win.remove(s.charAt(right++));
+        int[] map = new int[128];
+        // count: # duplicates, where duplicate means map[c] > 1
+        int count = 0, max = 0, left = 0, right = 0;
+        while (right < s.length()) {
+            char c = s.charAt(right);
+            ++map[c];
+            if (map[c] > 1) {
+                ++count;
             }
+            
+            while (count > 0) {
+                c = s.charAt(left);
+                --map[c];
+                if (map[c] == 1) {
+                    --count;
+                }
+                
+                ++left;
+            }
+            
+            max = Math.max(max, right - left + 1);
+            ++right;
         }
-        return maxLen;
+        return max;
     }
 }
 // @lc code=end
