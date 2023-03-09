@@ -100,7 +100,7 @@ class Solution {
     public int lengthOfLongestSubstring(String s) {
         int[] map = new int[128];
         // count: # duplicates, where duplicate means map[c] > 1
-        int count = 0, max = 0, left = 0, right = 0;
+        int count = 0, maxLen = 0, left = 0, right = 0;
         while (right < s.length()) {
             char c = s.charAt(right);
             ++map[c];
@@ -118,10 +118,10 @@ class Solution {
                 ++left;
             }
             
-            max = Math.max(max, right - left + 1);
+            maxLen = Math.max(maxLen, right - left + 1);
             ++right;
         }
-        return max;
+        return maxLen;
     }
 }
 // @lc code=end
