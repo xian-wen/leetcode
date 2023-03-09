@@ -133,9 +133,32 @@ public class Sort {
     }
 
     /**
-     * Partition arr so that arr[lo..(j-1)] <= arr[j] <= arr[(j+1)..hi].
+     * Partition arr so that arr[lo..(pivot-1)] <= arr[pivot] <= arr[(pivot+1), hi].
      */
     private int partition(int[] arr, int lo, int hi) {
+        Random r = new Random();
+        int ri = r.nextInt(hi - lo + 1) + lo;
+        swap(arr, ri, hi);
+        
+        int sentinel = arr[hi], pivot = lo;
+        for (int i = lo; i < hi; ++i) {
+            if (arr[i] < sentinel) {
+                swap(arr, pivot++, i);
+            }
+        }
+        
+        swap(arr, pivot, hi);
+        return pivot;
+    }
+    
+    /**
+     * Partition arr so that arr[lo..(j-1)] <= arr[j] <= arr[(j+1)..hi].
+     */
+    private int partition2(int[] arr, int lo, int hi) {
+        Random r = new Random();
+        int ri = r.nextInt(hi - lo + 1) + lo;
+        swap(arr, lo, ri);
+
         int sentinel = arr[lo];
         int i = lo, j = hi + 1;
         while (true) {
