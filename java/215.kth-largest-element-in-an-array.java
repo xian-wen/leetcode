@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Random;
 
 /*
  * @lc app=leetcode id=215 lang=java
@@ -41,41 +42,115 @@ import java.util.Arrays;
 
 // @lc code=start
 class Solution {
+    // /**
+    //  * Solution 1: Sort
+    //  */
+    // public int findKthLargest(int[] nums, int k) {
+    //     Arrays.sort(nums);
+    //     return nums[nums.length - k];
+    // }
+
+
+    // private static final int MAX_VALUE = 10000;
+
+    // /**
+    //  * Solution 2: Count
+    //  */
+    // public int findKthLargest(int[] nums, int k) {
+    //     int[] count = new int[MAX_VALUE * 2 + 1];
+    //     for (int i = 0; i < nums.length; ++i) {
+    //         ++count[nums[i] + MAX_VALUE];
+    //     }
+
+    //     int i = count.length - 1;
+    //     while (i >= 0 && k > count[i]) {
+    //         k -= count[i--];
+    //     }
+    //     return i - MAX_VALUE;
+    // }
+
+    /**
+     * Solution 3: Quick select
+     */
     public int findKthLargest(int[] nums, int k) {
-        // Solution 1:
-        // Arrays.sort(nums);
-        // return nums[nums.length - k];
-
-        // Solution 2:
-        return findKthLargest(nums, 0, nums.length - 1, k);
+        // The index of the Kth largest num is N - k.
+        int N = nums.length;
+        return quickSelect(nums, N - k, 0, N - 1);
     }
 
-    private int findKthLargest(int[] nums, int low, int high, int k) {
-        int mid = partition(nums, low, high);
-        int target = nums.length - k;  // Index of the kth largest element.
-        if (mid == target) {
-            return nums[mid];
-        } else if (mid > target) {
-            return findKthLargest(nums, low, mid - 1, k);
-        } else {
-            return findKthLargest(nums, mid + 1, high, k);
+    private int quickSelect(int[] nums, int target, int lo, int hi) {
+        if (lo >= hi) {
+            return nums[lo];
         }
+
+        int pivot = partition(nums, lo, hi);
+        if (target < pivot) {
+            return quickSelect(nums, target, lo, pivot - 1);
+        }
+        
+        if (target > pivot) {
+            return quickSelect(nums, target, pivot + 1, hi);
+        }
+        return nums[pivot];
     }
 
-    private int partition(int[] nums, int low, int high) {
-        int pivot = nums[low];
-        while (low < high) {
-            while (low < high && nums[high] >= pivot) {
-                --high;
+    /**
+     * nums[lo..(pivot-1)] <= nums[pivot] <= nums[(pivot+1), hi]
+     */
+    private int partition(int[] nums, int lo, int hi) {
+        Random r = new Random();
+        int index = r.nextInt(hi - lo + 1) + lo;
+        swap(nums, lo, index);
+
+        int sentinel = nums[hi], pivot = lo;
+        for (int i = lo; i < hi; ++i) {
+            if (nums[i] < sentinel) {
+                swap(nums, pivot++, i);
             }
-            nums[low] = nums[high];
-            while (low < high && nums[low] <= pivot) {
-                ++low;
-            }
-            nums[high] = nums[low];
         }
-        nums[low] = pivot;
-        return low;
+
+        swap(nums, pivot, hi);
+        return pivot;
+    }
+
+    // /**
+    //  * nums[lo..(j-1)] <= nums[j] <= nums[(j+1), hi]
+    //  */
+    // private int partition(int[] nums, int lo, int hi) {
+    //     Random r = new Random();
+    //     int index = r.nextInt(hi - lo + 1) + lo;
+    //     swap(nums, lo, index);
+
+    //     int sentinel = nums[lo];
+    //     int i = lo, j = hi + 1;
+    //     while (true) {
+    //         while (nums[++i] <= sentinel) {
+    //             if (i == hi) {
+    //                 break;
+    //             }
+    //         }
+            
+    //         while (nums[--j] >= sentinel) {
+    //             if (j == lo) {
+    //                 break;
+    //             }
+    //         }
+            
+    //         if (i >= j) {
+    //             break;
+    //         }
+            
+    //         swap(nums, i, j);
+    //     }
+        
+    //     swap(nums, lo, j);
+    //     return j;
+    // }
+
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
     }
 }
 // @lc code=end
