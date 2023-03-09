@@ -68,17 +68,15 @@ import java.util.Map;
 // @lc code=start
 class Solution {
     public boolean exist(char[][] board, String word) {
-        int rows = board.length, cols = board[0].length;
         int[] boardMap = new int[128];
         for (char[] row : board) {
             for (char c : row) {
                 ++boardMap[c];
             }
         }
-
+        
         int[] wordMap = new int[128];
-        char[] wordArr = word.toCharArray();
-        for (char c : wordArr) {
+        for (char c : word.toCharArray()) {
             ++wordMap[c];
             if (wordMap[c] > boardMap[c]) {
                 return false;
@@ -90,7 +88,8 @@ class Solution {
         if (boardMap[first] > boardMap[last]) {
             word = new StringBuilder(word).reverse().toString();
         }
-
+        
+        int rows = board.length, cols = board[0].length;
         boolean[][] visited = new boolean[rows][cols];
         for (int row = 0; row < rows; ++row) {
             for (int col = 0; col < cols; ++col) {
