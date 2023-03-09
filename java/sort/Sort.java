@@ -323,7 +323,7 @@ public class Sort {
         s.quickSort3Way(arr);
         isSorted = isSorted(arr);
         end = System.currentTimeMillis();
-        System.out.printf("Quick sort 3 way: %s, sorted: %b, time: %d ms\n\n", 
+        System.out.printf("Quick sort 3-way: %s, sorted: %b, time: %d ms\n\n", 
                 Arrays.toString(arr), isSorted, end - start);
         
         arr = aux.clone();
