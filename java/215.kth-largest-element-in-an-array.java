@@ -58,8 +58,8 @@ class Solution {
     //  */
     // public int findKthLargest(int[] nums, int k) {
     //     int[] count = new int[MAX_VALUE * 2 + 1];
-    //     for (int i = 0; i < nums.length; ++i) {
-    //         ++count[nums[i] + MAX_VALUE];
+    //     for (int num : nums) {
+    //         ++count[num + MAX_VALUE];
     //     }
 
     //     int i = count.length - 1;
