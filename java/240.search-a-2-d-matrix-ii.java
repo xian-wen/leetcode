@@ -58,34 +58,51 @@
 
 // @lc code=start
 class Solution {
-    private int[][] matrix;
-    private int M, N;
-    private int target;
+    // /**
+    //  * Solution 1: Recursion.
+    //  */
+    // public boolean searchMatrix(int[][] matrix, int target) {
+    //     return searchMatrix(matrix, target, 0, matrix[0].length - 1);
+    // }
 
-    public boolean searchMatrix(int[][] matrix, int target) {
-        this.matrix = matrix;
-        this.target = target;
-        M = matrix.length;
-        N = matrix[0].length;
-        return search(0, N - 1);
-    }
+    // private boolean searchMatrix(int[][] matrix, int target, int row, int col) {
+    //     if (!isValid(matrix, row, col)) {
+    //         return false;
+    //     }
+
+    //     if (target == matrix[row][col]) {
+    //         return true;
+    //     }
+
+    //     if (target > matrix[row][col]) {
+    //         return searchMatrix(matrix, target, row + 1, col);
+    //     }
+    //     return searchMatrix(matrix, target, row, col - 1);
+    // }
+
+    // private boolean isValid(int[][] matrix, int row, int col) {
+    //     int M = matrix.length, N = matrix[0].length;
+    //     return row >= 0 && row < M && col >= 0 && col < N;
+    // }
 
     /**
-     * Search from the top right corner.
+     * Solution 2: Iteration.
      */
-    private boolean search(int row, int col) {
-        if (row >= M || col < 0) {
-            return false;
-        }
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int M = matrix.length, N = matrix[0].length;
+        int row = 0, col = N - 1;
+        while (row < M && col >= 0) {
+            if (target == matrix[row][col]) {
+                return true;
+            }
 
-        if (target == matrix[row][col]) {
-            return true;
+            if (target > matrix[row][col]) {
+                ++row;
+            } else {
+                --col;
+            }
         }
-
-        if (target < matrix[row][col]) {
-            return search(row, col - 1);
-        }
-        return search(row + 1, col);
+        return false;
     }
 }
 // @lc code=end
