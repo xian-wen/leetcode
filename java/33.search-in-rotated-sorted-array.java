@@ -53,35 +53,68 @@
 
 // @lc code=start
 class Solution {
+    // /**
+    //  * Solution 1: Iteration
+    //  */
+    // public int search(int[] nums, int target) {
+    //     int l = 0, r = nums.length - 1;
+    //     while (l <= r) {
+    //         int mid = l + ((r - l) >> 1);
+    //         if (nums[mid] == target) {
+    //             return mid;
+    //         } else if (nums[mid] > nums[l]) {
+    //             // [l, mid] is in order.
+    //             if (target >= nums[l] && target < nums[mid]) {
+    //                 r = mid - 1;
+    //             } else {
+    //                 l = mid + 1;
+    //             }
+    //         } else if (nums[mid] < nums[r]) {
+    //             // [mid, r] is in order.
+    //             if (target > nums[mid] && target <= nums[r]) {
+    //                 l = mid + 1;
+    //             } else {
+    //                 r = mid - 1;
+    //             }
+    //         } else if (nums[mid] == nums[l]) {
+    //             // No idea which interval is in order.
+    //             ++l;
+    //         } else if (nums[mid] == nums[r]) {
+    //             // No idea which interval is in order.
+    //             --r;
+    //         }
+    //     }
+    //     return -1;
+    // }
+
+    /**
+     * Solution 2: Recursion
+     */
     public int search(int[] nums, int target) {
-        int l = 0, r = nums.length - 1;
-        while (l <= r) {
-            int mid = l + ((r - l) >> 1);
-            if (nums[mid] == target) {
-                return mid;
-            } else if (nums[mid] > nums[l]) {
-                // [l, mid] is in order.
-                if (target >= nums[l] && target < nums[mid]) {
-                    r = mid - 1;
-                } else {
-                    l = mid + 1;
-                }
-            } else if (nums[mid] < nums[r]) {
-                // [mid, r] is in order.
-                if (target > nums[mid] && target <= nums[r]) {
-                    l = mid + 1;
-                } else {
-                    r = mid - 1;
-                }
-            } else if (nums[mid] == nums[l]) {
-                // No idea which interval is in order.
-                ++l;
-            } else if (nums[mid] == nums[r]) {
-                // No idea which interval is in order.
-                --r;
-            }
+        return binarySearch(nums, target, 0, nums.length - 1);
+    }
+
+    private int binarySearch(int[] nums, int target, int lo, int hi) {
+        if (lo > hi) {
+            return -1;
         }
-        return -1;
+
+        int mid = lo + (hi - lo) / 2;
+        if (target == nums[mid]) {
+            return mid;
+        }
+
+        if (nums[lo] <= nums[mid]) {
+            if (target >= nums[lo] && target < nums[mid]) {
+                return binarySearch(nums, target, lo, mid - 1);
+            }
+            return binarySearch(nums, target, mid + 1, hi);
+        }
+
+        if (target > nums[mid] && target <= nums[hi]) {
+            return binarySearch(nums, target, mid + 1, hi);
+        }
+        return binarySearch(nums, target, lo, mid - 1);
     }
 }
 // @lc code=end
