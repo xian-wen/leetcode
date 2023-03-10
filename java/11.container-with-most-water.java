@@ -36,34 +36,22 @@
  * Output: 49
  * 
  */
-
-/* 
 class Solution {
     public int maxArea(int[] height) {
-        int maxArea = 0;
-        for (int i = 1; i < height.length; ++i) {
-            for (int j = 0; j < i; ++j) {
-                int area = Math.min(height[i], height[j]) * (i - j);
-                if (area > maxArea)
-                    maxArea = area;
+        int left = 0, right = height.length - 1, maxArea = 0;
+        while (left < right) {
+            int width = right - left;
+            int minHeight = Math.min(height[left], height[right]);
+            maxArea = Math.max(maxArea, width * minHeight);
+
+            while (left < right && height[left] <= minHeight) {
+                ++left;
+            }
+            
+            while (left < right && height[right] <= minHeight) {
+                --right;
             }
         }
-        return maxArea;
-    }
-}
- */
-
-class Solution {
-    public int maxArea(int[] height) {
-        int low = 0, high = height.length - 1, maxArea = 0;
-
-        while(low <= high) {
-            maxArea = Math.max(maxArea, Math.min(height[low], height[high]) * (high - low));
-            // move the higher
-            if (height[low] < height[high]) ++low;
-            else --high;
-        }
-
         return maxArea;
     }
 }
