@@ -85,7 +85,9 @@ class Solution {
     //     int pivot = partition(nums, lo, hi);
     //     if (target == pivot) {
     //         return nums[pivot];
-    //     } else if (target < pivot) {
+    //     } 
+        
+    //     if (target < pivot) {
     //         return quickSelect(nums, target, lo, pivot - 1);
     //     }
     //     return quickSelect(nums, target, pivot + 1, hi);
@@ -162,7 +164,7 @@ class Solution {
     //     int target = N / 2, res = 0;
     //     for (int i = 31; i >= 0; --i) {
     //         bits[i] = bits[i] > target ? 1 : 0;
-    //         res += bits[i] << i;
+    //         res |= bits[i] << i;
     //     }
     //     return res;
     // }
