@@ -45,47 +45,103 @@
 
 // @lc code=start
 class Solution {
+    // /**
+    //  * Solution 1: Double pointer
+    //  */
+    // public int[] searchRange(int[] nums, int target) {
+    //     int left = 0, right = nums.length - 1;
+    //     while (left <= right) {
+    //         if (nums[left] == target && nums[right] == target) {
+    //             break;
+    //         }
+
+    //         while (left <= right && nums[left] != target) {
+    //             ++left;
+    //         }
+
+    //         while (left <= right && nums[right] != target) {
+    //             --right;
+    //         }
+    //     }
+    //     return left > right ? new int[] {-1, -1} : new int[] {left, right}; 
+    // }
+
+    // /**
+    //  * Solution 2: Binary Search Iteration
+    //  */
+    // public int[] searchRange(int[] nums, int target) {
+    //     return new int[] {
+    //         findFirstEqual(nums, target),
+    //         findLastEqual(nums, target)
+    //     };
+    // }
+
+    // private int findFirstEqual(int[] nums, int target) {
+    //     int l = 0, r = nums.length - 1;
+    //     while (l <= r) {
+    //         int mid = l + ((r - l) >> 1);
+    //         if (nums[mid] > target) {
+    //             r = mid - 1;
+    //         } else if (nums[mid] < target) {
+    //             l = mid + 1;
+    //         } else {
+    //             if (mid == 0 || nums[mid - 1] != target) {
+    //                 return mid;
+    //             }
+    //             r = mid - 1;
+    //         }
+    //     }
+    //     return -1;
+    // }
+
+    // private int findLastEqual(int[] nums, int target) {
+    //     int l = 0, r = nums.length - 1;
+    //     while (l <= r) {
+    //         int mid = l + ((r - l) >> 1);
+    //         if (nums[mid] > target) {
+    //             r = mid - 1;
+    //         } else if (nums[mid] < target) {
+    //             l = mid + 1;
+    //         } else {
+    //             if (mid == nums.length - 1 || nums[mid + 1] != target) {
+    //                 return mid;
+    //             }
+    //             l = mid + 1;
+    //         }
+    //     }
+    //     return -1;
+    // }
+
+    /**
+     * Solution 3: Binary Search Recursion
+     */
     public int[] searchRange(int[] nums, int target) {
-        return new int[] {
-            findFirstEqual(nums, target),
-            findLastEqual(nums, target)
-        };
+        int N = nums.length;
+        // Init for min and max.
+        int[] res = new int[] {N, -1};
+        return binarySearch(nums, target, 0, N - 1, res);
     }
 
-    private int findFirstEqual(int[] nums, int target) {
-        int l = 0, r = nums.length - 1;
-        while (l <= r) {
-            int mid = l + ((r - l) >> 1);
-            if (nums[mid] > target) {
-                r = mid - 1;
-            } else if (nums[mid] < target) {
-                l = mid + 1;
-            } else {
-                if (mid == 0 || nums[mid - 1] != target) {
-                    return mid;
-                }
-                r = mid - 1;
-            }
+    private int[] binarySearch(int[] nums, int target, int low, int high, int[] res) {
+        if (low > high) {
+            return new int[] {-1, -1};
         }
-        return -1;
-    }
 
-    private int findLastEqual(int[] nums, int target) {
-        int l = 0, r = nums.length - 1;
-        while (l <= r) {
-            int mid = l + ((r - l) >> 1);
-            if (nums[mid] > target) {
-                r = mid - 1;
-            } else if (nums[mid] < target) {
-                l = mid + 1;
-            } else {
-                if (mid == nums.length - 1 || nums[mid + 1] != target) {
-                    return mid;
-                }
-                l = mid + 1;
-            }
+        int mid = low + (high - low) / 2;
+        if (target > nums[mid]) {
+            return binarySearch(nums, target, mid + 1, high, res);
         }
-        return -1;
+
+        if (target < nums[mid]) {
+            return binarySearch(nums, target, low, mid - 1, res);
+        }
+
+        res[0] = Math.min(res[0], mid);
+        res[1] = Math.max(res[1], mid);
+        // No idea move to left or right, so both.
+        binarySearch(nums, target, low, mid - 1, res);
+        binarySearch(nums, target, mid + 1, high, res);
+        return res;
     }
 }
 // @lc code=end
