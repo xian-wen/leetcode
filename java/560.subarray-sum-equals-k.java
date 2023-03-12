@@ -44,24 +44,21 @@ import java.util.Map;
 // @lc code=start
 class Solution {
     /**
-     * For prefix sum, sumRange(left, right) = sum[left + 1] - sum[right].
+     * For prefix sum, sumRange(left, right) = sum[right + 1] - sum[left].
      * 
      * This problem is equivalent to calculate the number of sums such that
      * sum[right + 1] - sum[left] == k, i.e., sum[left] = sum[right + 1] - k.
      */
     public int subarraySum(int[] nums, int k) {
         int count = 0, sumRight = 0, sumLeft;
-        // prefixSum -> count
+        // prefixSum -> frequency
         Map<Integer, Integer> map = new HashMap<>();
         // Similar to sum[0] = 0.
         map.put(0, 1);
-        for (int i = 0; i < nums.length; ++i) {
-            sumRight += nums[i];
+        for (int num : nums) {
+            sumRight += num;
             sumLeft = sumRight - k;
-            if (map.containsKey(sumLeft)) {
-                count += map.get(sumLeft);
-            }
-            
+            count += map.getOrDefault(sumLeft, 0);
             map.put(sumRight, map.getOrDefault(sumRight, 0) + 1);
         }
         return count;
