@@ -73,7 +73,7 @@ class Solution {
         int N = nums.length;
         // Sort to use double pointer.
         Arrays.sort(nums);
-        if (nums[0] > 0 || nums[N - 1] < 0) {
+        if (nums[N - 1] < 0) {
             return res;
         }
 
