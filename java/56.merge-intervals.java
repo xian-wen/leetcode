@@ -60,7 +60,7 @@ class Solution {
         for (int[] interval : intervals) {
             if (interval[0] <= end) {
                 end = Math.max(end, interval[1]);
-            } else if (interval[0] > end) {
+            } else {
                 res.add(new int[] {start, end});
                 start = interval[0];
                 end = interval[1];
