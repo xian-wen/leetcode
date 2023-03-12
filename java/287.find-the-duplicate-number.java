@@ -77,6 +77,7 @@ class Solution {
 
     // /**
     //  * Solution 2: Count
+    //  * 
     //  * Similarly could use HashSet to check the existence.
     //  */
     // public int findDuplicate(int[] nums) {
@@ -106,39 +107,7 @@ class Solution {
     // }
 
     // /**
-    //  * Solution 4: Binary Search
-    //  * 
-    //  * Pigeonhole Principle:
-    //  * Ref: https://en.wikipedia.org/wiki/Pigeonhole_principle
-    //  */
-    // public int findDuplicate(int[] nums) {
-    //     // nums.length = n + 1, nums are in range [1..n].
-    //     // hi = num.length also passed all the test cases.
-    //     int lo = 1, hi = nums.length - 1;
-    //     while (lo < hi) {
-    //         // # holes.
-    //         int mid = lo + (hi - lo) / 2;
-
-    //         int count = 0;
-    //         for (int num : nums) {
-    //             if (num <= mid) {
-    //                 ++count;
-    //             }
-    //         }
-
-    //         // # pigeons <= # holes, no duplicates in left.
-    //         if (count <= mid) {
-    //             lo = mid + 1;
-    //         } else {
-    //             // # pigeons > # holes, duplicates exist in left.
-    //             hi = mid;
-    //         }
-    //     }
-    //     return lo;
-    // }
-
-    // /**
-    //  * Solution 5: Index Sort
+    //  * Solution 4: Index Sort
     //  * 
     //  * A num at correct index: nums[i] = i + 1, i.e., 1 at 0, 2 at 1, ..., 4 at 3.
     //  * Duplicate means nums[i] = nums[nums[i] - 1].
@@ -169,8 +138,65 @@ class Solution {
     //     nums[j] = temp;
     // }
 
+    // /**
+    //  * Solution 5: Binary Search
+    //  * 
+    //  * Pigeonhole Principle:
+    //  * Ref: https://en.wikipedia.org/wiki/Pigeonhole_principle
+    //  */
+    // public int findDuplicate(int[] nums) {
+    //     // nums.length = n + 1, nums are in range [1..n].
+    //     int lo = 1, hi = nums.length - 1;
+    //     while (lo <= hi) {
+    //         // # holes.
+    //         int mid = lo + (hi - lo) / 2;
+
+    //         int count = 0;
+    //         for (int num : nums) {
+    //             if (num <= mid) {
+    //                 ++count;
+    //             }
+    //         }
+
+    //         // # pigeons <= # holes, no duplicates in left.
+    //         if (count <= mid) {
+    //             lo = mid + 1;
+    //         } else {
+    //             // # pigeons > # holes, duplicates exist in left.
+    //             hi = mid - 1;
+    //         }
+    //     }
+    //     return lo;
+    // }
+
+    // /**
+    //  * Solution 6: Bit Manipulation
+    //  */
+    // public int findDuplicate(int[] nums) {
+    //     int N = nums.length - 1;
+    //     int bitMax = 31;
+    //     while ((N >> bitMax) == 0) {
+    //         --bitMax;
+    //     }
+
+    //     int res = 0;
+    //     for (int bit = bitMax; bit >= 0; --bit) {
+    //         int count1ToN = 0, countNums = 0;
+    //         for (int i = 0; i <= N; ++i) {
+    //             count1ToN += (i >> bit) & 1;
+    //             countNums += (nums[i] >> bit) & 1;
+    //         }
+
+    //         if (countNums > count1ToN) {
+    //             res |= 1 << bit;
+    //         }
+    //     }
+    //     return res;
+    // }
+
     /**
-     * Solution 6: Floyd's Cycle Finding (Tortoise and Hare)
+     * Solution 7: Floyd's Cycle Finding (Tortoise and Hare)
+     * 
      * Ref: https://www.geeksforgeeks.org/floyds-cycle-finding-algorithm/
      */
     public int findDuplicate(int[] nums) {
