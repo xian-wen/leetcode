@@ -153,18 +153,16 @@ class Solution {
     //  * Solution 5: Bits Manipulation
     //  */
     // public int majorityElement(int[] nums) {
-    //     int[] bits = new int[32];
-    //     int N = nums.length;
-    //     for (int num : nums) {
-    //         for (int i = 31; i >= 0; --i) {
-    //             bits[i] += (num >> i) & 1;
+    //     int N = nums.length, target = N / 2, res = 0;
+    //     for (int bit = 31; bit >= 0; --bit) {
+    //         int count = 0;
+    //         for (int num : nums) {
+    //             count += (num >> bit) & 1;
     //         }
-    //     }
 
-    //     int target = N / 2, res = 0;
-    //     for (int i = 31; i >= 0; --i) {
-    //         bits[i] = bits[i] > target ? 1 : 0;
-    //         res |= bits[i] << i;
+    //         if (count > target) {
+    //             res |= 1 << bit;
+    //         }
     //     }
     //     return res;
     // }
