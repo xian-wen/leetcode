@@ -130,7 +130,7 @@ class Solution {
      * Search Rule:
      * 1. Only binary search the shorter len arr, say nums1, set lo = 0, hi = len(nums1)
      * 2. If left1 > right2, move to left, to make left1 smaller
-     * 3. If left2 > right1, move to right, to make left1 bigger
+     * 3. If left2 > right1, move to right, to make left2 smaller, also left1 bigger
      * 4. If paritition becomes empty, set -Infinity at 0 and Infinity at len(nums1)
      * 
      * Case 1: Even total length
