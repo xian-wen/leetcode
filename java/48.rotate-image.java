@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /*
  * @lc app=leetcode id=48 lang=java
  *
@@ -48,40 +50,79 @@
 
 // @lc code=start
 class Solution {
-    private int[][] matrix;
+    // /**
+    //  * Solution 1:
+    //  * 
+    //  * First transform the matrix, then reverse all its columns.
+    //  */
+    // public void rotate(int[][] matrix) {
+    //     transform(matrix);
+    //     reverseColumns(matrix);
+    // }
+
+    // private void transform(int[][] matrix) {
+    //     int N = matrix.length;
+    //     for (int row = 0; row < N; ++row) {
+    //         for (int col = row + 1; col < N; ++col) {
+    //             swap2D(matrix, row, col, col, row);
+    //         }
+    //     }
+    // }
+
+    // private void swap2D(int[][] matrix, int row1, int col1, int row2, int col2) {
+    //     int temp = matrix[row1][col1];
+    //     matrix[row1][col1] = matrix[row2][col2];
+    //     matrix[row2][col2] = temp;
+    // }
+
+    // private void reverseColumns(int[][] matrix) {
+    //     for (int[] row : matrix) {
+    //         reverse(row);
+    //     }
+    // }
+
+    // private void reverse(int[] nums) {
+    //     int left = 0, right = nums.length - 1;
+    //     while (left < right) {
+    //         swap(nums, left++, right--);
+    //     }
+    // }
+
+    // private void swap(int[] nums, int i, int j) {
+    //     int temp = nums[i];
+    //     nums[i] = nums[j];
+    //     nums[j] = temp;
+    // }
 
     /**
-     * Solution 1:
-     * Rotating the matrix 90 degrees is equivalent to swap four points:
-     * matrix[i][j], matrix[j][N-1-i], matrix[N-1-i][N-1-j], matrix[N-1-j][i].
-     * 
      * Solution 2:
-     * First transform the matrix, then reverse all its columns.
+     * 
+     * Rotating the matrix 90 degrees is equivalent to swap four points:
+     * matrix[r][c], matrix[c][N-1-r], matrix[N-1-r][N-1-c], matrix[N-1-c][r].
      */
     public void rotate(int[][] matrix) {
-        this.matrix = matrix;
         int N = matrix.length;
-        for (int i = 0; i < N / 2; ++i) {
-            for (int j = i; j < N - 1 - i; ++j) {
-                int i2 = j, j2 = N - 1 - i;
-                int i3 = N - 1 - i, j3 = N - 1 - j;
-                int i4 = N - 1 - j, j4 = i;
-                swap(i, j, i2, j2, i3, j3, i4, j4);
+        for (int row = 0; row < N / 2; ++row) {
+            for (int col = row; col < N - 1 - row; ++col) {
+                int row2 = col, col2 = N - 1 - row;
+                int row3 = N - 1 - row, col3 = N - 1 - col;
+                int row4 = N - 1 - col, col4 = row;
+                swap(matrix, row, col, row2, col2, row3, col3, row4, col4);
             }
         }
     }
 
     /**
-     * Swap matrix[i1][j1], matrix[i2][j2], matrix[i3][j3], and matrix[i4][j4]
+     * Swap matrix[r1][c1], matrix[r2][c2], matrix[r3][c3], and matrix[r4][c4]
      * so that ABCD becomes DABC.
      */
-    private void swap(int i1, int j1, int i2, int j2, 
-                      int i3, int j3, int i4, int j4) {
-        int temp = matrix[i1][j1];
-        matrix[i1][j1] = matrix[i4][j4];
-        matrix[i4][j4] = matrix[i3][j3];
-        matrix[i3][j3] = matrix[i2][j2];
-        matrix[i2][j2] = temp;
+    private void swap(int[][] matrix, int row1, int col1, int row2, int col2, 
+                      int row3, int col3, int row4, int col4) {
+        int temp = matrix[row1][col1];
+        matrix[row1][col1] = matrix[row4][col4];
+        matrix[row4][col4] = matrix[row3][col3];
+        matrix[row3][col3] = matrix[row2][col2];
+        matrix[row2][col2] = temp;
     }
 }
 // @lc code=end
