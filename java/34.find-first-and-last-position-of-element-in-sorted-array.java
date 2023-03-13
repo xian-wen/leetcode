@@ -122,7 +122,8 @@ class Solution {
         return binarySearch(nums, target, 0, N - 1, res);
     }
 
-    private int[] binarySearch(int[] nums, int target, int low, int high, int[] res) {
+    private int[] binarySearch(int[] nums, int target, int low, int high, 
+                               int[] res) {
         if (low > high) {
             return new int[] {-1, -1};
         }
