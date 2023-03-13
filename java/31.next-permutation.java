@@ -91,7 +91,7 @@ class Solution {
             swap(nums, prev, greater);
         }
 
-        reverse(nums, index, nums.length - 1);
+        reverseSuffix(nums, index);
     }
 
     private int indexOfLongestNonIncreasingSuffix(int[] nums) {
@@ -110,9 +110,10 @@ class Solution {
         return start;
     }
 
-    private void reverse(int[] nums, int low, int high) {
-        while (low < high) {
-            swap(nums, low++, high--);
+    private void reverseSuffix(int[] nums, int begin) {
+        int end = nums.length - 1;
+        while (begin < end) {
+            swap(nums, begin++, end--);
         }
     }
 
