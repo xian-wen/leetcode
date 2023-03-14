@@ -132,14 +132,14 @@ class Solution {
     //  * Solution 6: Bit Manipulation
     //  */
     // public int singleNumber(int[] nums) {
-    //     int[] bits = new int[32];
     //     int res = 0;
     //     for (int bit = 31; bit >= 0; --bit) {
+    //         int count = 0;
     //         for (int num : nums) {
-    //             bits[bit] += (num >> bit) & 1;
+    //             count += (num >> bit) & 1;
     //         }
 
-    //         if ((bits[bit] & 1) == 1) {
+    //         if ((count & 1) == 1) {
     //             res |= 1 << bit;
     //         }
     //     }
