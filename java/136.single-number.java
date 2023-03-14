@@ -44,7 +44,111 @@
 
 // @lc code=start
 class Solution {
+    // /**
+    //  * Solution 1: Count
+    //  */
+    // public int singleNumber(int[] nums) {
+    //     Map<Integer, Integer> map = new HashMap<>();
+    //     for (int num : nums) {
+    //         map.put(num, map.getOrDefault(num, 0) + 1);
+    //     }
+
+    //     for (int num : map.keySet()) {
+    //         if (map.get(num) == 1) {
+    //             return num;
+    //         }
+    //     }
+    //     return -1;
+    // }
+
+    // /**
+    //  * Solution 2: Set
+    //  */
+    // public int singleNumber(int[] nums) {
+    //     Set<Integer> set = new HashSet<>();
+    //     for (int num : nums) {
+    //         if (!set.contains(num)) {
+    //             set.add(num);
+    //         } else {
+    //             set.remove(num);
+    //         }
+    //     }
+
+    //     for (int num : set) {
+    //         return num;
+    //     }        
+    //     return -1;
+    // }
+
+    // /**
+    //  * Solution 3: Sum 1
+    //  */
+    // public int singleNumber(int[] nums) {
+    //     int N = nums.length, res = 0;
+    //     Arrays.sort(nums);
+    //     for (int i = 0; i < N; ++i) {
+    //         if (i % 2 == 0) {
+    //             res += nums[i];
+    //         } else {
+    //             res -= nums[i];
+    //         }
+    //     }
+    //     return res;
+    // }
+
+    // /**
+    //  * Solution 4: Sum 2
+    //  */
+    // public int singleNumber(int[] nums) {
+    //     Set<Integer> set = new HashSet<>();
+    //     int sum = 0;
+    //     for (int num : nums) {
+    //         set.add(num);
+    //         sum += num;
+    //     }
+
+    //     int sumSet = 0;
+    //     for (int num : set) {
+    //         sumSet += num;
+    //     }
+    //     return 2 * sumSet - sum;
+    // }
+
+    // /**
+    //  * Solution 5: Sort
+    //  */
+    // public int singleNumber(int[] nums) {
+    //     int N = nums.length, res = -1;
+    //     Arrays.sort(nums);
+    //     for (int i = 0; i < N - 1; i += 2) {
+    //         if (nums[i] != nums[i + 1]) {
+    //             return nums[i];
+    //         }
+    //     }
+    //     return nums[N - 1];
+    // }
+
+    // /**
+    //  * Solution 6: Bit Manipulation
+    //  */
+    // public int singleNumber(int[] nums) {
+    //     int[] bits = new int[32];
+    //     int res = 0;
+    //     for (int bit = 31; bit >= 0; --bit) {
+    //         for (int num : nums) {
+    //             bits[bit] += (num >> bit) & 1;
+    //         }
+
+    //         if ((bits[bit] & 1) == 1) {
+    //             res |= 1 << bit;
+    //         }
+    //     }
+    //     return res;
+    // }
+
     /**
+     * Solution 7: XOR
+     *
      * x ^ x = 0, x ^ 0 = x
      */
     public int singleNumber(int[] nums) {
