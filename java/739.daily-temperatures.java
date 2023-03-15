@@ -54,14 +54,10 @@ class Solution {
         int[] res = new int[N];
         Deque<Integer> stack = new ArrayDeque<>();
         for (int i = 0; i < N; ++i) {
-            while (!stack.isEmpty()) {
-                int top = stack.peek();
-                if (temperatures[i] <= temperatures[top]) {
-                    break;
-                }
-                
-                stack.pop();
-                res[top] = i - top;
+            while (!stack.isEmpty() 
+                    && temperatures[i] > temperatures[stack.peek()]) {
+                int index = stack.pop();
+                res[index] = i - index;
             }
 
             stack.push(i);
