@@ -1,7 +1,11 @@
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.TreeMap;
 
 /*
  * @lc app=leetcode id=347 lang=java
@@ -46,22 +50,78 @@ import java.util.Queue;
 
 // @lc code=start
 class Solution {
+    // /**
+    //  * Solution 1: Priority Queue
+    //  */
+    // public int[] topKFrequent(int[] nums, int k) {
+    //     if (k == nums.length) {
+    //         return nums;
+    //     }
+
+    //     Map<Integer, Integer> map = new HashMap<>();
+    //     for (int num : nums) {
+    //         map.put(num, map.getOrDefault(num, 0) + 1);
+    //     }
+        
+    //     Queue<Integer> pq = new PriorityQueue<>(
+    //         (k1, k2) -> Integer.compare(map.get(k2), map.get(k1)));
+
+    //     for (int key : map.keySet()) {
+    //         pq.offer(key);
+    //     }
+
+    //     int[] res = new int[k];
+    //     for (int i = 0; i < k; i++) {
+    //         res[i] = pq.poll();
+    //     }
+    //     return res;
+    // }
+
+    /**
+     * Solution 2: Count
+     */
     public int[] topKFrequent(int[] nums, int k) {
-        Map<Integer, Integer> count = new HashMap<>();
-        for (int num : nums) {
-            count.put(num, count.getOrDefault(num, 0) + 1);
+        if (k == nums.length) {
+            return nums;
         }
 
-        Queue<Integer> pq = new PriorityQueue<>(
-            (k1, k2) -> Integer.compare(count.get(k2), count.get(k1)));
+        int min = Integer.MAX_VALUE, max = Integer.MIN_VALUE;
+        for (int num : nums) {
+            min = Math.min(min, num);
+            max = Math.max(max, num);
+        }
 
-        for (int key : count.keySet()) {
-            pq.offer(key);
+        int[] map = new int[max - min + 1];
+        for (int num : nums) {
+            ++map[num - min];
+        }
+        
+        // Mirror of map, i.e., count -> nums, count is at most N.
+        int N = nums.length, maxCount = 0;
+        List<Integer>[] mirror = new List[N + 1];
+        for (int num = min; num <= max; ++num) {
+            int count = map[num - min];
+            if (count == 0) {
+                continue;
+            }
+
+            if (mirror[count] == null) {
+                mirror[count] = new ArrayList<>();
+            }
+
+            mirror[count].add(num);
+            maxCount = Math.max(maxCount, count);
         }
 
         int[] res = new int[k];
-        for (int i = 0; i < k; i++) {
-            res[i] = pq.poll();
+        for (int c = maxCount, i = 0; c > 0 && i < k; --c) {
+            if (mirror[c] == null) {
+                continue;
+            }
+
+            for (int num : mirror[c]) {
+                res[i++] = num;
+            }
         }
         return res;
     }
