@@ -64,56 +64,52 @@
 
 // @lc code=start
 class Trie {
-    private static final int R = 26;
-    private Node root; 
-
-    private class Node {
-        Node[] next = new Node[R];
-        boolean isWord;
+    private static final int ALPHABET_LEN = 26;
+    private TrieNode root; 
+    
+    private class TrieNode {
+        private TrieNode[] children = new TrieNode[ALPHABET_LEN];
+        private boolean isWord;
     }
 
     public Trie() {
-        
     }
     
     public void insert(String word) {
         root = insert(root, word, 0);
     }
 
-    private Node insert(Node node, String word, int d) {
+    private TrieNode insert(TrieNode node, String word, int index) {
         if (node == null) {
-            node = new Node();
+            node = new TrieNode();
         }
 
-        if (d == word.length()) {
+        if (index == word.length()) {
             node.isWord = true;
         } else {
-            char c = word.charAt(d);
-            node.next[c - 'a'] = insert(node.next[c - 'a'], word, d + 1);
+            char c = word.charAt(index);
+            node.children[c - 'a'] = 
+                    insert(node.children[c - 'a'], word, index + 1);
         }
         return node;
     }
     
     public boolean search(String word) {
-        Node node = search(root, word, 0);
+        TrieNode node = search(root, word, 0);
         return node == null ? false : node.isWord;
     }
 
-    private Node search(Node node, String word, int d) {
-        if (node == null) {
-            return null;
-        }
-
-        if (d == word.length()) {
+    private TrieNode search(TrieNode node, String word, int index) {
+        if (node == null || index == word.length()) {
             return node;
         }
 
-        char c = word.charAt(d);
-        return search(node.next[c - 'a'], word, d + 1);
+        char c = word.charAt(index);
+        return search(node.children[c - 'a'], word, index + 1);
     }
     
     public boolean startsWith(String prefix) {
-        Node node = search(root, prefix, 0);
+        TrieNode node = search(root, prefix, 0);
         return node != null;
     }
 }
