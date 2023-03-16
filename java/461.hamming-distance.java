@@ -50,22 +50,37 @@
 
 // @lc code=start
 class Solution {
-    public int hammingDistance(int x, int y) {
-        int res = x ^ y;
-        return countOne(res);
-    }
+    // /**
+    //  * Solution 1: Recursion
+    //  */
+    // public int hammingDistance(int x, int y) {
+    //     int res = x ^ y;
+    //     return countOne(res);
+    // }
+
+    // /**
+    //  * Count the # 1s in the binary form of x.
+    //  */
+    // private int countOne(int x) {
+    //     if (x == 0) {
+    //         return 0;
+    //     }
+
+    //     int last = x & 1;
+    //     int next = x >> 1;
+    //     return countOne(next) + last;
+    // }
 
     /**
-     * Count the # 1s in the binary form of x.
+     * Solution 2: Iteration
      */
-    private int countOne(int x) {
-        if (x == 0) {
-            return 0;
+    public int hammingDistance(int x, int y) {
+        int xor = x ^ y;
+        int res = 0;
+        for (int bit = 31; bit >= 0; --bit) {
+            res += (xor >> bit) & 1;
         }
-
-        int last = x & 1;
-        int next = x >> 1;
-        return countOne(next) + last;
+        return res;
     }
 }
 // @lc code=end
