@@ -117,10 +117,7 @@ class Solution {
         }
 
         public void addEdge(String from, String to, double weight) {
-            if (!adj.containsKey(from)) {
-                adj.put(from, new LinkedList<>());
-            }
-
+            adj.putIfAbsent(from, new LinkedList<>());
             Edge edge = new Edge(from, to, weight);
             adj.get(from).add(edge);
         }
