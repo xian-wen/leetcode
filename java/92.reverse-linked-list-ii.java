@@ -59,7 +59,38 @@
  */
 class Solution {
     public ListNode reverseBetween(ListNode head, int left, int right) {
-        
+        ListNode dummy = new ListNode(-1, head);
+        ListNode front = dummy, prevLeft = dummy, nextRight = head.next;
+        int steps = 0;
+        while (steps <= right) {
+            front = front.next;
+            ++steps;
+            if (steps + 1 == left) {
+                prevLeft = front;
+            }
+        }
+
+        nextRight = front;
+        prevLeft.next = reverseBetween(prevLeft.next, nextRight);
+        return dummy.next;
+    }
+
+    private ListNode reverseBetween(ListNode start, ListNode end) {
+        if (start == null || start.next == end) {
+            return start;
+        }
+
+        ListNode reversed = reverseBetween(start.next, end);
+        start.next.next = start;
+        start.next = end;
+        return reversed;
+    }
+
+    private String listToString(ListNode head) {
+        if (head == null) {
+            return "null";
+        }
+        return String.format("%d -> %s", head.val, listToString(head.next));
     }
 }
 // @lc code=end
