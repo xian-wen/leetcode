@@ -162,15 +162,17 @@ public class Sort {
         int sentinel = arr[lo];
         int i = lo, j = hi + 1;
         while (true) {
-            // Find the first i such that arr[i] > sentinel.
-            while (arr[++i] <= sentinel) {
+            // Find the first i such that arr[i] >= sentinel.
+            // Avoid <= !!!
+            while (arr[++i] < sentinel) {
                 if (i == hi) {
                     break;
                 }
             }
 
-            // Find the first j such that arr[j] < sentinel.
-            while (arr[--j] >= sentinel) {
+            // Find the first j such that arr[j] <= sentinel.
+            // Avoid <= !!!
+            while (arr[--j] > sentinel) {
                 if (j == lo) {
                     break;
                 }
