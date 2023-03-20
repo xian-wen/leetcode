@@ -81,14 +81,14 @@ class Solution {
     //  * Solution 2: HashSet
     //  */
     // public int lengthOfLongestSubstring(String s) {
-    //     int N = s.length(), right = 0, left = 0, maxLen = 0;
+    //     int N = s.length(), left = 0, right = 0, maxLen = 0;
     //     Set<Character> win = new HashSet<>();
-    //     while (left < N) {
-    //         if (!win.contains(s.charAt(left))) {
-    //             win.add(s.charAt(left++));
+    //     while (right < N) {
+    //         if (!win.contains(s.charAt(right))) {
+    //             win.add(s.charAt(right++));
     //             maxLen = Math.max(maxLen, win.size());
     //         } else {
-    //             win.remove(s.charAt(right++));
+    //             win.remove(s.charAt(left++));
     //         }
     //     }
     //     return maxLen;
