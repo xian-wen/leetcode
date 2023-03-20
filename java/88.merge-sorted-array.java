@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Collections;
 
 /*
  * @lc app=leetcode id=88 lang=java
@@ -76,18 +77,39 @@ import java.util.Arrays;
 
 // @lc code=start
 class Solution {
+    // /**
+    //  * Solution 1
+    //  */
+    // public void merge(int[] nums1, int m, int[] nums2, int n) {
+    //     int[] copy = Arrays.copyOf(nums1, m);
+    //     int i = 0, j = 0;
+    //     for (int k = 0; k < m + n; ++k) {
+    //         if (i == m) {
+    //             nums1[k] = nums2[j++];
+    //         } else if (j == n) {
+    //             nums1[k] = copy[i++];
+    //         } else if (copy[i] < nums2[j]) {
+    //             nums1[k] = copy[i++];
+    //         } else {
+    //             nums1[k] = nums2[j++];
+    //         }
+    //     }
+    // }
+
+    /**
+     * Solution 2: Space optimization.
+     */
     public void merge(int[] nums1, int m, int[] nums2, int n) {
-        int[] copy = Arrays.copyOf(nums1, m);
-        int i = 0, j = 0;
-        for (int k = 0; k < m + n; ++k) {
-            if (i == m) {
-                nums1[k] = nums2[j++];
-            } else if (j == n) {
-                nums1[k] = copy[i++];
-            } else if (copy[i] < nums2[j]) {
-                nums1[k] = copy[i++];
+        int i = m - 1, j = n - 1;
+        for (int k = m + n - 1; k >= 0; --k) {
+            if (i == -1) {
+                nums1[k] = nums2[j--];
+            } else if (j == -1) {
+                nums1[k] = nums1[i--];
+            } else if (nums1[i] > nums2[j]) {
+                nums1[k] = nums1[i--];
             } else {
-                nums1[k] = nums2[j++];
+                nums1[k] = nums2[j--];
             }
         }
     }
