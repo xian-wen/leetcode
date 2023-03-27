@@ -59,6 +59,10 @@
 class Solution extends SolBase {
     /**
      * Idea: rand7() -> rand49() -> rand40() -> rand10()
+     * 
+     * N^b * (randN() - 1) + N^(b - 1) * (randN() - 1) + 
+     * N^(b - 2) * (randN() - 1) + ... + N^0 * (randN() - 1) 
+     * generates randX() - 1, where X = N^(b + 1).
      */
     public int rand10() {
         // rand49(): [0, 48]
