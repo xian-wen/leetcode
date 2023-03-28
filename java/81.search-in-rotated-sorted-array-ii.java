@@ -54,33 +54,70 @@
 
 // @lc code=start
 class Solution {
+    // /**
+    //  * Solution 1: Iteration
+    //  */
+    // public boolean search(int[] nums, int target) {
+    //     int l = 0, r = nums.length - 1;
+    //     while (l <= r) {
+    //         int mid = l + ((r - l) >> 1);
+    //         if (nums[mid] == target) {
+    //             return true;
+    //         } else if (nums[mid] > nums[l]) {
+    //             // [l, mid] is in order.
+    //             if (target >= nums[l] && target < nums[mid]) {
+    //                 r = mid - 1;
+    //             } else {
+    //                 l = mid + 1;
+    //             }
+    //         } else if (nums[mid] < nums[r]) {
+    //             // [mid, r] is in order.
+    //             if (target > nums[mid] && target <= nums[r]) {
+    //                 l = mid + 1;
+    //             } else {
+    //                 r = mid - 1;
+    //             }
+    //         } else if (nums[mid] == nums[l]) {
+    //             ++l;
+    //         } else if (nums[mid] == nums[r]) {
+    //             --r;
+    //         }
+    //     }
+    //     return false;
+    // }
+
+    /**
+     * Solution 2: Recursion
+     */
     public boolean search(int[] nums, int target) {
-        int l = 0, r = nums.length - 1;
-        while (l <= r) {
-            int mid = l + ((r - l) >> 1);
-            if (nums[mid] == target) {
-                return true;
-            } else if (nums[mid] > nums[l]) {
-                // [l, mid] is in order.
-                if (target >= nums[l] && target < nums[mid]) {
-                    r = mid - 1;
-                } else {
-                    l = mid + 1;
-                }
-            } else if (nums[mid] < nums[r]) {
-                // [mid, r] is in order.
-                if (target > nums[mid] && target <= nums[r]) {
-                    l = mid + 1;
-                } else {
-                    r = mid - 1;
-                }
-            } else if (nums[mid] == nums[l]) {
-                ++l;
-            } else if (nums[mid] == nums[r]) {
-                --r;
-            }
+        return binarySearch(nums, 0, nums.length - 1, target);
+    }
+
+    private boolean binarySearch(int[] nums, int lo, int hi, int target) {
+        if (lo > hi) {
+            return false;
         }
-        return false;
+
+        int mid = lo + (hi - lo) / 2;
+        if (target == nums[mid]) {
+            return true;
+        }
+
+        if (nums[lo] == nums[mid] && nums[mid] == nums[hi]) {
+            return binarySearch(nums, ++lo, --hi, target);
+        }
+
+        if (nums[lo] <= nums[mid]) {
+            if (target >= nums[lo] && target < nums[mid]) {
+                return binarySearch(nums, lo, mid - 1, target);
+            }
+            return binarySearch(nums, mid + 1, hi, target);
+        }
+
+        if (target > nums[mid] && target <= nums[hi]) {
+            return binarySearch(nums, mid + 1, hi, target);
+        }
+        return binarySearch(nums, lo, mid - 1, target);
     }
 }
 // @lc code=end
