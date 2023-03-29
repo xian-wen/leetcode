@@ -74,12 +74,9 @@ import java.util.Map;
 // @lc code=start
 class LRUCache {
     // private Map<Integer, DLLNode> map;
-    // private DLLNode head;
+    // private DLinkedList list;
     // private int capacity;
 
-    // /**
-    //  * Solution 1
-    //  */
     // private class DLLNode {
     //     private int key, value;
     //     private DLLNode prev, next;
@@ -98,44 +95,60 @@ class LRUCache {
     //     }
     // }
 
-    // private void addFirst(DLLNode node) {
-    //     node.next = head.next;
-    //     node.prev = head;
-    //     head.next.prev = node;
-    //     head.next = node;
-    // }
+    // private class DLinkedList {
+    //     private DLLNode head;
 
-    // private void remove(DLLNode node) {
-    //     DLLNode prev = node.prev;
-    //     DLLNode next = node.next;
-    //     prev.next = next;
-    //     next.prev = prev;
-    // }
-
-    // private DLLNode removeLast() {
-    //     DLLNode tail = head.prev;
-    //     remove(tail);
-    //     return tail;
-    // }
-
-    // private void moveFirst(DLLNode node) {
-    //     remove(node);
-    //     addFirst(node);
-    // }
-
-    // private String listToString(DLLNode node) {
-    //     if (node.next == head) {
-    //         return String.format("%s", node);
+    //     public DLinkedList() {
+    //         head = new DLLNode();
+    //         head.next = head;
+    //         head.prev = head;
     //     }
-    //     return String.format("%s<->%s", node, listToString(node.next));
+
+    //     public void addFirst(DLLNode node) {
+    //         node.next = head.next;
+    //         node.prev = head;
+    //         head.next.prev = node;
+    //         head.next = node;
+    //     }
+    
+    //     public void remove(DLLNode node) {
+    //         DLLNode prev = node.prev;
+    //         DLLNode next = node.next;
+    //         prev.next = next;
+    //         next.prev = prev;
+    //     }
+    
+    //     public DLLNode removeLast() {
+    //         DLLNode tail = head.prev;
+    //         remove(tail);
+    //         return tail;
+    //     }
+    
+    //     public void moveFirst(DLLNode node) {
+    //         remove(node);
+    //         addFirst(node);
+    //     }
+
+    //     @Override
+    //     public String toString() {
+    //         return toString(head);
+    //     }
+    
+    //     private String toString(DLLNode node) {
+    //         if (node.next == head) {
+    //             return String.format("%s", node);
+    //         }
+    //         return String.format("%s<->%s", node, toString(node.next));
+    //     }
     // }
 
+    // /**
+    //  * Solution 1
+    //  */
     // public LRUCache(int capacity) {
     //     this.capacity = capacity;
     //     map = new HashMap<>();
-    //     head = new DLLNode();
-    //     head.next = head;
-    //     head.prev = head;
+    //     list = new DLinkedList();
     // }
     
     // public int get(int key) {
@@ -144,7 +157,7 @@ class LRUCache {
     //         return -1;
     //     }
 
-    //     moveFirst(node);
+    //     list.moveFirst(node);
     //     return node.value;
     // }
     
@@ -152,17 +165,17 @@ class LRUCache {
     //     if (map.containsKey(key)) {
     //         DLLNode node = map.get(key);
     //         node.value = value;
-    //         moveFirst(node);
+    //         list.moveFirst(node);
     //         return;
     //     }
 
     //     if (map.size() == capacity) {
-    //         DLLNode removed = removeLast();
+    //         DLLNode removed = list.removeLast();
     //         map.remove(removed.key);
     //     }
 
     //     DLLNode node = new DLLNode(key, value);
-    //     addFirst(node);
+    //     list.addFirst(node);
     //     map.put(key, node);
     // }
 
