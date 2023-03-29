@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /*
@@ -72,82 +73,119 @@ import java.util.Map;
 
 // @lc code=start
 class LRUCache {
-    private Map<Integer, DLLNode> map;
-    private DLLNode head;
-    private int capacity;
+    // private Map<Integer, DLLNode> map;
+    // private DLLNode head;
+    // private int capacity;
 
-    private class DLLNode {
-        private int key, value;
-        private DLLNode prev, next;
+    // /**
+    //  * Solution 1
+    //  */
+    // private class DLLNode {
+    //     private int key, value;
+    //     private DLLNode prev, next;
 
-        public DLLNode() {
-        }
+    //     public DLLNode() {
+    //     }
 
-        public DLLNode(int key, int value) {
-            this.key = key;
-            this.value = value;
-        }
-    }
+    //     public DLLNode(int key, int value) {
+    //         this.key = key;
+    //         this.value = value;
+    //     }
 
-    private void addFirst(DLLNode node) {
-        node.next = head.next;
-        node.prev = head;
-        head.next.prev = node;
-        head.next = node;
-    }
+    //     @Override
+    //     public String toString() {
+    //         return String.format("(%d, %d)", key, value);
+    //     }
+    // }
 
-    private void remove(DLLNode node) {
-        DLLNode prev = node.prev;
-        DLLNode next = node.next;
-        prev.next = next;
-        next.prev = prev;
-    }
+    // private void addFirst(DLLNode node) {
+    //     node.next = head.next;
+    //     node.prev = head;
+    //     head.next.prev = node;
+    //     head.next = node;
+    // }
 
-    private DLLNode removeLast() {
-        DLLNode last = head.prev;
-        remove(last);
-        return last;
-    }
+    // private void remove(DLLNode node) {
+    //     DLLNode prev = node.prev;
+    //     DLLNode next = node.next;
+    //     prev.next = next;
+    //     next.prev = prev;
+    // }
 
-    private void moveFirst(DLLNode node) {
-        remove(node);
-        addFirst(node);
-    }
+    // private DLLNode removeLast() {
+    //     DLLNode tail = head.prev;
+    //     remove(tail);
+    //     return tail;
+    // }
 
+    // private void moveFirst(DLLNode node) {
+    //     remove(node);
+    //     addFirst(node);
+    // }
+
+    // private String listToString(DLLNode node) {
+    //     if (node.next == head) {
+    //         return String.format("%s", node);
+    //     }
+    //     return String.format("%s<->%s", node, listToString(node.next));
+    // }
+
+    // public LRUCache(int capacity) {
+    //     this.capacity = capacity;
+    //     map = new HashMap<>();
+    //     head = new DLLNode();
+    //     head.next = head;
+    //     head.prev = head;
+    // }
+    
+    // public int get(int key) {
+    //     DLLNode node = map.get(key);
+    //     if (node == null) {
+    //         return -1;
+    //     }
+
+    //     moveFirst(node);
+    //     return node.value;
+    // }
+    
+    // public void put(int key, int value) {
+    //     if (map.containsKey(key)) {
+    //         DLLNode node = map.get(key);
+    //         node.value = value;
+    //         moveFirst(node);
+    //         return;
+    //     }
+
+    //     if (map.size() == capacity) {
+    //         DLLNode removed = removeLast();
+    //         map.remove(removed.key);
+    //     }
+
+    //     DLLNode node = new DLLNode(key, value);
+    //     addFirst(node);
+    //     map.put(key, node);
+    // }
+
+    private Map<Integer, Integer> map;
+
+    /**
+     * Solution 2: Built-in
+     */
     public LRUCache(int capacity) {
-        this.capacity = capacity;
-        map = new HashMap<>();
-        head = new DLLNode();
-        head.next = head;
-        head.prev = head;
+        map = new LinkedHashMap<>(capacity, 0.75f, true) {
+            @Override
+            protected boolean removeEldestEntry(Map.Entry eldest) {
+                return map.size() > capacity;
+            }
+        };
     }
     
     public int get(int key) {
-        if (!map.containsKey(key)) {
-            return -1;
-        }
-
-        DLLNode node = map.get(key);
-        moveFirst(node);
-        return node.value;
+        return map.getOrDefault(key, -1);
     }
     
     public void put(int key, int value) {
-        if (map.containsKey(key)) {
-            DLLNode node = map.get(key);
-            node.value = value;
-            moveFirst(node);
-            return;
-        }
-
-        if (map.size() == capacity) {
-            DLLNode last = removeLast();
-            map.remove(last.key);
-        }
-
-        DLLNode node = new DLLNode(key, value);
-        addFirst(node);
-        map.put(key, node);
+        map.put(key, value);
     }
 }
 
