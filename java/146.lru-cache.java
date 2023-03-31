@@ -185,6 +185,8 @@ class LRUCache {
      * Solution 2: Built-in
      */
     public LRUCache(int capacity) {
+        // Ref: https://docs.oracle.com/javase/8/docs/api/java/util/LinkedHashMap.html
+        // LinkedHashMap(int initialCapacity, float loadFactor, boolean accessOrder)
         map = new LinkedHashMap<>(capacity, 0.75f, true) {
             @Override
             protected boolean removeEldestEntry(Map.Entry eldest) {
