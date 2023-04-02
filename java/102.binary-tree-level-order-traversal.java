@@ -70,32 +70,58 @@ import java.util.Queue;
  * }
  */
 class Solution {
+    // /**
+    //  * Solution 1: Iteration
+    //  */
+    // public List<List<Integer>> levelOrder(TreeNode root) {
+    //     List<List<Integer>> res = new ArrayList<>();
+    //     if (root == null) {
+    //         return res;
+    //     }
+
+    //     Queue<TreeNode> queue = new ArrayDeque<>();
+    //     queue.offer(root);
+    //     while (!queue.isEmpty()) {
+    //         int size = queue.size();
+    //         List<Integer> temp = new ArrayList<>();
+    //         for (int i = 0; i < size; ++i) {
+    //             TreeNode node = queue.poll();
+    //             temp.add(node.val);
+    //             if (node.left != null) {
+    //                 queue.offer(node.left);
+    //             }
+
+    //             if (node.right != null) {
+    //                 queue.offer(node.right);
+    //             }
+    //         }
+
+    //         res.add(temp);
+    //     }
+    //     return res;
+    // }
+
+    /**
+     * Solution 2: Recursion
+     */
     public List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> res = new ArrayList<>();
-        if (root == null) {
-            return res;
-        }
-
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.offer(root);
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            List<Integer> list = new ArrayList<>();
-            for (int i = 0; i < size; ++i) {
-                TreeNode node = queue.poll();
-                list.add(node.val);
-                if (node.left != null) {
-                    queue.offer(node.left);
-                }
-
-                if (node.right != null) {
-                    queue.offer(node.right);
-                }
-            }
-
-            res.add(list);
-        }
+        levelOrder(root, 0, res);
         return res;
+    }
+
+    private void levelOrder(TreeNode node, int level, List<List<Integer>> res) {
+        if (node == null) {
+            return;
+        }
+
+        if (level >= res.size()) {
+            res.add(new ArrayList<>());
+        }
+
+        res.get(level).add(node.val);
+        levelOrder(node.left, level + 1, res);
+        levelOrder(node.right, level + 1, res);
     }
 }
 // @lc code=end
