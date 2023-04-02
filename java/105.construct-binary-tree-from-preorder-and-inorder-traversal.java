@@ -67,29 +67,30 @@ import java.util.Map;
  * }
  */
 class Solution {
-    private int[] preorder;
-    private Map<Integer, Integer> inMap;
-    
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        this.preorder = preorder;
-        inMap = new HashMap<>();
-        for (int i = 0; i < inorder.length; ++i) {
+        Map<Integer, Integer> inMap = new HashMap<>();
+        int N = inorder.length;
+        for (int i = 0; i < N; ++i) {
             inMap.put(inorder[i], i);
         }
-        return buildTree(0, preorder.length - 1, 0, inorder.length - 1);
+        return buildTree(preorder, inMap, 0, N - 1, 0, N - 1);
     }
 
-    private TreeNode buildTree(int leftPre, int rightPre, int leftIn, int rightIn) {
-        if (leftPre > rightPre || leftIn > rightIn) {
+    private TreeNode buildTree(int[] preorder, Map<Integer, Integer> inMap, 
+                               int preLeft, int preRight, 
+                               int inLeft, int inRight) {
+        if (preLeft > preRight) {
             return null;
         }
 
-        int rootVal = preorder[leftPre];
-        int rootIn = inMap.get(rootVal);
-        int leftSize = rootIn - leftIn;
-        TreeNode left = buildTree(leftPre + 1, leftPre + leftSize, leftIn, rootIn - 1);
-        TreeNode right = buildTree(leftPre + leftSize + 1, rightPre, rootIn + 1, rightIn);
-        return new TreeNode(rootVal, left, right);
+        int root = preorder[preLeft];
+        int rootIndex = inMap.get(root);
+        int leftLen = rootIndex - inLeft;
+        TreeNode left = buildTree(preorder, inMap, preLeft + 1, 
+                                  preLeft + leftLen, inLeft, rootIndex - 1);
+        TreeNode right = buildTree(preorder, inMap, preLeft + leftLen + 1, 
+                                   preRight, rootIndex + 1, inRight);
+        return new TreeNode(root, left, right);
     }
 }
 // @lc code=end

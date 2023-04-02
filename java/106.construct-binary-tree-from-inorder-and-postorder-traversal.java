@@ -67,29 +67,30 @@ import java.util.Map;
  * }
  */
 class Solution {
-    private int[] postorder;
-    private Map<Integer, Integer> inMap;
-
     public TreeNode buildTree(int[] inorder, int[] postorder) {
-        this.postorder = postorder;
-        inMap = new HashMap<>();
-        for (int i = 0; i < inorder.length; ++i) {
+        Map<Integer, Integer> inMap = new HashMap<>();
+        int N = inorder.length;
+        for (int i = 0; i < N; ++i) {
             inMap.put(inorder[i], i);
         }
-        return buildTree(0, inorder.length - 1, 0, postorder.length - 1);
+        return buildTree(inMap, postorder, 0, N - 1, 0, N - 1);
     }
 
-    private TreeNode buildTree(int leftIn, int rightIn, int leftPost, int rightPost) {
-        if (leftIn > rightIn || leftPost > rightPost) {
+    private TreeNode buildTree(Map<Integer, Integer> inMap, int[] postorder, 
+                               int inLeft, int inRight, 
+                               int postLeft, int postRight) {
+        if (inLeft > inRight) {
             return null;
         }
-
-        int rootVal = postorder[rightPost];
-        int rootIn = inMap.get(rootVal);
-        int leftSize = rootIn - leftIn;
-        TreeNode left = buildTree(leftIn, rootIn - 1, leftPost, leftPost + leftSize - 1);
-        TreeNode right = buildTree(rootIn + 1, rightIn, leftPost + leftSize, rightPost - 1);
-        return new TreeNode(rootVal, left, right);
+        
+        int root = postorder[postRight];
+        int rootIndex = inMap.get(root);
+        int rightLen = inRight - rootIndex;
+        TreeNode left = buildTree(inMap, postorder, inLeft, rootIndex - 1, 
+                                  postLeft, postRight - rightLen - 1);
+        TreeNode right = buildTree(inMap, postorder, rootIndex + 1, inRight, 
+                                   postRight - rightLen, postRight - 1);
+        return new TreeNode(root, left, right);
     }
 }
 // @lc code=end
