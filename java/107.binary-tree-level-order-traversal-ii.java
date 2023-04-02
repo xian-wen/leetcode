@@ -1,3 +1,6 @@
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -70,32 +73,59 @@ import java.util.Queue;
  * }
  */
 class Solution {
+    // /**
+    //  * Solution 1: Iteration
+    //  */
+    // public List<List<Integer>> levelOrderBottom(TreeNode root) {
+    //     List<List<Integer>> res = new LinkedList<>();
+    //     if (root == null) {
+    //         return res;
+    //     }
+
+    //     Queue<TreeNode> queue = new ArrayDeque<>();
+    //     queue.offer(root);
+    //     while (!queue.isEmpty()) {
+    //         int size = queue.size();
+    //         List<Integer> temp = new ArrayList<>();
+    //         for (int i = 0; i < size; ++i) {
+    //             TreeNode node = queue.poll();
+    //             temp.add(node.val);
+    //             if (node.left != null) {
+    //                 queue.offer(node.left);
+    //             }
+
+    //             if (node.right != null) {
+    //                 queue.offer(node.right);
+    //             }
+    //         }
+
+    //         res.add(0, temp);
+    //     }
+    //     return res;
+    // }
+
+    /**
+     * Solution 2: Recursion
+     */
     public List<List<Integer>> levelOrderBottom(TreeNode root) {
-        List<List<Integer>> res = new LinkedList<>();
-        if (root == null) {
-            return res;
-        }
-
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.offer(root);
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            List<Integer> list = new LinkedList<>();
-            for (int i = 0; i < size; ++i) {
-                TreeNode node = queue.poll();
-                list.add(node.val);
-                if (node.left != null) {
-                    queue.offer(node.left);
-                }
-
-                if (node.right != null) {
-                    queue.offer(node.right);
-                }
-            }
-
-            res.add(0, list);
-        }
+        List<List<Integer>> res = new ArrayList<>();
+        levelOrderBottom(root, 0, res);
+        Collections.reverse(res);
         return res;
+    }
+
+    private void levelOrderBottom(TreeNode node, int level, List<List<Integer>> res) {
+        if (node == null) {
+            return;
+        }
+
+        if (level >= res.size()) {
+            res.add(new ArrayList<>());
+        }
+
+        res.get(level).add(node.val);
+        levelOrderBottom(node.left, level + 1, res);
+        levelOrderBottom(node.right, level + 1, res);
     }
 }
 // @lc code=end
