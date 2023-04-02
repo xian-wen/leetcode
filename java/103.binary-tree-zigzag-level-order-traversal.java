@@ -1,4 +1,5 @@
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
@@ -71,39 +72,71 @@ import java.util.List;
  * }
  */
 class Solution {
+    // /**
+    //  * Solution 1: Iteration
+    //  */
+    // public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+    //     List<List<Integer>> res = new ArrayList<>();
+    //     if (root == null) {
+    //         return res;
+    //     }
+
+    //     Queue<TreeNode> queue = new ArrayDeque<>();
+    //     queue.offer(root);
+    //     int level = 0;
+    //     while (!queue.isEmpty()) {
+    //         int size = queue.size();
+    //         List<Integer> temp = new LinkedList<>();
+    //         for (int i = 0; i < size; ++i) {
+    //             TreeNode node = queue.poll();
+    //             if (level % 2 == 0) {
+    //                 temp.add(node.val);
+    //             } else {
+    //                 temp.add(0, node.val);
+    //             }
+
+    //             if (node.left != null) {
+    //                 queue.offer(node.left);
+    //             }
+
+    //             if (node.right != null) {
+    //                 queue.offer(node.right);
+    //             }
+    //         }
+
+    //         ++level;
+    //         res.add(temp);
+    //     }
+    //     return res;
+    // }
+
+    /**
+     * Solution 2: Recursion
+     */
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-        List<List<Integer>> res = new LinkedList<>();
-        if (root == null) {
-            return res;
-        }
-
-        Deque<TreeNode> queue = new ArrayDeque<>();
-        queue.offer(root);
-        int level = 0;
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            List<Integer> list = new LinkedList<>();
-            for (int i = 0; i < size; ++i) {
-                TreeNode node = queue.poll();
-                if (level % 2 == 0) {
-                    list.add(node.val);
-                } else {
-                    list.add(0, node.val);
-                }
-
-                if (node.left != null) {
-                    queue.offer(node.left);
-                }
-
-                if (node.right != null) {
-                    queue.offer(node.right);
-                }
-            }
-
-            res.add(list);
-            ++level;
-        }
+        List<List<Integer>> res = new ArrayList<>();
+        zigzagLevelOrder(root, 0, res);
         return res;
+    }
+
+    private void zigzagLevelOrder(TreeNode node, int level, 
+                                  List<List<Integer>> res) {
+        if (node == null) {
+            return;
+        }
+
+        if (level >= res.size()) {
+            res.add(new LinkedList<>());
+        }
+
+        if (level % 2 == 0) {
+            res.get(level).add(node.val);
+        } else {
+            res.get(level).add(0, node.val);
+        }
+
+        zigzagLevelOrder(node.left, level + 1, res);
+        zigzagLevelOrder(node.right, level + 1, res);
     }
 }
 // @lc code=end
