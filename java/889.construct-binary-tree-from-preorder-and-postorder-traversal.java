@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /*
@@ -108,6 +110,10 @@ class Solution {
 
     /**
      * Solution 2: No Map
+     * 
+     * Use preorder[i] to construct the tree, and postorder[i] to check whether 
+     * it still has children to be constructed.
+     * postorder[i] means the tree postorder[i] has been constructed already.
      */
     public TreeNode constructFromPrePost(int[] preorder, int[] postorder) {
         TreeNode node = new TreeNode(preorder[pre++]);
@@ -121,6 +127,28 @@ class Solution {
 
         ++post;
         return node;
+    }
+
+    private String treeToString(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+
+        List<String> children = new ArrayList<>();
+        String left = treeToString(root.left);
+        if (left != null) {
+            children.add(left);
+        }
+
+        String right = treeToString(root.right);
+        if (right != null) {
+            children.add(right);
+        }
+
+        if (children.isEmpty()) {
+            return String.format("Tree(%d)", root.val);
+        }
+        return String.format("Tree(%d, %s)", root.val, children);
     }
 }
 // @lc code=end
