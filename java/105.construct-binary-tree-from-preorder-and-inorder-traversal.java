@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /*
@@ -67,30 +69,80 @@ import java.util.Map;
  * }
  */
 class Solution {
+    // /**
+    //  * Solution 1: With Map
+    //  */
+    // public TreeNode buildTree(int[] preorder, int[] inorder) {
+    //     Map<Integer, Integer> inMap = new HashMap<>();
+    //     int N = inorder.length;
+    //     for (int i = 0; i < N; ++i) {
+    //         inMap.put(inorder[i], i);
+    //     }
+    //     return buildTree(preorder, inMap, 0, N - 1, 0, N - 1);
+    // }
+
+    // private TreeNode buildTree(int[] preorder, Map<Integer, Integer> inMap, 
+    //                            int preLeft, int preRight, 
+    //                            int inLeft, int inRight) {
+    //     if (preLeft > preRight) {
+    //         return null;
+    //     }
+
+    //     int root = preorder[preLeft];
+    //     int rootIndex = inMap.get(root);
+    //     int leftLen = rootIndex - inLeft;
+    //     TreeNode left = buildTree(preorder, inMap, preLeft + 1, 
+    //                               preLeft + leftLen, inLeft, rootIndex - 1);
+    //     TreeNode right = buildTree(preorder, inMap, preLeft + leftLen + 1, 
+    //                                preRight, rootIndex + 1, inRight);
+    //     return new TreeNode(root, left, right);
+    // }
+
+    private int pre, in;
+
+    /**
+     * Solution 2: No Map
+     */
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        Map<Integer, Integer> inMap = new HashMap<>();
-        int N = inorder.length;
-        for (int i = 0; i < N; ++i) {
-            inMap.put(inorder[i], i);
-        }
-        return buildTree(preorder, inMap, 0, N - 1, 0, N - 1);
+        return buildTree(preorder, inorder, Integer.MAX_VALUE);
     }
 
-    private TreeNode buildTree(int[] preorder, Map<Integer, Integer> inMap, 
-                               int preLeft, int preRight, 
-                               int inLeft, int inRight) {
-        if (preLeft > preRight) {
+    private TreeNode buildTree(int[] preorder, int[] inorder, int stop) {
+        if (pre >= preorder.length) {
             return null;
         }
 
-        int root = preorder[preLeft];
-        int rootIndex = inMap.get(root);
-        int leftLen = rootIndex - inLeft;
-        TreeNode left = buildTree(preorder, inMap, preLeft + 1, 
-                                  preLeft + leftLen, inLeft, rootIndex - 1);
-        TreeNode right = buildTree(preorder, inMap, preLeft + leftLen + 1, 
-                                   preRight, rootIndex + 1, inRight);
-        return new TreeNode(root, left, right);
+        if (inorder[in] == stop) {
+            ++in;
+            return null;
+        }
+
+        TreeNode node = new TreeNode(preorder[pre++]);
+        node.left = buildTree(preorder, inorder, node.val);
+        node.right = buildTree(preorder, inorder, stop);
+        return node;
+    }
+
+    private String treeToString(TreeNode root) {
+        if(root == null) {
+            return null;
+        }
+
+        List<String> children = new ArrayList<>();
+        String left = treeToString(root.left);
+        if (left != null) {
+            children.add(left);
+        }
+
+        String right = treeToString(root.right);
+        if (right != null) {
+            children.add(right);
+        }
+
+        if (children.isEmpty()) {
+            return String.format("Tree(%d)", root.val);
+        }
+        return String.format("Tree(%d, %s)", root.val, children);
     }
 }
 // @lc code=end
