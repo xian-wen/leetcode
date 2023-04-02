@@ -100,7 +100,7 @@ class Solution {
         return res;
     }
 
-    public void inorderTraversal(TreeNode root, List<Integer> res) {
+    private void inorderTraversal(TreeNode root, List<Integer> res) {
         if (root == null) {
             return;
         }
