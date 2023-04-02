@@ -71,34 +71,56 @@ import java.util.Map;
  * }
  */
 class Solution {
-    public TreeNode constructFromPrePost(int[] preorder, int[] postorder) {
-        Map<Integer, Integer> postMap = new HashMap<>();
-        int N = preorder.length;
-        for (int i = 0; i < N; ++i) {
-            postMap.put(postorder[i], i);
-        }
-        return buildTree(preorder, postMap, 0, N - 1, 0, N - 1);
-    }
+    // /**
+    //  * Solution 1: With Map
+    //  */
+    // public TreeNode constructFromPrePost(int[] preorder, int[] postorder) {
+    //     Map<Integer, Integer> postMap = new HashMap<>();
+    //     int N = preorder.length;
+    //     for (int i = 0; i < N; ++i) {
+    //         postMap.put(postorder[i], i);
+    //     }
+    //     return buildTree(preorder, postMap, 0, N - 1, 0, N - 1);
+    // }
 
-    private TreeNode buildTree(int[] preorder, Map<Integer, Integer> postMap,
-                               int preLeft, int preRight, 
-                               int postLeft, int postRight) {
-        if (preLeft > preRight) {
-            return null;
-        }
+    // private TreeNode buildTree(int[] preorder, Map<Integer, Integer> postMap,
+    //                            int preLeft, int preRight, 
+    //                            int postLeft, int postRight) {
+    //     if (preLeft > preRight) {
+    //         return null;
+    //     }
         
-        if (preLeft == preRight) {
-            return new TreeNode(preorder[preLeft]);
+    //     if (preLeft == preRight) {
+    //         return new TreeNode(preorder[preLeft]);
+    //     }
+
+    //     int root = preorder[preLeft];
+    //     int leftIndex = postMap.get(preorder[preLeft + 1]);
+    //     int leftLen = leftIndex - postLeft + 1;
+    //     TreeNode left = buildTree(preorder, postMap, preLeft + 1, 
+    //                               preLeft + leftLen, postLeft, leftIndex);
+    //     TreeNode right = buildTree(preorder, postMap, preLeft + leftLen + 1, 
+    //                                preRight, leftIndex + 1, postRight - 1);
+    //     return new TreeNode(root, left, right);
+    // }
+
+    private int pre, post;
+
+    /**
+     * Solution 2: No Map
+     */
+    public TreeNode constructFromPrePost(int[] preorder, int[] postorder) {
+        TreeNode node = new TreeNode(preorder[pre++]);
+        if (node.val != postorder[post]) {
+            node.left = constructFromPrePost(preorder, postorder);
         }
 
-        int root = preorder[preLeft];
-        int leftIndex = postMap.get(preorder[preLeft + 1]);
-        int leftLen = leftIndex - postLeft + 1;
-        TreeNode left = buildTree(preorder, postMap, preLeft + 1, 
-                                  preLeft + leftLen, postLeft, leftIndex);
-        TreeNode right = buildTree(preorder, postMap, preLeft + leftLen + 1, 
-                                   preRight, leftIndex + 1, postRight - 1);
-        return new TreeNode(root, left, right);
+        if (node.val != postorder[post]) {
+            node.right = constructFromPrePost(preorder, postorder);
+        }
+
+        ++post;
+        return node;
     }
 }
 // @lc code=end
