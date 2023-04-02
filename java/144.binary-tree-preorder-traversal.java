@@ -1,6 +1,9 @@
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
-import java.util.LinkedList;
 import java.util.List;
+
+import javax.swing.tree.TreeNode;
 
 /*
  * @lc app=leetcode id=144 lang=java
@@ -72,27 +75,48 @@ import java.util.List;
  * }
  */
 class Solution {
+    // /**
+    //  * Solution 1: Iteration
+    //  */
+    // public List<Integer> preorderTraversal(TreeNode root) {
+    //     List<Integer> res = new ArrayList<>();
+    //     if (root == null) {
+    //         return res;
+    //     }
+
+    //     Deque<TreeNode> stack = new ArrayDeque<>();
+    //     stack.push(root);
+    //     while (!stack.isEmpty()) {
+    //         TreeNode node = stack.pop();
+    //         res.add(node.val);
+    //         if (node.right != null) {
+    //             stack.push(node.right);
+    //         }
+
+    //         if (node.left != null) {
+    //             stack.push(node.left);
+    //         }
+    //     }
+    //     return res;
+    // }
+
+    /**
+     * Solution 2: Recursion
+     */
     public List<Integer> preorderTraversal(TreeNode root) {
-        List<Integer> preorder = new LinkedList<>();
-        if (root == null) {
-            return preorder;
-        }
-        
-        Deque<TreeNode> stack = new LinkedList<>();
-        stack.push(root);
-        while (!stack.isEmpty()) {
-            TreeNode node = stack.pop();
-            preorder.add(node.val);
+        List<Integer> res = new ArrayList<>();
+        preorder(root, res);
+        return res;
+    }
 
-            if (node.right != null) {
-                stack.push(node.right);
-            }
-
-            if (node.left != null) {
-                stack.push(node.left);
-            }
+    private void preorder(TreeNode node, List<Integer> res) {
+        if (node == null) {
+            return;
         }
-        return preorder;
+
+        res.add(node.val);
+        preorder(node.left, res);
+        preorder(node.right, res);
     }
 }
 // @lc code=end
