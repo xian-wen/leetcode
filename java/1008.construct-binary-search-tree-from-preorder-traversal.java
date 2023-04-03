@@ -77,7 +77,7 @@ class Solution {
     // private int pre, in;
 
     // /**
-    //  * Solution 1: Sort to get inorder
+    //  * Solution 1: Sort to Get Inorder
     //  */
     // public TreeNode bstFromPreorder(int[] preorder) {
     //     int[] inorder = preorder.clone();
@@ -104,28 +104,69 @@ class Solution {
     //     return node;
     // }
 
+    // /**
+    //  * Solution 2: No Sort
+    //  */
+    // public TreeNode bstFromPreorder(int[] preorder) {
+    //     return bstFromPreorder(preorder, 0, preorder.length - 1);
+    // }
+
+    // private TreeNode bstFromPreorder(int[] preorder, int start, int end) {
+    //     if (start > end) {
+    //         return null;
+    //     }
+
+    //     int root = preorder[start];
+    //     int rightIndex = start + 1;
+    //     // Find the index of the right child.
+    //     while (rightIndex <= end && preorder[rightIndex] < root) {
+    //         ++rightIndex;
+    //     }
+
+    //     TreeNode left = bstFromPreorder(preorder, start + 1, rightIndex - 1);
+    //     TreeNode right = bstFromPreorder(preorder, rightIndex, end);
+    //     return new TreeNode(root, left, right);
+    // }
+
+    // private int pre;
+
+    // /**
+    //  * Solution 3: MIN and MAX
+    //  */
+    // public TreeNode bstFromPreorder(int[] preorder) {
+    //     return bstFromPreorder(preorder, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    // }
+
+    // private TreeNode bstFromPreorder(int[] preorder, int min, int max) {
+    //     if (pre == preorder.length || preorder[pre] < min 
+    //             || preorder[pre] > max) {
+    //         return null;
+    //     }
+
+    //     TreeNode node = new TreeNode(preorder[pre++]);
+    //     node.left = bstFromPreorder(preorder, min, node.val);
+    //     node.right = bstFromPreorder(preorder, node.val, max);
+    //     return node;
+    // }
+
+    private int pre;
+
     /**
-     * Solution 2: No Sort
+     * Solution 4: MAX Only
      */
     public TreeNode bstFromPreorder(int[] preorder) {
-        return bstFromPreorder(preorder, 0, preorder.length - 1);
+        return bstFromPreorder(preorder, Integer.MAX_VALUE);
     }
 
-    private TreeNode bstFromPreorder(int[] preorder, int start, int end) {
-        if (start > end) {
+    private TreeNode bstFromPreorder(int[] preorder, int max) {
+        if (pre == preorder.length || preorder[pre] > max) {
             return null;
         }
 
-        int root = preorder[start];
-        int rightIndex = start + 1;
-        // Find the index of the right child.
-        while (rightIndex <= end && preorder[rightIndex] < root) {
-            ++rightIndex;
-        }
-
-        TreeNode left = bstFromPreorder(preorder, start + 1, rightIndex - 1);
-        TreeNode right = bstFromPreorder(preorder, rightIndex, end);
-        return new TreeNode(root, left, right);
+        TreeNode node = new TreeNode(preorder[pre++]);
+        node.left = bstFromPreorder(preorder, node.val);
+        node.right = bstFromPreorder(preorder, max);
+        return node;
     }
 }
 // @lc code=end
