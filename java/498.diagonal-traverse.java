@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /*
  * @lc app=leetcode id=498 lang=java
  *
@@ -40,35 +42,64 @@
  * 
  */
 class Solution {
-    public int[] findDiagonalOrder(int[][] matrix) {
-        if (matrix.length == 0) return new int[0]; // empty array
+    // /**
+    //  * Solution 1
+    //  */
+    // public int[] findDiagonalOrder(int[][] mat) {
+    //     int M = mat.length, N = mat[0].length, i = 0;
+    //     int[] res = new int[M * N];
+    //     for (int diagSum = 0; diagSum < M + N - 1; ++diagSum) {
+    //         for (int r = 0; r <= diagSum; ++r) {
+    //             int row = r;
+    //             int col = diagSum - r;
+    //             if (diagSum % 2 == 0) {
+    //                 int temp = row;
+    //                 row = col;
+    //                 col = temp;
+    //             }
 
-        final int M = matrix.length;  // M rows
-        final int N = matrix[0].length;  // N cols
+    //             if (row >= M || col >= N) {
+    //                 continue;
+    //             }
 
+    //             res[i++] = mat[row][col];
+    //         }
+    //     }
+    //     return res;
+    // }
+
+    /**
+     * Solution 2
+     */
+    public int[] findDiagonalOrder(int[][] mat) {
+        int M = mat.length, N = mat[0].length, row = 0, col = 0;
         int[] res = new int[M * N];
-        int index = 0;
-        for (int s = 0; s <= M + N - 2; ++s) { // s: the first row and the last col
-            for (int x = 0; x <= s; ++x) {
-                // for all i + j = s
-                int i = x;
-                int j = s - x;
-
-                // when s is an even, swap(i, j)               
-                if (s % 2 == 0) { // i == i ^ j ^ j
-                    i = i ^ j;
-                    j = i ^ j;
-                    i = i ^ j;
+        for (int i = 0; i < res.length; ++i) {
+            res[i] = mat[row][col];
+            if ((row + col) % 2 == 0) {  // Move up
+                // The order matters!!!
+                // When row = 0 and col = N - 1, move to the next row.
+                if (col == N - 1) {
+                    ++row;
+                } else if (row == 0) {
+                    ++col;
+                } else {
+                    --row;
+                    ++col;
                 }
-
-                // overflow
-                if (i >= M || j >= N) continue;
-
-                res[index++] = matrix[i][j];
+            } else {  // Move down
+                // The order matters!!!
+                // When row = M - 1 and col = 0, move to the next col.
+                if (row == M - 1) {
+                    ++col;
+                } else if (col == 0) {
+                    ++row;
+                } else {
+                    ++row;
+                    --col;
+                }
             }
         }
-    
         return res;
     }
 }
-
