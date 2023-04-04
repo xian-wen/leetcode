@@ -63,27 +63,49 @@ import java.util.Deque;
  * 
  */
 class Solution {
+    // /**
+    //  * Solution 1
+    //  */
+    // public boolean isValid(String s) {
+    //     Deque<Character> stack = new ArrayDeque<>();
+    //     for (char c : s.toCharArray()) {
+    //         if (stack.isEmpty()) {
+    //             stack.push(c);
+    //             continue;
+    //         }
+            
+    //         if (isMatch(stack.peek(), c)) {
+    //             stack.pop();
+    //         } else {
+    //             stack.push(c);
+    //         }
+    //     }
+    //     return stack.isEmpty();
+    // }
+
+    // private boolean isMatch(char c1, char c2) {
+    //     return (c1 == '(' && c2 == ')')
+    //             || (c1 == '[' && c2 == ']')
+    //             || (c1 == '{' && c2 == '}');
+    // }
+
+    /**
+     * Solution 2
+     */
     public boolean isValid(String s) {
         Deque<Character> stack = new ArrayDeque<>();
         for (char c : s.toCharArray()) {
-            if (stack.isEmpty()) {
-                stack.push(c);
-                continue;
-            }
-            
-            if (isMatch(stack.peek(), c)) {
-                stack.pop();
-            } else {
-                stack.push(c);
+            if (c == '(') {
+                stack.push(')');
+            } else if (c == '[') {
+                stack.push(']');
+            } else if (c == '{') {
+                stack.push('}');
+            } else if (stack.isEmpty() || stack.pop() != c) {
+                return false;
             }
         }
         return stack.isEmpty();
-    }
-
-    private boolean isMatch(char c1, char c2) {
-        return (c1 == '(' && c2 == ')')
-                || (c1 == '[' && c2 == ']')
-                || (c1 == '{' && c2 == '}');
     }
 }
 
