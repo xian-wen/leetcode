@@ -9,7 +9,15 @@ class Solution {
     // /**
     //  * Solution 1
     //  * 
-    //  * count = # ')' we need.
+    //  * countMin: # '(' must be paired
+    //  * countMax: # '(' could be paired
+    //  * 
+    //  * countMin: count '*' as ')'
+    //  * countMax: count '*' as '('
+    //  * 
+    //  * countMin must not < 0:
+    //  * ')' should not match '(' after it,
+    //  * i.e., )( or *(
     //  */
     // public boolean checkValidString(String s) {
     //     int countMin = 0, countMax = 0;
