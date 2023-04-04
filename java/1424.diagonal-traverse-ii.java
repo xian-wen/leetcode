@@ -14,33 +14,7 @@ import java.util.Queue;
 // @lc code=start
 class Solution {
     // /**
-    //  * Solution 1: BFS
-    //  */
-    // public int[] findDiagonalOrder(List<List<Integer>> nums) {
-    //     List<Integer> res = new ArrayList<>();
-    //     Queue<int[]> queue = new ArrayDeque<>();
-    //     queue.offer(new int[] {0, 0});
-    //     int M = nums.size();
-    //     while (!queue.isEmpty()) {
-    //         int[] indices = queue.poll();
-    //         int row = indices[0], col = indices[1];
-    //         res.add(nums.get(row).get(col));
-
-    //         // Add below for num at col 0.
-    //         if (col == 0 && row < M - 1) {
-    //             queue.offer(new int[] {row + 1, col});
-    //         }
-
-    //         // Add right.
-    //         if (col < nums.get(row).size() - 1) {
-    //             queue.offer(new int[] {row, col + 1});
-    //         }
-    //     }
-    //     return res.stream().mapToInt(Integer::intValue).toArray();
-    // }
-
-    // /**
-    //  * Solution 2: Map
+    //  * Solution 1: Map
     //  */
     // public int[] findDiagonalOrder(List<List<Integer>> nums) {
     //     // diagSum -> list of nums in the diag
@@ -67,7 +41,7 @@ class Solution {
     // }
 
     /**
-     * Solution 3: List
+     * Solution 2: List
      */
     public int[] findDiagonalOrder(List<List<Integer>> nums) {
         // diagSum -> list of nums in the diag
@@ -95,6 +69,32 @@ class Solution {
         }
         return res;
     }
+
+    // /**
+    //  * Solution 3: BFS
+    //  */
+    // public int[] findDiagonalOrder(List<List<Integer>> nums) {
+    //     List<Integer> res = new ArrayList<>();
+    //     Queue<int[]> queue = new ArrayDeque<>();
+    //     queue.offer(new int[] {0, 0});
+    //     int M = nums.size();
+    //     while (!queue.isEmpty()) {
+    //         int[] indices = queue.poll();
+    //         int row = indices[0], col = indices[1];
+    //         res.add(nums.get(row).get(col));
+
+    //         // Add below for num at col 0.
+    //         if (col == 0 && row < M - 1) {
+    //             queue.offer(new int[] {row + 1, col});
+    //         }
+
+    //         // Add right.
+    //         if (col < nums.get(row).size() - 1) {
+    //             queue.offer(new int[] {row, col + 1});
+    //         }
+    //     }
+    //     return res.stream().mapToInt(Integer::intValue).toArray();
+    // }
 }
 // @lc code=end
 
