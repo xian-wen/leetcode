@@ -1,5 +1,9 @@
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Queue;
+import java.util.Set;
 
 /*
  * @lc app=leetcode id=301 lang=java
@@ -57,12 +61,69 @@ import java.util.List;
 
 // @lc code=start
 class Solution {
+    // /**
+    //  * Solution 1: BFS
+    //  */
+    // public List<String> removeInvalidParentheses(String s) {
+    //     List<String> res = new ArrayList<>();
+    //     Set<String> visited = new HashSet<>();
+    //     Queue<String> queue = new ArrayDeque<>();
+    //     queue.offer(s);
+    //     visited.add(s);
+    //     boolean found = false;
+    //     while (!queue.isEmpty()) {
+    //         String str = queue.poll();
+    //         if (isValid(str)) {
+    //             res.add(str);
+    //             found = true;
+    //         }
+
+    //         // Once found, no need to remove.
+    //         if (found) {
+    //             continue;
+    //         }
+
+    //         int N = str.length();
+    //         for (int i = 0; i < N; ++i) {
+    //             char c = str.charAt(i);
+    //             if (c != '(' && c != ')') {  // c is letter.
+    //                 continue;
+    //             }
+
+    //             String removed = str.substring(0, i) + str.substring(i + 1);
+    //             if (!visited.contains(removed)) {
+    //                 queue.offer(removed);
+    //                 visited.add(removed);
+    //             }
+    //         }
+    //     }
+    //     return res;
+    // }
+
+    // private boolean isValid(String s) {
+    //     int count = 0;
+    //     for (char c : s.toCharArray()) {
+    //         if (c == '(') {
+    //             ++count;
+    //         } else if (c == ')') {
+    //             if (count == 0) {
+    //                 return false;
+    //             }
+
+    //             --count;
+    //         }
+    //     }
+    //     return count == 0;
+    // }
+
+    /**
+     * Solution 2: DFS
+     */
     public List<String> removeInvalidParentheses(String s) {
-        // Set to remove duplicates.
         List<String> res = new ArrayList<>();
         char[] par = new char[] {'(', ')'};
         remove(s, par, 0, 0, res);
-        return new ArrayList<>(res);
+        return res;
     }
 
     private void remove(String s, char[] par, int left, int right, 
@@ -86,10 +147,10 @@ class Solution {
 
             // Invalid parenthesis found, remove it.
             // There might be multiple different left could be removed, each of
-            // them corresponding to a valid result.
+            // which corresponding to a valid result.
             while (left <= right) {
-                // For cases like "())()", only remove the invalid itself,
-                // i.e., the second ')', to avoid duplicates of "()()".
+                // For cases like "())()", only remove the first invalid ')',
+                // to avoid duplicates of "()()".
                 if (s.charAt(left) != par[1] 
                         || left > 0 && s.charAt(left - 1) == par[1]) {
                     ++left;
@@ -102,7 +163,6 @@ class Solution {
                 remove(removed, par, left, right, res);
                 ++left;
             }
-
             // After all invalid parentheses have been removed, return.
             return;
         }
