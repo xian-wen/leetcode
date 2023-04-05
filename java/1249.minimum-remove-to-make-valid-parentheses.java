@@ -13,8 +13,8 @@ class Solution {
     //  * Solution 1: Stack
     //  */
     // public String minRemoveToMakeValid(String s) {
-    //     char[] chars = s.toCharArray();
     //     Deque<Integer> stack = new ArrayDeque<>();
+    //     char[] chars = s.toCharArray();
     //     int N = chars.length;
     //     for (int i = 0; i < N; ++i) {
     //         char c = chars[i];
@@ -24,11 +24,13 @@ class Solution {
     //             if (!stack.isEmpty()) {
     //                 stack.pop();
     //             } else {
+    //                 // Invalid ')'.
     //                 chars[i] = '*';
     //             }
     //         }
     //     }
 
+    //     // Invalid '('.
     //     while (!stack.isEmpty()) {
     //         chars[stack.pop()] = '*';
     //     }
