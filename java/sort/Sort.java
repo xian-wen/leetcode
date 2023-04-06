@@ -171,7 +171,7 @@ public class Sort {
             }
 
             // Find the first j such that arr[j] <= sentinel.
-            // Avoid <= !!!
+            // Avoid >= !!!
             while (arr[--j] > sentinel) {
                 if (j == lo) {
                     break;
