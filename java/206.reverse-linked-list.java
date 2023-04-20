@@ -63,39 +63,41 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
-// Iterative:
-// class Solution {
-//     public ListNode reverseList(ListNode head) {
-//         ListNode reversed = null;
-//         while (head != null) {
-//             ListNode next = head.next;
-//             head.next = reversed;
-//             reversed = head;
-//             head = next;
-//         }
-//         return reversed;
-//     }
-// }
-
-// Recursive 1:
-// class Solution {
-//     public ListNode reverseList(ListNode head) {
-//         return reverseList(head, null);
-//     }
-
-//     private ListNode reverseList(ListNode cur, ListNode reversed) {
-//         if (cur == null) {
-//             return reversed;
-//         }
-
-//         ListNode next = cur.next;
-//         cur.next = reversed;
-//         return reverseList(next, cur);
-//     }
-// }
-
-// Recursive 2:
 class Solution {
+    // /**
+    //  * Solution 1: Iteration
+    //  */
+    // public ListNode reverseList(ListNode head) {
+    //     ListNode reversed = null;
+    //     while (head != null) {
+    //         ListNode next = head.next;
+    //         head.next = reversed;
+    //         reversed = head;
+    //         head = next;
+    //     }
+    //     return reversed;
+    // }
+
+    // /**
+    //  * Solution 2: Recursion I
+    //  */
+    // public ListNode reverseList(ListNode head) {
+    //     return reverseList(head, null);
+    // }
+
+    // private ListNode reverseList(ListNode cur, ListNode reversed) {
+    //     if (cur == null) {
+    //         return reversed;
+    //     }
+
+    //     ListNode next = cur.next;
+    //     cur.next = reversed;
+    //     return reverseList(next, cur);
+    // }
+
+    /**
+     * Solution 3: Recursion II
+     */
     public ListNode reverseList(ListNode head) {
         if (head == null || head.next == null) {
             return head;
