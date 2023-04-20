@@ -187,7 +187,7 @@ public class Sort {
         }
 
         // If i < j before break, i.e., i > j after break, then after swap,
-        // arr[j] < sentinel, arr[i] > sentinel, so only j not i can be swapped.
+        // arr[j] <= sentinel, arr[i] >= sentinel, so only j not i can be swapped.
         swap(arr, lo, j);
         return j;
     }
