@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /*
  * @lc app=leetcode id=204 lang=java
  *
@@ -50,22 +52,49 @@
 
 // @lc code=start
 class Solution {
+    // /**
+    //  * Solution 1: Use long
+    //  * 
+    //  * Sieve of Eratosthenes:
+    //  * https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
+    //  */
+    // public int countPrimes(int n) {
+    //     boolean[] sieved = new boolean[n];
+    //     int count = 0;
+    //     for (int i = 2; i < n; ++i) {
+    //         if (!sieved[i]) {
+    //             ++count;
+    //             // Exclude all multiples of i.
+    //             // Note: when n = 5e6, j = 2.5e13 < 0 (2's complete) < n,
+    //             // out of bounds of sieved!!!
+    //             for (long j = (long) i * i; j < n; j += i) {
+    //                 sieved[(int) j] = true;
+    //             }
+    //         }
+    //     }
+    //     return count;
+    // }
+
     /**
-     * Sieve of Eratosthenes:
-     * https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
+     * Solution 2: No long
      */
     public int countPrimes(int n) {
-        boolean[] sieved = new boolean[n];
+        boolean[] isPrime = new boolean[n];
+        Arrays.fill(isPrime, true);
+        int end = (int) Math.sqrt(n);
+        for (int i = 2; i <= end; ++i) {
+            if (isPrime[i]) {
+                // Mark all multiples of i as not prime.
+                for (int j = i * i; j < n; j += i) {
+                    isPrime[j] = false;
+                }
+            }
+        }
+
         int count = 0;
         for (int i = 2; i < n; ++i) {
-            if (!sieved[i]) {
+            if (isPrime[i]) {
                 ++count;
-                // Exclude all multiples of i.
-                // Note: when n = 5e6, j = 2.5e13 < 0 (2's complete) < n,
-                // out of bounds of sieved!!!
-                for (long j = (long) i * i; j < n; j += i) {
-                    sieved[(int) j] = true;
-                }
             }
         }
         return count;
