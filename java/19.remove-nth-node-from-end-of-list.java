@@ -65,27 +65,50 @@
  * }
  */
 class Solution {
+    // /**
+    //  * Solution 1
+    //  */
+    // public ListNode removeNthFromEnd(ListNode head, int n) {
+    //     ListNode front = head;
+    //     while (n > 0) {
+    //         front = front.next;
+    //         --n;
+    //     }
+
+    //     if (front == null) {
+    //         return head.next;
+    //     }
+
+    //     ListNode back = head;
+    //     while (front.next != null) {
+    //         front = front.next;
+    //         back = back.next;
+    //     }
+
+    //     ListNode deleted = back.next;
+    //     back.next = back.next.next;
+    //     deleted.next = null;
+    //     return head;
+    // }
+
+    /**
+     * Solution 2
+     */
     public ListNode removeNthFromEnd(ListNode head, int n) {
-        ListNode front = head;
+        ListNode dummy = new ListNode(-1, head), front = dummy;
         while (n > 0) {
             front = front.next;
             --n;
         }
 
-        if (front == null) {
-            return head.next;
-        }
-
-        ListNode back = head;
+        ListNode back = dummy;
         while (front.next != null) {
             front = front.next;
             back = back.next;
         }
 
-        ListNode deleted = back.next;
         back.next = back.next.next;
-        deleted.next = null;
-        return head;
+        return dummy.next;
     }
 }
 // @lc code=end
