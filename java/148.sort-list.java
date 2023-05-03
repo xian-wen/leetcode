@@ -65,7 +65,7 @@
  */
 class Solution {
     // /**
-    //  * Solution 1: Recursion.
+    //  * Solution 1: Recursion
     //  */
     // public ListNode sortList(ListNode head) {
     //     if (head == null || head.next == null) {
@@ -89,25 +89,38 @@ class Solution {
     // }
 
     /**
-     * Solution 2: MergeSort.
+     * Solution 2: MergeSort
      */
     public ListNode sortList(ListNode head) {
-        if (head == null || head.next == null) {
+        if (isSorted(head)) {
             return head;
         }
 
-        // Split head into 2 lists.
-        ListNode prev = null, slow = head, fast = head;
-        while (fast != null && fast.next != null) {
-            prev = slow;
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-        prev.next = null;
+        ListNode mid = middle(head, head);
+        ListNode rightHead = mid.next;
+        mid.next = null;
 
-        ListNode list1 = sortList(head);
-        ListNode list2 = sortList(slow);
-        return merge2Lists(list1, list2);
+        ListNode left = sortList(head);
+        ListNode right = sortList(rightHead);
+        return merge2Lists(left, right);
+    }
+
+    private boolean isSorted(ListNode head) {
+        if (head == null || head.next == null) {
+            return true;
+        }
+
+        if (head.val > head.next.val) {
+            return false;
+        }
+        return isSorted(head.next);
+    }
+
+    private ListNode middle(ListNode fast, ListNode slow) {
+        if (fast.next == null || fast.next.next == null) {
+            return slow;
+        }
+        return middle(fast.next.next, slow.next);
     }
 
     private ListNode merge2Lists(ListNode list1, ListNode list2) {
