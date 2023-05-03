@@ -124,13 +124,9 @@ class Solution {
      * Solution 3: Recursion
      */
     public boolean isPalindrome(ListNode head) {
-        if (head == null || head.next == null) {
-            return true;
-        }
-    
-        ListNode middle = findMiddle(head, head);
-        middle = reverse(middle);
-        return isPalindrome(head, middle);
+        ListNode mid = middle(head, head);
+        mid = reverse(mid);
+        return isEqual(head, mid);
     }
     
     private void print(ListNode head) {
@@ -142,11 +138,11 @@ class Solution {
         print(head.next);
     }
     
-    private ListNode findMiddle(ListNode slow, ListNode fast) {
+    private ListNode middle(ListNode slow, ListNode fast) {
         if (fast == null || fast.next == null) {
             return slow;
         }
-        return findMiddle(slow.next, fast.next.next);
+        return middle(slow.next, fast.next.next);
     }
     
     private ListNode reverse(ListNode head) {
@@ -160,15 +156,15 @@ class Solution {
         return reversed;
     }
     
-    private boolean isPalindrome(ListNode head1, ListNode head2) {
-        if (head1 == null || head2 == null) {
+    private boolean isEqual(ListNode list1, ListNode list2) {
+        if (list1 == null || list2 == null) {
             return true;
         }
     
-        if (head1.val != head2.val) {
+        if (list1.val != list2.val) {
             return false;
         }
-        return isPalindrome(head1.next, head2.next);
+        return isEqual(list1.next, list2.next);
     }
 }
 // @lc code=end
