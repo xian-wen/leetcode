@@ -95,23 +95,46 @@ class Solution {
     //     }
     // }
 
-    private TreeNode pre = null;
+    // private TreeNode prev = null;
+
+    // /**
+    //  * Solution 2: Recursion
+    //  * 
+    //  * Reversed preorder (right, left, root).
+    //  */
+    // public void flatten(TreeNode root) {
+    //     if (root == null) {
+    //         return;
+    //     }
+
+    //     flatten(root.right);
+    //     flatten(root.left);
+
+    //     root.right = prev;
+    //     root.left = null;
+    //     prev = root;
+    // }
 
     /**
-     * Solution 2: Recursion
+     * Solution 3: Recursion without global variable
      * 
      * Reversed preorder (right, left, root).
      */
     public void flatten(TreeNode root) {
+        root = flatten(root, null);
+    }
+
+    private TreeNode flatten(TreeNode root, TreeNode prev) {
         if (root == null) {
-            return;
+            return prev;
         }
 
-        flatten(root.right);
-        flatten(root.left);
-        root.right = pre;
+        TreeNode right = flatten(root.right, prev);
+        TreeNode left = flatten(root.left, right);
+
+        root.right = left;
         root.left = null;
-        pre = root;
+        return root;
     }
 }
 // @lc code=end
