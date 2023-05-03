@@ -121,53 +121,51 @@
  *     }
  * }
  */
-// public class Solution {
-//     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-//         if (headA == null || headB == null) {
-//             return null;
-//         }
-
-//         int lengthA = length(headA);
-//         int lengthB = length(headB);
-//         if (lengthA > lengthB) {
-//             headA = walk(headA, lengthA - lengthB);
-//         } else if (lengthA < lengthB) {
-//             headB = walk(headB, lengthB - lengthA);
-//         }
-
-//         return getIntersection(headA, headB);
-//     }
-
-//     private int length(ListNode head) {
-//         if (head == null) {
-//             return 0;
-//         }
-
-//         return length(head.next) + 1;
-//     }
-
-//     private ListNode walk(ListNode head, int steps) {
-//         if (head == null || steps == 0) {
-//             return head;
-//         }
-
-//         return walk(head.next, steps - 1);
-//     }
-
-//     private ListNode getIntersection(ListNode headA, ListNode headB) {
-//         if (headA == null || headB == null) {
-//             return null;
-//         }
-
-//         if (headA == headB) {
-//             return headA;
-//         }
-
-//         return getIntersection(headA.next, headB.next);
-//     }
-// }
-
 public class Solution {
+    // public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+    //     if (headA == null || headB == null) {
+    //         return null;
+    //     }
+
+    //     int lengthA = length(headA);
+    //     int lengthB = length(headB);
+    //     if (lengthA > lengthB) {
+    //         headA = walk(headA, lengthA - lengthB);
+    //     } else if (lengthA < lengthB) {
+    //         headB = walk(headB, lengthB - lengthA);
+    //     }
+
+    //     return getIntersection(headA, headB);
+    // }
+
+    // private int length(ListNode head) {
+    //     if (head == null) {
+    //         return 0;
+    //     }
+
+    //     return length(head.next) + 1;
+    // }
+
+    // private ListNode walk(ListNode head, int steps) {
+    //     if (head == null || steps == 0) {
+    //         return head;
+    //     }
+
+    //     return walk(head.next, steps - 1);
+    // }
+
+    // private ListNode getIntersection(ListNode headA, ListNode headB) {
+    //     if (headA == null || headB == null) {
+    //         return null;
+    //     }
+
+    //     if (headA == headB) {
+    //         return headA;
+    //     }
+
+    //     return getIntersection(headA.next, headB.next);
+    // }
+
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
         if (headA == null || headB == null) {
             return null;
