@@ -69,6 +69,8 @@ class Solution {
 
     /**
      * Solution 2: KMP
+     * 
+     * Ref: https://en.wikipedia.org/wiki/Knuth-Morris-Pratt_algorithm
      */
     public int strStr(String haystack, String needle) {
         int[] lps = longestPrefixSuffix(needle);
