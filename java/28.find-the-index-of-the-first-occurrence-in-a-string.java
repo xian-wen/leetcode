@@ -47,26 +47,69 @@
 
 // @lc code=start
 class Solution {
-    public int strStr(String haystack, String needle) {
-        if (needle.isEmpty()) {
-            return 0; // needle is empty
-        } 
+    // /**
+    //  * Solution 1: Brute Force
+    //  */
+    // public int strStr(String haystack, String needle) {
+    //     int N = haystack.length(), M = needle.length(), i, j;
+    //     for (i = 0, j = 0; i < N && j < M; ++i) {
+    //         if (haystack.charAt(i) == needle.charAt(j)) {
+    //             ++j;
+    //         } else {
+    //             i -= j;
+    //             j = 0;
+    //         }
+    //     }
 
-        // to avoid overflow, max i is the minus of the two length
-        for (int i = 0; i <= haystack.length() - needle.length(); i++) {
-            int j = 0;
-            for (; j < needle.length(); j++) {
-                if (haystack.charAt(i + j) != needle.charAt(j)) { // not match
-                    break;
+    //     if (j == M) {
+    //         return i - M;
+    //     }
+    //     return -1;
+    // }
+
+    /**
+     * Solution 2: KMP
+     */
+    public int strStr(String haystack, String needle) {
+        int[] lps = longestPrefixSuffix(needle);
+        int N = haystack.length(), M = needle.length(), i = 0, j = 0;
+        while (i < N) {
+            if (haystack.charAt(i) == needle.charAt(j)) {
+                ++i;
+                ++j;
+                if (j == M) {
+                    return i - j;
+                }
+            } else {
+                j = lps[j];
+                if (j < 0) {
+                    ++i;
+                    ++j;
+                }
+            }
+        }
+        return -1;
+    }
+
+    private int[] longestPrefixSuffix(String needle) {
+        int M = needle.length();
+        int[] lps = new int[M];
+        lps[0] = -1;
+        int j = 1, cnd = 0;
+        while (j < M) {
+            if (needle.charAt(j) == needle.charAt(cnd)) {
+                lps[j] = lps[cnd];
+            } else {
+                lps[j] = cnd;
+                while (cnd >= 0 && needle.charAt(j) != needle.charAt(cnd)) {
+                    cnd = lps[cnd];
                 }
             }
 
-            if (j == needle.length()) {
-                return i; // match
-            }
+            ++j;
+            ++cnd;
         }
-
-        return -1; // not match
+        return lps;
     }
 }
 // @lc code=end
