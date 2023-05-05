@@ -19,8 +19,8 @@ class Solution {
     public ListNode[] splitListToParts(ListNode head, int k) {
         ListNode[] res = new ListNode[k];
         int len = length(head);
-        // The first remainder lists have (average + 1) nodes in each part,
-        // the rest lists have average nodes in each part.
+        // The first remainder lists each have (average + 1) nodes,
+        // the rest lists each have average nodes.
         int average = len / k, remainder = len % k, size = average;
         for (int i = 0; i < k; ++i) {
             if (i >= remainder) {
