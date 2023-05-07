@@ -51,8 +51,10 @@ class Solution {
         
     //     int[] res = new int[N];
     //     for (int i = 0; i < N; ++i) {
+    //         // First greater num in [i+1, N-1].
     //         int gt = queryGreater(nums[i], i + 1, 0, N - 1, 0);
     //         if (gt != -1) {
+    //             // Second greater number in [first+1, N-1].
     //             gt = queryGreater(nums[i], gt + 1, 0, N - 1, 0);
     //         }
 
