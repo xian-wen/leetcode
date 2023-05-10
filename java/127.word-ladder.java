@@ -31,9 +31,14 @@ class Solution {
     //                 return level;
     //             }
             
+    //             char[] chars = curr.toCharArray();
     //             for (int j = 0; j < N; ++j) {
-    //                 char[] chars = curr.toCharArray();
+    //                 char old = chars[j];
     //                 for (char c = 'a'; c <= 'z'; ++c) {
+    //                     if (c == old) {
+    //                         continue;
+    //                     }
+                        
     //                     chars[j] = c;
     //                     String next = String.valueOf(chars);
     //                     if (wordSet.contains(next)) {
@@ -41,6 +46,8 @@ class Solution {
     //                         wordSet.remove(next);
     //                     }
     //                 }
+
+    //                 chars[j] = old;
     //             }
     //         }
 
@@ -78,9 +85,14 @@ class Solution {
 
             Set<String> temp = new HashSet<>();
             for (String word : beginSet) {
+                char[] chars = word.toCharArray();
                 for (int i = 0; i < N; ++i) {
-                    char[] chars = word.toCharArray();
+                    char old = chars[i];
                     for (char c = 'a'; c <= 'z'; ++c) {
+                        if (c == old) {
+                            continue;
+                        }
+                        
                         chars[i] = c;
                         String next = String.valueOf(chars);
                         if (endSet.contains(next)) {
@@ -93,6 +105,8 @@ class Solution {
                             wordSet.remove(next);
                         }
                     }
+
+                    chars[i] = old;
                 }
             }
 
