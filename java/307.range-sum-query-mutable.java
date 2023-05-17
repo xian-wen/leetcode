@@ -66,33 +66,116 @@
 
 // @lc code=start
 class NumArray {
-    private int[] nums;
-    private int N;
+    // private int[] seg;
+    // private int n;
+
+    // /**
+    //  * Solution 1: Segment Tree
+    //  */
+    // public NumArray(int[] nums) {
+    //     n = nums.length;
+    //     seg = new int[4 * n];
+    //     build(nums, 0, n - 1, 0);
+    // }
+
+    // private void build(int[] nums, int lo, int hi, int i) {
+    //     if (lo == hi) {
+    //         seg[i] = nums[lo];
+    //         return;
+    //     }
+
+    //     int mid = lo + (hi - lo) / 2;
+    //     build(nums, lo, mid, 2 * i + 1);
+    //     build(nums, mid + 1, hi, 2 * i + 2);
+    //     seg[i] = seg[2 * i + 1] + seg[2 * i + 2];
+    // }
+    
+    // public void update(int index, int val) {
+    //     update(index, val, 0, n - 1, 0);
+    // }
+
+    // private void update(int idx, int val, int lo, int hi, int i) {
+    //     if (lo == hi) {
+    //         seg[i] = val;
+    //         return;
+    //     }
+
+    //     int mid = lo + (hi - lo) / 2;
+    //     if (idx <= mid) {
+    //         update(idx, val, lo, mid, 2 * i + 1);
+    //     } else {
+    //         update(idx, val, mid + 1, hi, 2 * i + 2);
+    //     }
+
+    //     seg[i] = seg[2 * i + 1] + seg[2 * i + 2];
+    // }
+    
+    // public int sumRange(int left, int right) {
+    //     return query(left, right, 0, n - 1, 0);
+    // }
+
+    // private int query(int qLo, int qHi, int lo, int hi, int i) {
+    //     if (qLo > hi || qHi < lo) {
+    //         return 0;
+    //     }
+        
+    //     if (qLo <= lo && qHi >= hi) {
+    //         return seg[i];
+    //     }
+        
+    //     int mid = lo + (hi - lo) / 2;
+    //     int leftSum = query(qLo, qHi, lo, mid, 2 * i + 1);
+    //     int rightSum = query(qLo, qHi, mid + 1, hi, 2 * i + 2);
+    //     return leftSum + rightSum;
+    // }
+
+    private int[] bit;
 
     /**
-     * sum[i] = sumRrange(0, i-1)
+     * Solution 2: Binary Indexed Tree
      */
-    private int[] sum;
-
     public NumArray(int[] nums) {
-        this.nums = nums;
-        N = nums.length;
-        sum = new int[N + 1];
-        sum[0] = 0;
+        int N = nums.length;
+        bit = new int[N + 1];
+        build(nums);
+    }
+
+    private void build(int[] nums) {
+        int N = nums.length;
+        System.arraycopy(nums, 0, bit, 1, N);
         for (int i = 1; i <= N; ++i) {
-            sum[i] = sum[i - 1] + nums[i - 1];
+            int j = i + lastSetBit(i);
+            if (j <= N) {
+                bit[j] += bit[i];
+            }
         }
+    }
+
+    private int lastSetBit(int index) {
+        return index & (-index);
     }
     
     public void update(int index, int val) {
-        nums[index] = val;
-        for (int i = index + 1; i <= N; ++i) {
-            sum[i] = sum[i - 1] + nums[i - 1];
+        int N = bit.length, delta = val - sumRange(index, index);
+        ++index;
+        while (index < N) {
+            bit[index] += delta;
+            index += lastSetBit(index);
         }
     }
     
     public int sumRange(int left, int right) {
-        return sum[right + 1] - sum[left];
+        return prefixSum(right) - prefixSum(left - 1);
+    }
+
+    private int prefixSum(int index) {
+        int sum = 0;
+        ++index;
+        while (index > 0) {
+            sum += bit[index];
+            index -= lastSetBit(index);
+        }
+        return sum;
     }
 }
 
