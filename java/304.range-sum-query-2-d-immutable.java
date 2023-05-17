@@ -82,7 +82,7 @@ class NumMatrix {
      * Subproblem: 
      * sum[r][c] = the sum of the region from (0, 0) to (r-1, c-1).
      * 
-     * Recursive Relation:
+     * Recurrence Relation:
      * sum[r][c] = sum[r-1][c] + sum[r][c-1] - sum[r-1][c-1] + matrix[r-1][c-1]
      * sum[0][c] = 0
      * sum[r][0] = 0
