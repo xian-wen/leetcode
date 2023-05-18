@@ -38,7 +38,7 @@ public class BIT {
         int N = nums.length;
         System.arraycopy(nums, 0, bit, 1, N);
         for (int i = 1; i <= N; ++i) {
-            // Get the index of the next node with a different parent.
+            // Get the index of the next node.
             int j = i + lastSetBit(i);
             if (j <= N) {
                 bit[j] += bit[i];
@@ -72,7 +72,7 @@ public class BIT {
         ++index;
         while (index < N) {
             bit[index] += delta;
-            // Move to the next node with a different parent.
+            // Move to the next node.
             index += lastSetBit(index);
         }
     }
