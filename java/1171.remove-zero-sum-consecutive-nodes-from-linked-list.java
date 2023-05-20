@@ -22,10 +22,9 @@ class Solution {
     //  * Solution 1: One Pass
     //  */
     // public ListNode removeZeroSumSublists(ListNode head) {
-    //     ListNode dummy = new ListNode(0, head);
+    //     ListNode dummy = new ListNode(0, head), curr = dummy;
     //     Map<Integer, ListNode> map = new HashMap<>();
     //     int prefixSum = 0;
-    //     ListNode curr = dummy;
     //     while (curr != null) {
     //         prefixSum += curr.val;
     //         if (map.containsKey(prefixSum)) {
@@ -63,11 +62,10 @@ class Solution {
      * result: [1,5,1]
      */
     public ListNode removeZeroSumSublists(ListNode head) {
-        ListNode dummy = new ListNode(0, head);
+        ListNode dummy = new ListNode(0, head), curr = dummy;
         // prefixSum -> the last node
         Map<Integer, ListNode> map = new HashMap<>();
         int prefixSum = 0;
-        ListNode curr = dummy;
         while (curr != null) {
             prefixSum += curr.val;
             map.put(prefixSum, curr);
