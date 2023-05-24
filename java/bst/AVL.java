@@ -129,8 +129,8 @@ public class AVL<K extends Comparable<K>, V> {
             }
 
             Node temp = node;
-            node = min(node.right);
-            node.right = removeMin(node.right);
+            node = min(temp.right);
+            node.right = removeMin(temp.right);
             node.left = temp.left;
         }
 
