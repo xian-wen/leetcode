@@ -120,8 +120,62 @@ class Solution {
     //     return (pre + med) / 2.0;
     // }
 
+    // /**
+    //  * Solution 3: Binary Search Iteration
+    //  */
+    // public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+    //     int M = nums1.length, N = nums2.length;
+    //     if (M == 0) {
+    //         return median(nums2);
+    //     }
+
+    //     if (N == 0) {
+    //         return median(nums1);
+    //     }
+
+    //     // Make nums1 always the shorter one.
+    //     if (M > N) {
+    //         return findMedianSortedArrays(nums2, nums1);
+    //     }
+
+    //     int lo = 0, hi = M, half = (M + N) / 2;
+    //     while (lo <= hi) {
+    //         int mid1 = lo + (hi - lo) / 2;
+    //         int mid2 = half - mid1;
+
+    //         int left1 = mid1 > 0 ? nums1[mid1 - 1] : Integer.MIN_VALUE;
+    //         int left2 = mid2 > 0 ? nums2[mid2 - 1] : Integer.MIN_VALUE;
+    //         int right1 = mid1 < M ? nums1[mid1] : Integer.MAX_VALUE;
+    //         int right2 = mid2 < N ? nums2[mid2] : Integer.MAX_VALUE;
+
+    //         if (left1 > right2) {
+    //             hi = mid1 - 1;
+    //         } else if (left2 > right1) {
+    //             lo = mid1 + 1;
+    //         } else {
+    //             if ((M + N) % 2 == 1) {
+    //                 return Math.min(right1, right2);
+    //             }
+    //             return (Math.max(left1, left2) + Math.min(right1, right2)) / 2.0; 
+    //         }
+    //     }
+    //     return -1.0;
+    // }
+
+    // private double median(int[] nums) {
+    //     int N = nums.length;
+    //     if (N == 0) {
+    //         return 0.0;
+    //     }
+        
+    //     if (N % 2 == 1) {
+    //         return nums[N / 2];
+    //     }
+    //     return (nums[N / 2 - 1] + nums[N / 2]) / 2.0;
+    // }
+
     /**
-     * Solution 3: Binary Search
+     * Solution 4: Binary Search Recursion
      * 
      * Partition Rule:
      * 1. # nums in left part = # nums in right part (diff in 1 for odd total len)
@@ -173,53 +227,39 @@ class Solution {
      */
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         int M = nums1.length, N = nums2.length;
-        if (M == 0) {
-            return median(nums2);
-        }
-
-        if (N == 0) {
-            return median(nums1);
-        }
-
-        // Make nums1 always the shorter one.
+        // Make nums1 always be the shorter one.
         if (M > N) {
             return findMedianSortedArrays(nums2, nums1);
         }
-
-        int lo = 0, hi = M, half = (M + N) / 2;
-        while (lo <= hi) {
-            int mid1 = lo + (hi - lo) / 2;
-            int mid2 = half - mid1;
-
-            int left1 = mid1 > 0 ? nums1[mid1 - 1] : Integer.MIN_VALUE;
-            int left2 = mid2 > 0 ? nums2[mid2 - 1] : Integer.MIN_VALUE;
-            int right1 = mid1 < M ? nums1[mid1] : Integer.MAX_VALUE;
-            int right2 = mid2 < N ? nums2[mid2] : Integer.MAX_VALUE;
-
-            if (left1 > right2) {
-                hi = mid1 - 1;
-            } else if (left2 > right1) {
-                lo = mid1 + 1;
-            } else {
-                if ((M + N) % 2 == 1) {
-                    return Math.min(right1, right2);
-                }
-                return (Math.max(left1, left2) + Math.min(right1, right2)) / 2.0; 
-            }
-        }
-        return -1.0;
+        return binarySearch(nums1, nums2, 0, M);
     }
 
-    private double median(int[] nums) {
-        int N = nums.length;
-        if (N == 0) {
-            return 0.0;
+    private double binarySearch(int[] nums1, int[] nums2, int lo, int hi) {
+        if (lo > hi) {
+            return -1.0;
         }
-        
-        if (N % 2 == 1) {
-            return nums[N / 2];
+
+        int M = nums1.length, N = nums2.length, half = (M + N) / 2;
+        int mid1 = lo + (hi - lo) / 2;
+        int mid2 = half - mid1;
+
+        int left1 = mid1 > 0 ? nums1[mid1 - 1] : Integer.MIN_VALUE;
+        int left2 = mid2 > 0 ? nums2[mid2 - 1] : Integer.MIN_VALUE;
+        int right1 = mid1 < M ? nums1[mid1] : Integer.MAX_VALUE;
+        int right2 = mid2 < N ? nums2[mid2] : Integer.MAX_VALUE;
+
+        if (left1 > right2) {
+            return binarySearch(nums1, nums2, lo, mid1 - 1);
         }
-        return (nums[N / 2 - 1] + nums[N / 2]) / 2.0;
+
+        if (left2 > right1) {
+            return binarySearch(nums1, nums2, mid1 + 1, hi);
+        }
+
+        if ((M + N) % 2 == 1) {
+            return Math.min(right1, right2);
+        }
+        return (Math.max(left1, left2) + Math.min(right1, right2)) / 2.0;
     }
 }
 // @lc code=end
