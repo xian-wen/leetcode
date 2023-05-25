@@ -147,7 +147,7 @@ class Solution {
      *                start end
      */
     private ListNode reverseBetween(ListNode start, ListNode end) {
-        if (start == null || start.next == end) {
+        if (start == end || start.next == end) {
             return start;
         }
 
