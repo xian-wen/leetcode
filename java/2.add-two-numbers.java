@@ -83,9 +83,9 @@ class Solution {
                 l2 = l2.next;
             }
 
-            int sum = (val1 + val2 + carry) % 10;
-            carry = (val1 + val2 + carry) / 10;
-            node.next = new ListNode(sum, null);
+            int sum = val1 + val2 + carry;
+            carry = sum / 10;
+            node.next = new ListNode(sum % 10);
             node = node.next;
         }
         return dummy.next;
