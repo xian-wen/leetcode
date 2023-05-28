@@ -72,7 +72,8 @@
 // @lc code=start
 class Solution {
     /**
-     * Min-Max problem: Binary Search
+     * Min-Max problem:
+     * Binary search the minimum capacity of the robber to steal >= k houses.
      */
     public int minCapability(int[] nums, int k) {
         int min = Integer.MAX_VALUE, max = 0;
