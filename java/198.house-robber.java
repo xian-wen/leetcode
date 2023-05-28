@@ -55,28 +55,43 @@
 
 // @lc code=start
 class Solution {
+    // /**
+    //  * Solution 1: Dynamic Programming
+    //  * 
+    //  * Subproblem:
+    //  * amount[i] = The maximum amount of money attainable by robbing the subset
+    //  * of house 1, 2, ..., i.
+    //  * 
+    //  * Recurrence relation:
+    //  * amount[i] = max{amount[i - 1], amount[i - 2] + nums[i - 1]}
+    //  * amount[0] = 0
+    //  * amount[1] = nums[0]
+    //  * 
+    //  * Time complexity:
+    //  * O(N)
+    //  */
+    // public int rob(int[] nums) {
+    //     int N = nums.length;
+    //     int[] amount = new int[N + 1];
+    //     // By default, amount[0] = 0
+    //     amount[1] = nums[0];
+    //     for (int i = 2; i <= N; ++i) {
+    //         amount[i] = Math.max(amount[i - 1], amount[i - 2] + nums[i - 1]);
+    //     }
+    //     return amount[N];
+    // }
+
     /**
-     * Subproblem:
-     * amount[i] = The maximum amount of money attainable by robbing the subset
-     * of house 1, 2, ..., i.
-     * 
-     * Recurrence relation:
-     * amount[i] = max{amount[i - 1], amount[i - 2] + nums[i - 1]}
-     * amount[0] = 0
-     * amount[1] = nums[0]
-     * 
-     * Time complexity:
-     * O(N)
+     * Solution 2: Space Optimization
      */
     public int rob(int[] nums) {
-        int N = nums.length;
-        int[] amount = new int[N + 1];
-        // By default, amount[0] = 0
-        amount[1] = nums[0];
-        for (int i = 2; i <= N; ++i) {
-            amount[i] = Math.max(amount[i - 1], amount[i - 2] + nums[i - 1]);
+        int curr = 0, prev = 0;
+        for (int num : nums) {
+            int temp = curr;
+            curr = Math.max(curr, num + prev);
+            prev = temp;
         }
-        return amount[N];
+        return curr;
     }
 }
 // @lc code=end
