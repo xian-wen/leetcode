@@ -47,6 +47,8 @@
 // @lc code=start
 class Solution {
     // /**
+    //  * Solution 1
+    //  * 
     //  * Subproblem:
     //  * partitionable[i] = whether array can be partitioned using a subset of
     //  * nums[0..(N-1)] with a total sum = i.
@@ -80,6 +82,9 @@ class Solution {
     //     return partitionable[half];
     // }
 
+    /**
+     * Solution 2
+     */
     public boolean canPartition(int[] nums) {
         int sum = 0;
         for (int num : nums) {
