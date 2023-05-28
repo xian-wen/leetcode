@@ -1,6 +1,8 @@
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 /*
  * @lc app=leetcode id=146 lang=java
@@ -179,10 +181,56 @@ class LRUCache {
     //     map.put(key, node);
     // }
 
+    // private Map<Integer, Integer> map;
+    // // LinkedHashSet: doubly linked list, remove: O(1)
+    // // LinkedList: doubly linked list, remove: O(N)
+    // private Set<Integer> set;
+    // private int capacity;
+
+    // /**
+    //  * Solution 2: Linked Hash Set
+    //  */
+    // public LRUCache(int capacity) {
+    //     this.capacity = capacity;
+    //     map = new HashMap<>();
+    //     set = new LinkedHashSet<>();
+    // }
+    
+    // public int get(int key) {
+    //     if (!map.containsKey(key)) {
+    //         return -1;
+    //     }
+
+    //     moveLast(set, key);
+    //     return map.get(key);
+    // }
+
+    // private void moveLast(Set<Integer> set, int num) {
+    //     set.remove(num);
+    //     set.add(num);
+    // }
+    
+    // public void put(int key, int value) {
+    //     if (map.containsKey(key)) {
+    //         map.put(key, value);
+    //         moveLast(set, key);
+    //         return;
+    //     }
+
+    //     if (map.size() == capacity) {
+    //         int first = set.iterator().next();
+    //         map.remove(first);
+    //         set.remove(first);
+    //     }
+
+    //     map.put(key, value);
+    //     set.add(key);
+    // }
+
     private Map<Integer, Integer> map;
 
     /**
-     * Solution 2: Built-in
+     * Solution 3: Linked Hash Map
      */
     public LRUCache(int capacity) {
         // Ref: https://docs.oracle.com/javase/8/docs/api/java/util/LinkedHashMap.html
