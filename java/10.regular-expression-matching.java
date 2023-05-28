@@ -79,14 +79,17 @@ class Solution {
      * match[i][j] = whether s[0..(i-1)] matches p[0..(j-1)].
      * 
      * Recurrence relation:
-     * match[i][j] = match[i-1][j-1]                                 if p[j-1] = '.'
-     *             = s[i-1] == p[j-1] && match[i-1][j-1]             if p[j-1] = [a-z]
-     *             = match[i][j-2]                                   if p[j-1] = '*' && p[j-2] != '.' && s[i-1] != p[j-2]
-     *             = match[i-1][j] || match[i][j-1] || match[i][j-2] if p[j-1] = '*' && (p[j-2] = '.' || s[i-1] == p[j-2])
+     * match[i][j] = match[i-1][j-1]                     if p[j-1] = '.'
+     *             = s[i-1] == p[j-1] && match[i-1][j-1] if p[j-1] = [a-z]
+     *             = match[i][j-2]                       if p[j-1] = '*' && p[j-2] != '.' && s[i-1] != p[j-2]
+     *             = match[i-1][j] || match[i][j-2]      if p[j-1] = '*' && (p[j-2] = '.' || s[i-1] == p[j-2])
      * match[i][0] = false
      * match[0][0] = true
      * match[0][j] = match[0][j-2] if p[j-1] == '*'
      *             = false         otherwise
+     * 
+     * match[i-1][j]: a* count as multiple a
+     * match[i][j-2]: a* count as empty
      * 
      * Time complexity:
      * O(MN)
@@ -110,7 +113,7 @@ class Solution {
                 } else if (p.charAt(j - 2) != '.' && s.charAt(i - 1) != p.charAt(j - 2)) {
                     match[i][j] = match[i][j - 2];
                 } else {
-                    match[i][j] = match[i - 1][j] || match[i][j - 1] || match[i][j - 2];
+                    match[i][j] = match[i - 1][j] || match[i][j - 2];
                 }
             }
         }
