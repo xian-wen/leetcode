@@ -42,29 +42,56 @@
 
 // @lc code=start
 class Solution {
+    // /**
+    //  * Solution 1: Dynamic Programming
+    //  * 
+    //  * Subproblem:
+    //  * bst[i] = the number of structurally unique BST's having exactly i nodes 
+    //  * of unique value from 1 to i.
+    //  * 
+    //  * Recurrence relation:
+    //  * bst[i] = sum(bst[j-1]] * bst[i-j]) where j in [1..i] and j is the root
+    //  *        = bst[0] * bst[i-1] + bst[1] * bst[i-2] + ... + bst[i-1] * bst[0] 
+    //  *        = sum(bst[j-1] * bst[i-j]) where 1 <= j <= i
+    //  * bst[0] = 1  // empty tree
+    //  * 
+    //  * bst[j-1]: # left subtrees of the tree root at j
+    //  * bst[i-j]: # right subtrees of the tree root at j
+    //  * 
+    //  * Time complexity:
+    //  * O(n^2)
+    //  */
+    // public int numTrees(int n) {
+    //     int[] bst = new int[n + 1];
+    //     bst[0] = 1;
+    //     for (int i = 1; i <= n; ++i) {
+    //         for (int j = 1; j <= i; ++j) {
+    //             bst[i] += bst[j - 1] * bst[i - j];
+    //         }
+    //     }
+    //     return bst[n];
+    // }
+
+    private int[] memo = new int[20];
+
     /**
-     * Subproblem:
-     * bst[i] = the number of structurally unique BST's having exactly i nodes 
-     * of unique value from 1 to i.
-     * 
-     * Recurrence relation:
-     * bst[i] = sum(bst[tree[1..(j-1)]] * bst[tree[(j+1)..i]]) where j is the root
-     *        = bst[0] * bst[i-1] + bst[1] * bst[i-2] + ... + bst[i-1] * bst[0] 
-     *        = sum(bst[j-1] * bst[i-j]) where 1 <= j <= i
-     * bst[0] = 1  // empty tree
-     * 
-     * Time complexity:
-     * O(n^2)
+     * Solution 2: Recursion
      */
     public int numTrees(int n) {
-        int[] bst = new int[n + 1];
-        bst[0] = 1;
-        for (int i = 1; i <= n; ++i) {
-            for (int j = 1; j <= i; ++j) {
-                bst[i] += bst[j - 1] * bst[i - j];
-            }
+        if (n == 0) {
+            return 1;
         }
-        return bst[n];
+
+        if (memo[n] > 0) {
+            return memo[n];
+        }
+
+        for (int i = 1; i <= n; ++i) {
+            int left = numTrees(i - 1);
+            int right = numTrees(n - i);
+            memo[n] += left * right;
+        }
+        return memo[n];
     }
 }
 // @lc code=end
