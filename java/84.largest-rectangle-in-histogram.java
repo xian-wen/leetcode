@@ -58,7 +58,7 @@ class Solution {
     //     int N = heights.length, maxArea = 0;
     //     for (int i = 0; i <= N; ++i) {
     //         int curHeight = i < N ? heights[i] : 0;
-    //         while (!stack.isEmpty() && curHeight <= heights[stack.peek()]) {
+    //         while (!stack.isEmpty() && curHeight < heights[stack.peek()]) {
     //             int height = heights[stack.pop()];
     //             int width = stack.isEmpty() ? i : i - stack.peek() - 1;
     //             maxArea = Math.max(maxArea, width * height);
