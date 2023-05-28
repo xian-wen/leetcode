@@ -1,3 +1,5 @@
+import java.util.Deque;
+
 /*
  * @lc app=leetcode id=538 lang=java
  *
@@ -76,21 +78,94 @@
  * }
  */
 class Solution {
-    private int pre = 0;
+    // /**
+    //  * Solution 1: Iteration
+    //  * 
+    //  * Reversed inorder traversal (right, root, left).
+    //  */
+    // public TreeNode convertBST(TreeNode root) {
+    //     Deque<TreeNode> stack = new ArrayDeque<>();
+    //     TreeNode node = root, prev = null;
+    //     while (node != null || !stack.isEmpty()) {
+    //         while (node != null) {
+    //             stack.push(node);
+    //             node = node.right;
+    //         }
+
+    //         node = stack.pop();
+    //         if (prev != null) {
+    //             node.val += prev.val;
+    //         }
+
+    //         prev = node;
+    //         node = node.left;
+    //     }
+    //     return root;
+    // }
+
+    // private int prev;
+
+    // /**
+    //  * Solution 2: Recursion
+    //  * 
+    //  * Reversed inorder traversal (right, root, left).
+    //  */
+    // public TreeNode convertBST(TreeNode root) {
+    //     convertBSTHelper(root);
+    //     return root;
+    // }
+
+    // public void convertBSTHelper(TreeNode root) {
+    //     if (root == null) {
+    //         return;
+    //     }
+
+    //     convertBSTHelper(root.right);
+    //     root.val += prev;
+    //     prev = root.val;
+    //     convertBSTHelper(root.left);
+    // }
+
+    // /**
+    //  * Solution 3: Recursion without Global Variable I
+    //  * 
+    //  * Reversed inorder traversal (right, root, left).
+    //  */
+    // public TreeNode convertBST(TreeNode root) {
+    //     convertBST(root, 0);
+    //     return root;
+    // }
+
+    // private int convertBST(TreeNode root, int prev) {
+    //     if (root == null) {
+    //         return prev;
+    //     }
+
+    //     int right = convertBST(root.right, prev);
+    //     root.val += right;
+    //     return convertBST(root.left, root.val);
+    // }
 
     /**
+     * Solution 4: Recursion without Global Variable II
+     * 
      * Reversed inorder traversal (right, root, left).
      */
     public TreeNode convertBST(TreeNode root) {
+        convertBST(root, null);
+        return root;
+    }
+
+    private TreeNode convertBST(TreeNode root, TreeNode prev) {
         if (root == null) {
-            return null;
+            return prev;
         }
 
-        convertBST(root.right);
-        root.val += pre;
-        pre = root.val;
-        convertBST(root.left);
-        return root;
+        TreeNode right = convertBST(root.right, prev);
+        if (right != null) {
+            root.val += right.val;
+        }
+        return convertBST(root.left, root);
     }
 }
 // @lc code=end
