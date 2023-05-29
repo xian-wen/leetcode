@@ -60,18 +60,22 @@ class Solution {
 
     private void backtrack(char[][] board, int r, int c, Node node, 
                            List<String> res) {
-        if (node != null && node.word != null) {
+        if (node == null) {
+            return;
+        }
+
+        if (node.word != null) {
             res.add(node.word);
             node.word = null;
         }
         
-        if (!isValid(board, r, c) || board[r][c] == '#' || node == null) {
+        if (!isValid(board, r, c) || board[r][c] == '#') {
             return;
         }
 
         char old = board[r][c];
         node = node.next[old - 'a'];
-        
+
         board[r][c] = '#';
         backtrack(board, r + 1, c, node, res);
         backtrack(board, r - 1, c, node, res);
