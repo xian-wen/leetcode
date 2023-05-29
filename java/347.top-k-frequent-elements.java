@@ -112,6 +112,8 @@ class Solution {
         }
 
         int[] res = new int[k];
+        // Since the answer is unique, we can also put i < k in the condition
+        // of the outer for loop, not only in the inner for loop.
         for (int c = maxCount, i = 0; c > 0 && i < k; --c) {
             if (mirror[c] == null) {
                 continue;
