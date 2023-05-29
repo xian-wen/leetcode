@@ -105,7 +105,6 @@ class Solution {
      */
     private boolean hasCircleIter(DiGraph graph) {
         int V = graph.V;
-        boolean[] visited = new boolean[V];
         Queue<Integer> queue = new LinkedList<>();
         for (int v = 0; v < V; ++v) {
             if (graph.indegree[v] == 0) {
@@ -115,7 +114,6 @@ class Solution {
 
         while (!queue.isEmpty()) {
             int v = queue.poll();
-            visited[v] = true;
             for (int w : graph.adj[v]) {
                 --graph.indegree[w];
                 if (graph.indegree[w] == 0) {
@@ -126,7 +124,7 @@ class Solution {
 
         // There exist vertices that could not be handled.
         for (int v = 0; v < V; ++v) {
-            if (!visited[v]) {
+            if (graph.indegree[v] != 0) {
                 return true;
             }
         }
@@ -169,7 +167,7 @@ class Solution {
 
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         DiGraph graph = new DiGraph(numCourses, prerequisites);
-        return !hasCircle(graph);
+        return !hasCircleIter(graph);
     }
 }
 // @lc code=end
